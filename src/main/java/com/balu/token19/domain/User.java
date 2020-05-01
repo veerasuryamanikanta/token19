@@ -38,23 +38,19 @@ public class User extends Root {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
 	public Set<ShopDetails> shopdetails;
 
-	@Column(nullable = true, updatable = true)
 	@NotNull
 	private String userName;
 
-	@Column(nullable = true, unique = true, updatable = true)
+	@Column(nullable = false, unique = true, updatable = true)
 	@NotNull
 	private String userNumber;
 	
-	@Column(nullable = true, unique = true, updatable = true)
 	@NotNull
 	private String userEmail;
 	
-	@Column(nullable = true, unique = true, updatable = true)
 	@NotNull
 	private String userAddress;
 
-	@Column(nullable = true, updatable = true)
 	@NotNull
 	public String userImage;
 
