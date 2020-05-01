@@ -59,26 +59,26 @@ public class UserController {
 						}
 					} else {
 						UserDTO userdtoData = userService.saveUser(userDTO);
-						if (userdtoData != null) {
-							long rndNumber = Helper.createRandomInteger(111, 579026);
-							if (Helper.sendOTP(userDTO.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
-									AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
-									AppConstants.otpMessage)) {
-								OtpDTO otpdto = new OtpDTO();
-								otpdto.setUserNumber(userdtoData.getUserNumber());
-								otpdto.setOtpCode("" + rndNumber);
-								OtpDTO otpdtodaata = otpService.saveOtp(otpdto);
-								if (otpdtodaata != null) {
-									holder.setResult(userdtoData);
-								} else {
-									holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
-								}
-							} else {
-								holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
-							}
-						} else {
-							holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save."));
-						}
+//						if (userdtoData != null) {
+//							long rndNumber = Helper.createRandomInteger(111, 579026);
+//							if (Helper.sendOTP(userDTO.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
+//									AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
+//									AppConstants.otpMessage)) {
+//								OtpDTO otpdto = new OtpDTO();
+//								otpdto.setUserNumber(userdtoData.getUserNumber());
+//								otpdto.setOtpCode("" + rndNumber);
+//								OtpDTO otpdtodaata = otpService.saveOtp(otpdto);
+//								if (otpdtodaata != null) {
+//									holder.setResult(userdtoData);
+//								} else {
+//									holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
+//								}
+//							} else {
+//								holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
+//							}
+//						} else {
+//							holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save."));
+//						}
 					}
 				}
 			} else {
