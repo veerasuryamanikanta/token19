@@ -131,7 +131,7 @@ public class ShopController {
 	
 
 	@RequestMapping(value = "/downloadFile/{fileName:.+}", method = RequestMethod.GET)
-	public ResponseEntity<Resource> downloadFile(String fileName, HttpServletRequest request) {
+	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
 		Resource resource = fileStorageService.loadFileAsResource(fileName);
 		String contentType = null;
 		try {
