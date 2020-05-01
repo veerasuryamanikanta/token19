@@ -38,7 +38,6 @@ public class Request extends Root {
 	@NotNull
 	private String requestPath;
 
-	@Column(nullable = false, unique = true, updatable = true)
 	@NotNull
 	private String requestStatus;
 	
