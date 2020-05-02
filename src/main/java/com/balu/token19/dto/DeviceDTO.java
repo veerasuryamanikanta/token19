@@ -26,5 +26,6 @@ public class DeviceDTO {
 	private String createdDate;
 	
 	private String updatedOn;
+	
 
 }

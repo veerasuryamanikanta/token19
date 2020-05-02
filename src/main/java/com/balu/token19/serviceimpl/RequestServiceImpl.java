@@ -47,6 +47,7 @@ public class RequestServiceImpl implements RequestService {
 		requestDtoData.setShopdetailsId(requestData.getShopdetails().getShopdetailsId());
 		return requestDtoData;
 	}
+	
 
 	/*
 	 * -----------------GET REQUEST INFO BY SHOP ID -------------
