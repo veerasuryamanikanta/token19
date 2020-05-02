@@ -24,7 +24,7 @@ public class Device extends Root{
 	private String deviceName;
 	
 	@NotNull
-	public int deviceVersion;
+	public String deviceVersion;
 
 	@NotNull
 	public String uniqueID;

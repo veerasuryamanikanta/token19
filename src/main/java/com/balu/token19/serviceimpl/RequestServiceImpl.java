@@ -42,6 +42,8 @@ public class RequestServiceImpl implements RequestService {
 		RequestDTO requestDtoData = new RequestDTO();
 		mapper.map(requestData, requestDtoData);
 		requestDtoData.setUserId(requestData.getUser().getUserId());
+		requestDtoData.setUserNumber(requestData.getUser().getUserNumber());
+		requestDtoData.setUserName(requestData.getUser().getUserName());
 		requestDtoData.setShopdetailsId(requestData.getShopdetails().getShopdetailsId());
 		return requestDtoData;
 	}
@@ -59,6 +61,8 @@ public class RequestServiceImpl implements RequestService {
 				RequestDTO requestdto = new RequestDTO();
 				mapper.map(requestDtoData, requestdto);
 				requestdto.setUserId(requestDtoData.getUser().getUserId());
+				requestdto.setUserNumber(requestDtoData.getUser().getUserNumber());
+				requestdto.setUserName(requestDtoData.getUser().getUserName());
 				requestdto.setShopdetailsId(requestDtoData.getShopdetails().getShopdetailsId());
 				requestDtoList.add(requestdto);
 			}

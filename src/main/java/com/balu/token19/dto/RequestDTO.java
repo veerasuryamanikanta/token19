@@ -14,6 +14,10 @@ public class RequestDTO {
 	private Long requestId;
 
 	private Long userId;
+	
+	private String userNumber;
+	
+	private String userName;
 
 	private Long shopdetailsId;
 
