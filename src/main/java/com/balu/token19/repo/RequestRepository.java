@@ -13,4 +13,5 @@ public interface RequestRepository extends JpaRepository<Request,Long>{
 	@Query(nativeQuery = true, value = "select * from request where shopdetails_id =:shopdetailsId")
 	List<Request> findByShopId(@Param("shopdetailsId") Long shopdetailsId);
 	
+	
 }

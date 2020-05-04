@@ -47,7 +47,6 @@ public class RequestServiceImpl implements RequestService {
 		requestDtoData.setShopdetailsId(requestData.getShopdetails().getShopdetailsId());
 		return requestDtoData;
 	}
-	
 
 	/*
 	 * -----------------GET REQUEST INFO BY SHOP ID -------------
@@ -69,6 +68,39 @@ public class RequestServiceImpl implements RequestService {
 			}
 		}
 		return requestDtoList;
+	}
+
+	
+	/*
+	 * -----------------UPDATE REQUEST INFO BY SHOP ID -------------
+	 */
+	@Override
+	public RequestDTO updateRequest(RequestDTO requestDTO) {
+		Request requestData = requestRepository.getOne(requestDTO.getRequestId());
+		if (requestData != null) {
+			Request request = new Request();
+			mapper.map(requestDTO, request);
+			request.setUser(userRepository.getOne(requestData.getUser().getUserId()));
+			request.setShopdetails(shopdetailsRepository.getOne(requestData.getShopdetails().getShopdetailsId()));
+			if (requestDTO.getRequestPath() == null) {
+				request.setRequestPath(requestData.getRequestPath());
+			}
+			
+			if (requestDTO.getCreatedDate() == null) {
+				request.setCreatedDate(requestData.getCreatedDate());
+			}
+			
+			Request request_save_data = requestRepository.save(request);
+			RequestDTO requestDtoData = new RequestDTO();
+			mapper.map(request_save_data, requestDtoData);
+			requestDtoData.setUserId(request_save_data.getUser().getUserId());
+			requestDtoData.setUserNumber(request_save_data.getUser().getUserNumber());
+			requestDtoData.setUserName(request_save_data.getUser().getUserName());
+			requestDtoData.setShopdetailsId(request_save_data.getShopdetails().getShopdetailsId());
+			return requestDtoData;
+		} else {
+			return null;
+		}
 	}
 
 }

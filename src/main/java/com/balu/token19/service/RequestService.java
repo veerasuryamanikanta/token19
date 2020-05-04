@@ -5,9 +5,11 @@ import java.util.List;
 import com.balu.token19.dto.RequestDTO;
 
 public interface RequestService {
-	
+
 	RequestDTO saveRequest(RequestDTO requestDTO);
-	
+
 	List<RequestDTO> findByShopId(Long shopdetailsId);
-		
+
+	RequestDTO updateRequest(RequestDTO requestDTO);
+
 }

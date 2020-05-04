@@ -29,5 +29,6 @@ public class RequestDTO {
 
 	private String tokenNumber;
 	
+	private String createdDate;
 
 }

@@ -35,6 +35,10 @@ public class RequestController {
 	@Autowired
 	private RequestService requestService;
 
+	
+	/*
+	 * -----------------SAVE REQUEST -------------
+	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ReturnHolder saveRequest(@RequestBody RequestDTO requestDTO) {
 
@@ -53,6 +57,10 @@ public class RequestController {
 		return holder;
 	}
 
+	
+	/*
+	 * -----------------GET REQUEST INFO BY SHOP ID -------------
+	 */
 	@RequestMapping(value = "/list/{shopdetailsId}", method = RequestMethod.GET)
 	public ReturnHolder getRequests(@PathVariable("shopdetailsId") Long shopdetailsId) {
 		ReturnHolder holder = new ReturnHolder();
@@ -73,7 +81,32 @@ public class RequestController {
 		}
 		return holder;
 	}
+	
+	
+	/*
+	 * -----------------UPDATE REQUEST INFO BY SHOP ID -------------
+	 */
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public ReturnHolder updateRequest(@RequestBody RequestDTO requestDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (requestDTO != null) {
+				RequestDTO requestDtoData = requestService.updateRequest(requestDTO);
+				holder.setResult(requestDtoData);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+			}
 
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+		}
+		return holder;
+	}
+
+	
+	/*
+	 * -----------------UPLOAD FILE -------------
+	 */
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public ReturnHolder uploadFile(@RequestParam("file") MultipartFile file) {
 
@@ -94,6 +127,10 @@ public class RequestController {
 		return holder;
 	}
 
+	
+	/*
+	 * -----------------DOWNLOAD FILE -------------
+	 */
 	@RequestMapping(value = "/downloadFile/{fileName:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Resource> downloadFile(String fileName, HttpServletRequest request) {
 		Resource resource = fileStorageService.loadFileAsResource(fileName);
