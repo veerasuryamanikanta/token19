@@ -86,7 +86,7 @@ public class RequestController {
 	/*
 	 * -----------------GET REQUEST INFO BY SHOP ID -------------
 	 */
-	@RequestMapping(value = "/user/list/{shopdetailsId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/list/{userId}", method = RequestMethod.GET)
 	public ReturnHolder getRequestByUser(@PathVariable("userId") Long userId) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
