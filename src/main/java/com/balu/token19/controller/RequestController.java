@@ -84,6 +84,31 @@ public class RequestController {
 	
 	
 	/*
+	 * -----------------GET REQUEST INFO BY SHOP ID -------------
+	 */
+	@RequestMapping(value = "/user/list/{shopdetailsId}", method = RequestMethod.GET)
+	public ReturnHolder getRequestByUser(@PathVariable("userId") Long userId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (userId != null) {
+				List<RequestDTO> requestDTOList = requestService.findByUserId(userId);
+				if (requestDTOList.size() != 0) {
+					holder.setResult(requestDTOList);
+				} else {
+					holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+				}
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+		}
+		return holder;
+	}
+	
+	
+	/*
 	 * -----------------UPDATE REQUEST INFO BY SHOP ID -------------
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)

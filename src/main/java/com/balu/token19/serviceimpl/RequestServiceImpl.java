@@ -69,6 +69,28 @@ public class RequestServiceImpl implements RequestService {
 		}
 		return requestDtoList;
 	}
+	
+	/*
+	 * -----------------GET REQUEST INFO BY USER ID -------------
+	 */
+	@Override
+	public List<RequestDTO> findByUserId(Long userId) {
+		List<Request> requestData = requestRepository.findByUserId(userId);
+		List<RequestDTO> requestDtoList = new ArrayList<RequestDTO>();
+		if (requestData.size() != 0) {
+			for (int i = 0; i < requestData.size(); i++) {
+				Request requestDtoData = (Request) requestData.get(i);
+				RequestDTO requestdto = new RequestDTO();
+				mapper.map(requestDtoData, requestdto);
+				requestdto.setUserId(requestDtoData.getUser().getUserId());
+				requestdto.setUserNumber(requestDtoData.getUser().getUserNumber());
+				requestdto.setUserName(requestDtoData.getUser().getUserName());
+				requestdto.setShopdetailsId(requestDtoData.getShopdetails().getShopdetailsId());
+				requestDtoList.add(requestdto);
+			}
+		}
+		return requestDtoList;
+	}
 
 	
 	/*

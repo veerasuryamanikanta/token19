@@ -9,6 +9,8 @@ public interface RequestService {
 	RequestDTO saveRequest(RequestDTO requestDTO);
 
 	List<RequestDTO> findByShopId(Long shopdetailsId);
+	
+	List<RequestDTO> findByUserId(Long userId);
 
 	RequestDTO updateRequest(RequestDTO requestDTO);
 
