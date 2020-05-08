@@ -15,11 +15,11 @@ public class RequestDTO {
 
 	private Long userId;
 	
-	private String userNumber;
+	private Long shopDetailsId;
 	
-	private String userName;
-
-	private Long shopdetailsId;
+	private UserDTO userDTO;
+	
+	private ShopDetailsDTO shopDetailsDTO;
 
 	private String requestPath;
 

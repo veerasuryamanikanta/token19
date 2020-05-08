@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.balu.token19.domain.Request;
+import com.balu.token19.domain.ShopDetails;
+import com.balu.token19.domain.User;
 import com.balu.token19.dto.RequestDTO;
+import com.balu.token19.dto.ShopDetailsDTO;
+import com.balu.token19.dto.UserDTO;
 import com.balu.token19.repo.RequestRepository;
 import com.balu.token19.repo.ShopDetailsRepository;
 import com.balu.token19.repo.UserRepository;
@@ -37,14 +41,12 @@ public class RequestServiceImpl implements RequestService {
 		Request request = new Request();
 		mapper.map(requestDTO, request);
 		request.setUser(userRepository.getOne(requestDTO.getUserId()));
-		request.setShopdetails(shopdetailsRepository.getOne(requestDTO.getShopdetailsId()));
+		request.setShopdetails(shopdetailsRepository.getOne(requestDTO.getShopDetailsId()));
 		Request requestData = requestRepository.save(request);
 		RequestDTO requestDtoData = new RequestDTO();
 		mapper.map(requestData, requestDtoData);
 		requestDtoData.setUserId(requestData.getUser().getUserId());
-		requestDtoData.setUserNumber(requestData.getUser().getUserNumber());
-		requestDtoData.setUserName(requestData.getUser().getUserName());
-		requestDtoData.setShopdetailsId(requestData.getShopdetails().getShopdetailsId());
+		requestDtoData.setShopDetailsId(requestData.getShopdetails().getShopdetailsId());
 		return requestDtoData;
 	}
 
@@ -60,10 +62,14 @@ public class RequestServiceImpl implements RequestService {
 				Request requestDtoData = (Request) requestData.get(i);
 				RequestDTO requestdto = new RequestDTO();
 				mapper.map(requestDtoData, requestdto);
-				requestdto.setUserId(requestDtoData.getUser().getUserId());
-				requestdto.setUserNumber(requestDtoData.getUser().getUserNumber());
-				requestdto.setUserName(requestDtoData.getUser().getUserName());
-				requestdto.setShopdetailsId(requestDtoData.getShopdetails().getShopdetailsId());
+				User user = requestDtoData.getUser();
+				UserDTO userdto = new UserDTO();
+				mapper.map(user, userdto);
+				requestdto.setUserDTO(userdto);
+				ShopDetails shopDetails = requestDtoData.getShopdetails();
+				ShopDetailsDTO shopDetailsDTO= new ShopDetailsDTO();
+				mapper.map(shopDetails, shopDetailsDTO);
+				requestdto.setShopDetailsDTO(shopDetailsDTO);
 				requestDtoList.add(requestdto);
 			}
 		}
@@ -82,10 +88,14 @@ public class RequestServiceImpl implements RequestService {
 				Request requestDtoData = (Request) requestData.get(i);
 				RequestDTO requestdto = new RequestDTO();
 				mapper.map(requestDtoData, requestdto);
-				requestdto.setUserId(requestDtoData.getUser().getUserId());
-				requestdto.setUserNumber(requestDtoData.getUser().getUserNumber());
-				requestdto.setUserName(requestDtoData.getUser().getUserName());
-				requestdto.setShopdetailsId(requestDtoData.getShopdetails().getShopdetailsId());
+				User user = requestDtoData.getUser();
+				UserDTO userdto = new UserDTO();
+				mapper.map(user, userdto);
+				requestdto.setUserDTO(userdto);
+				ShopDetails shopDetails = requestDtoData.getShopdetails();
+				ShopDetailsDTO shopDetailsDTO= new ShopDetailsDTO();
+				mapper.map(shopDetails, shopDetailsDTO);
+				requestdto.setShopDetailsDTO(shopDetailsDTO);
 				requestDtoList.add(requestdto);
 			}
 		}
@@ -115,10 +125,16 @@ public class RequestServiceImpl implements RequestService {
 			Request request_save_data = requestRepository.save(request);
 			RequestDTO requestDtoData = new RequestDTO();
 			mapper.map(request_save_data, requestDtoData);
+			User user = request_save_data.getUser();
 			requestDtoData.setUserId(request_save_data.getUser().getUserId());
-			requestDtoData.setUserNumber(request_save_data.getUser().getUserNumber());
-			requestDtoData.setUserName(request_save_data.getUser().getUserName());
-			requestDtoData.setShopdetailsId(request_save_data.getShopdetails().getShopdetailsId());
+			requestDtoData.setShopDetailsId(request_save_data.getShopdetails().getShopdetailsId());
+			UserDTO userdto = new UserDTO();
+			mapper.map(user, userdto);
+			requestDtoData.setUserDTO(userdto);
+			ShopDetails shopDetails = request_save_data.getShopdetails();
+			ShopDetailsDTO shopDetailsDTO= new ShopDetailsDTO();
+			mapper.map(shopDetails, shopDetailsDTO);
+			requestDtoData.setShopDetailsDTO(shopDetailsDTO);
 			return requestDtoData;
 		} else {
 			return null;
