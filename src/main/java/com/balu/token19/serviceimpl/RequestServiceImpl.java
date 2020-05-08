@@ -47,6 +47,14 @@ public class RequestServiceImpl implements RequestService {
 		mapper.map(requestData, requestDtoData);
 		requestDtoData.setUserId(requestData.getUser().getUserId());
 		requestDtoData.setShopDetailsId(requestData.getShopdetails().getShopdetailsId());
+		User user = requestData.getUser();
+		UserDTO userdto = new UserDTO();
+		mapper.map(user, userdto);
+		requestDtoData.setUserDTO(userdto);
+		ShopDetails shopDetails = requestData.getShopdetails();
+		ShopDetailsDTO shopDetailsDTO= new ShopDetailsDTO();
+		mapper.map(shopDetails, shopDetailsDTO);
+		requestDtoData.setShopDetailsDTO(shopDetailsDTO);
 		return requestDtoData;
 	}
 
@@ -62,6 +70,8 @@ public class RequestServiceImpl implements RequestService {
 				Request requestDtoData = (Request) requestData.get(i);
 				RequestDTO requestdto = new RequestDTO();
 				mapper.map(requestDtoData, requestdto);
+				requestdto.setUserId(requestDtoData.getUser().getUserId());
+				requestdto.setShopDetailsId(requestDtoData.getShopdetails().getShopdetailsId());
 				User user = requestDtoData.getUser();
 				UserDTO userdto = new UserDTO();
 				mapper.map(user, userdto);
@@ -88,6 +98,8 @@ public class RequestServiceImpl implements RequestService {
 				Request requestDtoData = (Request) requestData.get(i);
 				RequestDTO requestdto = new RequestDTO();
 				mapper.map(requestDtoData, requestdto);
+				requestdto.setUserId(requestDtoData.getUser().getUserId());
+				requestdto.setShopDetailsId(requestDtoData.getShopdetails().getShopdetailsId());
 				User user = requestDtoData.getUser();
 				UserDTO userdto = new UserDTO();
 				mapper.map(user, userdto);
