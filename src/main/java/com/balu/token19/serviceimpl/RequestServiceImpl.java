@@ -126,12 +126,25 @@ public class RequestServiceImpl implements RequestService {
 			mapper.map(requestDTO, request);
 			request.setUser(userRepository.getOne(requestData.getUser().getUserId()));
 			request.setShopdetails(shopdetailsRepository.getOne(requestData.getShopdetails().getShopdetailsId()));
+			
 			if (requestDTO.getRequestPath() == null) {
 				request.setRequestPath(requestData.getRequestPath());
 			}
 			
 			if (requestDTO.getCreatedDate() == null) {
 				request.setCreatedDate(requestData.getCreatedDate());
+			}
+			
+			if (requestDTO.getRecieveTime() == null) {
+				request.setRecieveTime(requestData.getRecieveTime());
+			}
+			
+			if (requestDTO.getRequestStatus() == null) {
+				request.setRequestStatus(requestData.getRequestStatus());
+			}
+			
+			if (requestDTO.getTokenNumber() == null) {
+				request.setTokenNumber(requestData.getTokenNumber());
 			}
 			
 			Request request_save_data = requestRepository.save(request);
