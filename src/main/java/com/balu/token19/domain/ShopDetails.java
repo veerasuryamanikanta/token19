@@ -38,31 +38,24 @@ public class ShopDetails extends Root {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "shopdetails", cascade = CascadeType.MERGE)
 	public Set<Request> request;
 
-	@Column(nullable = true, updatable = true)
 	@NotNull
 	private String shopName;
 
-	@Column(nullable = true, unique = true, updatable = true)
 	@NotNull
 	private String ownerName;
 	
-	@Column(nullable = true, unique = true, updatable = true)
 	@NotNull
 	private String pincode;
 	
-	@Column(nullable = true, unique = true, updatable = true)
 	@NotNull
 	private String shopAddress;
 	
-	@Column(nullable = true, unique = true, updatable = true)
 	@NotNull
 	private String shopLatitude;
 	
-	@Column(nullable = true, unique = true, updatable = true)
 	@NotNull
 	private String shopLongitude;
 
-	@Column(nullable = true, updatable = true)
 	@NotNull
 	public String shopImage;
 	
