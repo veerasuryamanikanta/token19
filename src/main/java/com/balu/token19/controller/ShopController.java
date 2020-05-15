@@ -65,7 +65,7 @@ public class ShopController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public ReturnHolder updateShopdetails(@RequestBody ShopDetailsDTO shopDetailsDTO) {
+	public ShopDetailsDTO updateShopdetails(@RequestBody ShopDetailsDTO shopDetailsDTO) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
 			if (shopDetailsDTO != null) {
@@ -76,9 +76,9 @@ public class ShopController {
 			}
 
 		} catch (Exception e) {
-			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."+e));
 		}
-		return holder;
+		return shopDetailsDTO;
 	}
 
 	@RequestMapping(value = "/list/{userId}", method = RequestMethod.GET)
