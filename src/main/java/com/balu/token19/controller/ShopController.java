@@ -28,107 +28,120 @@ import com.balu.token19.service.ShopDetailsService;
 @RestController
 @RequestMapping(value = "/shop")
 public class ShopController {
-	
+
 	@Autowired
 	private ShopDetailsService shopDetailsService;
-	
+
 	@Autowired
 	private FileStorageService fileStorageService;
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public ReturnHolder saveRole(@RequestBody ShopDetailsDTO shopdetailsDTO) {
+	public ReturnHolder saveShopdetails(@RequestBody ShopDetailsDTO shopdetailsDTO) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
-			if(shopdetailsDTO!=null) {
-				if(shopdetailsDTO.getShopName().equalsIgnoreCase("")) {
+			if (shopdetailsDTO != null) {
+				if (shopdetailsDTO.getShopName().equalsIgnoreCase("")) {
 					holder = new ReturnHolder(false, new ErrorObject("error", "Shop Name Should Not Be Empty."));
-				}else if(shopdetailsDTO.getOwnerName().equalsIgnoreCase("")) {
+				} else if (shopdetailsDTO.getOwnerName().equalsIgnoreCase("")) {
 					holder = new ReturnHolder(false, new ErrorObject("error", "Owner Name Should Not Be Empty."));
-				}else {
+				} else {
 					ShopDetailsDTO shopDto = shopDetailsService.getShopDetails(shopdetailsDTO.getUserId());
-					if(shopDto!=null) {
+					if (shopDto != null) {
 						holder = new ReturnHolder(false, new ErrorObject("error", "Shop Alreay Registered."));
-					}else {
+					} else {
 						ShopDetailsDTO shopdetailsDtoData = shopDetailsService.saveShopDetails(shopdetailsDTO);
 						holder.setResult(shopdetailsDtoData);
 					}
-					
+
 				}
-			}else {
+			} else {
 				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
 		}
 		return holder;
 	}
-	
+
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public ReturnHolder updateShopdetails(@RequestBody ShopDetailsDTO shopDetailsDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (shopDetailsDTO != null) {
+				ShopDetailsDTO shopdetailsDtoData = shopDetailsService.updateShopDetails(shopDetailsDTO);
+				holder.setResult(shopdetailsDtoData);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+		}
+		return holder;
+	}
+
 	@RequestMapping(value = "/list/{userId}", method = RequestMethod.GET)
 	public ReturnHolder getShopdetails(@PathVariable("userId") Long userId) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
-			if(userId!=null) {
+			if (userId != null) {
 				ShopDetailsDTO shopDto = shopDetailsService.getShopDetails(userId);
-				if(shopDto!=null) {
+				if (shopDto != null) {
 					holder.setResult(shopDto);
-				}else {
+				} else {
 					holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
 				}
-			}else {
+			} else {
 				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
 		}
 		return holder;
 	}
-	
-	
+
 	@RequestMapping(value = "/shoplist/{pincode}", method = RequestMethod.GET)
 	public ReturnHolder getShopdetailsByPincode(@PathVariable("pincode") String pincode) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
-			if(pincode!=null) {
+			if (pincode != null) {
 				List<ShopDetailsDTO> shopDtoList = shopDetailsService.getShopsbyPincode(pincode);
-				if(shopDtoList.size()!=0) {
+				if (shopDtoList.size() != 0) {
 					holder.setResult(shopDtoList);
-				}else {
+				} else {
 					holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
 				}
-			}else {
+			} else {
 				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
 		}
 		return holder;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public ReturnHolder uploadFile(@RequestParam("file") MultipartFile file) {
 
 		ReturnHolder holder = new ReturnHolder();
 		try {
-			if(file!=null) {
+			if (file != null) {
 				String fileName = fileStorageService.storeFile(file);
 				String fileDownloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
 						.path("/shop/downloadFile/").path(fileName).toUriString();
 				holder.setResult(fileDownloadUrl);
-			}else {
+			} else {
 				holder = new ReturnHolder(false, new ErrorObject("error", "File Path Empty."));
 			}
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "File Path Empty."));
 		}
 		return holder;
 	}
-	
 
 	@RequestMapping(value = "/downloadFile/{fileName:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
