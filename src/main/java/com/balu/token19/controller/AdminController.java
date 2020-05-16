@@ -29,8 +29,7 @@ public class AdminController {
 
 	@Autowired
 	private DeviceService deviceService;
-	
-	
+
 	/*
 	 * -----------------SAVE ROLE -------------
 	 */
@@ -62,7 +61,6 @@ public class AdminController {
 		return holder;
 	}
 
-	
 	/*
 	 * -----------------ROLES LIST -------------
 	 */
@@ -78,6 +76,9 @@ public class AdminController {
 		return holder;
 	}
 
+	/*
+	 * -----------------SAVE APP VERSION -------------
+	 */
 	@RequestMapping(value = "/version/save", method = RequestMethod.POST)
 	public ReturnHolder saveVersion(@RequestBody VersionDTO versionDTO) {
 		ReturnHolder holder = new ReturnHolder();
@@ -95,7 +96,6 @@ public class AdminController {
 		return holder;
 	}
 
-	
 	/*
 	 * -----------------APP VERSION INFO -------------
 	 */
@@ -111,7 +111,6 @@ public class AdminController {
 		return holder;
 	}
 
-	
 	/*
 	 * -----------------SAVE DEVICE -------------
 	 */

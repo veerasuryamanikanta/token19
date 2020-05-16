@@ -61,6 +61,9 @@ public class OtpServiceImpl implements OtpService {
 
 	}
 
+	/*
+	 * ----------------SAVE OTP--------------------
+	 */
 	@Override
 	public OtpDTO saveOtp(OtpDTO otpdto) {
 		Otp otp = new Otp();
@@ -71,12 +74,15 @@ public class OtpServiceImpl implements OtpService {
 		return otpDtoData;
 	}
 
+	/*
+	 * ----------------UPDATE OTP--------------------
+	 */
 	@Override
 	public String updateOtp(OtpDTO otpdto) {
 		try {
 			otpRepository.updateOTP(otpdto.getUserNumber(), String.valueOf(otpdto.getOtpCode()));
 			return "success";
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return "failed";
 		}
 	}

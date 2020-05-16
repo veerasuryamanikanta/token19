@@ -35,6 +35,9 @@ public class ShopController {
 	@Autowired
 	private FileStorageService fileStorageService;
 
+	/*
+	 * -----------------SAVE SHOP DETAILS -------------
+	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ReturnHolder saveShopdetails(@RequestBody ShopDetailsDTO shopdetailsDTO) {
 		ReturnHolder holder = new ReturnHolder();
@@ -64,6 +67,9 @@ public class ShopController {
 		return holder;
 	}
 
+	/*
+	 * -----------------UPDATE SHOP DETAILS -------------
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ShopDetailsDTO updateShopdetails(@RequestBody ShopDetailsDTO shopDetailsDTO) {
 		ReturnHolder holder = new ReturnHolder();
@@ -76,11 +82,14 @@ public class ShopController {
 			}
 
 		} catch (Exception e) {
-			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."+e));
+			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty." + e));
 		}
 		return shopDetailsDTO;
 	}
 
+	/*
+	 * -----------------SHOP LIST BY USERID -------------
+	 */
 	@RequestMapping(value = "/list/{userId}", method = RequestMethod.GET)
 	public ReturnHolder getShopdetails(@PathVariable("userId") Long userId) {
 		ReturnHolder holder = new ReturnHolder();
@@ -102,6 +111,9 @@ public class ShopController {
 		return holder;
 	}
 
+	/*
+	 * -----------------SHOP LIST BY PINCODE -------------
+	 */
 	@RequestMapping(value = "/shoplist/{pincode}", method = RequestMethod.GET)
 	public ReturnHolder getShopdetailsByPincode(@PathVariable("pincode") String pincode) {
 		ReturnHolder holder = new ReturnHolder();
@@ -123,6 +135,9 @@ public class ShopController {
 		return holder;
 	}
 
+	/*
+	 * -----------------UPLOAD SHOP IMAGE -------------
+	 */
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	public ReturnHolder uploadFile(@RequestParam("file") MultipartFile file) {
 
@@ -143,6 +158,9 @@ public class ShopController {
 		return holder;
 	}
 
+	/*
+	 * -----------------DOWNLOAD SHOP IMAGE -------------
+	 */
 	@RequestMapping(value = "/downloadFile/{fileName:.+}", method = RequestMethod.GET)
 	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
 		Resource resource = fileStorageService.loadFileAsResource(fileName);

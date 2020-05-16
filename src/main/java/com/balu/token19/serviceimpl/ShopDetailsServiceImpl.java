@@ -25,6 +25,9 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	/*
+	 * ----------------SAVE SHOP DETAILS--------------------
+	 */
 	@Override
 	public ShopDetailsDTO saveShopDetails(ShopDetailsDTO shopDetailsDTO) {
 		ShopDetails shopdetails = new ShopDetails();
@@ -37,6 +40,9 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 		return shopdetailsDtoData;
 	}
 
+	/*
+	 * ----------------SHOPS LIST BY USERID--------------------
+	 */
 	@Override
 	public ShopDetailsDTO getShopDetails(Long userid) {
 		ShopDetails shopdetails = shopDetailsRepository.findByUserId(userid);
@@ -51,6 +57,9 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 
 	}
 
+	/*
+	 * ----------------SHOPS LIST BY PINCODE--------------------
+	 */
 	@Override
 	public List<ShopDetailsDTO> getShopsbyPincode(String pincode) {
 		List<ShopDetails> shopdetailsList = shopDetailsRepository.findByPincode(pincode);
@@ -67,6 +76,9 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 		return shopdetailsDtoList;
 	}
 
+	/*
+	 * ----------------UPDATE SHOP DETAILS--------------------
+	 */
 	@Override
 	public ShopDetailsDTO updateShopDetails(ShopDetailsDTO shopDetailsDTO) {
 		ShopDetails shopDetailsById = shopDetailsRepository.getOne(shopDetailsDTO.getShopdetailsId());
@@ -78,19 +90,19 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 			if (shopDetailsDTO.getShopName() == null) {
 				shopdetails.setShopName(shopDetailsById.getShopName());
 			}
-			
+
 			if (shopDetailsDTO.getOwnerName() == null) {
 				shopdetails.setOwnerName(shopDetailsById.getOwnerName());
 			}
-			
+
 			if (shopDetailsDTO.getPincode() == null) {
 				shopdetails.setPincode(shopDetailsById.getPincode());
 			}
-			
+
 			if (shopDetailsDTO.getShopLatitude() == null) {
 				shopdetails.setShopLatitude(shopDetailsById.getShopLatitude());
 			}
-			
+
 			if (shopDetailsDTO.getShopLongitude() == null) {
 				shopdetails.setShopLongitude(shopDetailsById.getShopLongitude());
 			}
@@ -98,7 +110,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 			if (shopDetailsDTO.getShopAddress() == null) {
 				shopdetails.setShopAddress(shopDetailsById.getShopAddress());
 			}
-			
+
 			if (shopDetailsDTO.getShopImage() == null) {
 				shopdetails.setShopImage(shopDetailsById.getShopImage());
 			}

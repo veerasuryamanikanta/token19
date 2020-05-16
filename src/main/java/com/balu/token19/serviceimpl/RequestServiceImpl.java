@@ -52,7 +52,7 @@ public class RequestServiceImpl implements RequestService {
 		mapper.map(user, userdto);
 		requestDtoData.setUserDTO(userdto);
 		ShopDetails shopDetails = requestData.getShopdetails();
-		ShopDetailsDTO shopDetailsDTO= new ShopDetailsDTO();
+		ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
 		mapper.map(shopDetails, shopDetailsDTO);
 		requestDtoData.setShopDetailsDTO(shopDetailsDTO);
 		return requestDtoData;
@@ -77,7 +77,7 @@ public class RequestServiceImpl implements RequestService {
 				mapper.map(user, userdto);
 				requestdto.setUserDTO(userdto);
 				ShopDetails shopDetails = requestDtoData.getShopdetails();
-				ShopDetailsDTO shopDetailsDTO= new ShopDetailsDTO();
+				ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
 				mapper.map(shopDetails, shopDetailsDTO);
 				requestdto.setShopDetailsDTO(shopDetailsDTO);
 				requestDtoList.add(requestdto);
@@ -85,7 +85,7 @@ public class RequestServiceImpl implements RequestService {
 		}
 		return requestDtoList;
 	}
-	
+
 	/*
 	 * -----------------GET REQUEST INFO BY USER ID -------------
 	 */
@@ -105,7 +105,7 @@ public class RequestServiceImpl implements RequestService {
 				mapper.map(user, userdto);
 				requestdto.setUserDTO(userdto);
 				ShopDetails shopDetails = requestDtoData.getShopdetails();
-				ShopDetailsDTO shopDetailsDTO= new ShopDetailsDTO();
+				ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
 				mapper.map(shopDetails, shopDetailsDTO);
 				requestdto.setShopDetailsDTO(shopDetailsDTO);
 				requestDtoList.add(requestdto);
@@ -114,7 +114,6 @@ public class RequestServiceImpl implements RequestService {
 		return requestDtoList;
 	}
 
-	
 	/*
 	 * -----------------UPDATE REQUEST INFO BY SHOP ID -------------
 	 */
@@ -126,27 +125,27 @@ public class RequestServiceImpl implements RequestService {
 			mapper.map(requestDTO, request);
 			request.setUser(userRepository.getOne(requestData.getUser().getUserId()));
 			request.setShopdetails(shopdetailsRepository.getOne(requestData.getShopdetails().getShopdetailsId()));
-			
+
 			if (requestDTO.getRequestPath() == null) {
 				request.setRequestPath(requestData.getRequestPath());
 			}
-			
+
 			if (requestDTO.getCreatedDate() == null) {
 				request.setCreatedDate(requestData.getCreatedDate());
 			}
-			
+
 			if (requestDTO.getRecieveTime() == null) {
 				request.setRecieveTime(requestData.getRecieveTime());
 			}
-			
+
 			if (requestDTO.getRequestStatus() == null) {
 				request.setRequestStatus(requestData.getRequestStatus());
 			}
-			
+
 			if (requestDTO.getTokenNumber() == null) {
 				request.setTokenNumber(requestData.getTokenNumber());
 			}
-			
+
 			Request request_save_data = requestRepository.save(request);
 			RequestDTO requestDtoData = new RequestDTO();
 			mapper.map(request_save_data, requestDtoData);
@@ -157,7 +156,7 @@ public class RequestServiceImpl implements RequestService {
 			mapper.map(user, userdto);
 			requestDtoData.setUserDTO(userdto);
 			ShopDetails shopDetails = request_save_data.getShopdetails();
-			ShopDetailsDTO shopDetailsDTO= new ShopDetailsDTO();
+			ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
 			mapper.map(shopDetails, shopDetailsDTO);
 			requestDtoData.setShopDetailsDTO(shopDetailsDTO);
 			return requestDtoData;

@@ -56,6 +56,9 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	/*
+	 * ----------------ACTIVATE USER--------------------
+	 */
 	@Override
 	public String activateUser(String usernumber) {
 		try {

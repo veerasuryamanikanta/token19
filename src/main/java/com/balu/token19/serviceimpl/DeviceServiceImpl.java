@@ -31,18 +31,17 @@ public class DeviceServiceImpl implements DeviceService {
 		return deviceDtoData;
 	}
 
-	
 	/*
 	 * -----------------GET DEVICE INFO BY NOTIFICAION ID -------------
 	 */
 	@Override
 	public DeviceDTO findByNotificationId(String notificationId) {
 		Device deviceData = deviceRepository.findByNotificationId(notificationId);
-		if(deviceData!=null) {
+		if (deviceData != null) {
 			DeviceDTO deviceDtoData = new DeviceDTO();
 			mapper.map(deviceData, deviceDtoData);
 			return deviceDtoData;
-		}else {
+		} else {
 			return null;
 		}
 	}
