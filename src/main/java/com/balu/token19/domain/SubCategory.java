@@ -41,5 +41,8 @@ public class SubCategory extends Root {
 
 	@NotNull
 	public String subcategoryName;
+	
+	@NotNull
+	public String subcategoryImage;
 
 }

@@ -17,6 +17,8 @@ public class SubCategoryDTO {
 
 	private String subcategoryName;
 
+	private String subcategoryImage;
+
 	private String createdDate;
 
 	private String updatedOn;
