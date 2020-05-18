@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.balu.token19.domain.Product;
 import com.balu.token19.dto.ProductDTO;
 import com.balu.token19.repo.ProductRepository;
+import com.balu.token19.repo.QuantityRepository;
+import com.balu.token19.repo.SubCategoryRepository;
 import com.balu.token19.service.ProductService;
 
 @Service
@@ -21,6 +23,12 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private SubCategoryRepository subCategoryRepository;
+
+	@Autowired
+	private QuantityRepository quantityRepository;
+
 	/*
 	 * -----------------SAVE SUBCATEGORY -------------
 	 */
@@ -28,6 +36,8 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDTO saveProduct(ProductDTO productDTO) {
 		Product product = new Product();
 		mapper.map(productDTO, product);
+		product.setSubcategory(subCategoryRepository.getOne(productDTO.getSubcategoryId()));
+		product.setQuantity(quantityRepository.getOne(productDTO.getQuantityId()));
 		Product productData = productRepository.save(product);
 		ProductDTO productDtoData = new ProductDTO();
 		mapper.map(productData, productDtoData);
@@ -45,6 +55,9 @@ public class ProductServiceImpl implements ProductService {
 			for (Product product : productData) {
 				ProductDTO productDtoData = new ProductDTO();
 				mapper.map(product, productDtoData);
+				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
+				productDtoData.setQuantityId(product.getQuantity().getQuantityId());
+				productDtoData.setQuantityName(product.getQuantity().getQuantityName());
 				productDtoList.add(productDtoData);
 			}
 		}
@@ -59,6 +72,9 @@ public class ProductServiceImpl implements ProductService {
 			for (Product product : productData) {
 				ProductDTO productDtoData = new ProductDTO();
 				mapper.map(product, productDtoData);
+				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
+				productDtoData.setQuantityId(product.getQuantity().getQuantityId());
+				productDtoData.setQuantityName(product.getQuantity().getQuantityName());
 				productDtoList.add(productDtoData);
 			}
 		}

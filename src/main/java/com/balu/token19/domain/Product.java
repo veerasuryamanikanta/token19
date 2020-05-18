@@ -28,6 +28,10 @@ public class Product extends Root {
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "subcategoryId")
 	public SubCategory subcategory;
+	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "quantityId")
+	public Quantity quantity;
 
 	@NotNull
 	private String productName;

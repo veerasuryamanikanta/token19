@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.balu.token19.dto.CategoryDTO;
 import com.balu.token19.dto.ErrorObject;
 import com.balu.token19.dto.ProductDTO;
+import com.balu.token19.dto.QuantityDTO;
 import com.balu.token19.dto.ReturnHolder;
 import com.balu.token19.dto.SubCategoryDTO;
 import com.balu.token19.service.CategoryService;
 import com.balu.token19.service.ProductService;
+import com.balu.token19.service.QuantityService;
 import com.balu.token19.service.SubCategoryService;
 
 @RestController
@@ -30,6 +32,9 @@ public class StoreController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private QuantityService quantityService;
 
 	/*
 	 * -----------------SAVE CATEGORY -------------
@@ -150,5 +155,43 @@ public class StoreController {
 		}
 		return holder;
 	}
+	
+	
+	/*
+	 * -----------------SAVE QTY -------------
+	 */
+	@RequestMapping(value = "/quantity/save", method = RequestMethod.POST)
+	public ReturnHolder saveQty(@RequestBody QuantityDTO quantityDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (quantityDTO != null) {
+				QuantityDTO quantityDTOData = quantityService.saveQuantity(quantityDTO);
+				holder.setResult(quantityDTOData);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save." + e));
+		}
+		return holder;
+	}
+	
+	
+	/*
+	 * -----------------ALL QUANTITY LIST -------------
+	 */
+	@RequestMapping(value = "/quantity/list", method = RequestMethod.GET)
+	public ReturnHolder getQty() {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			List<QuantityDTO> qtyDTOList = quantityService.findAllQuantities();
+			holder.setResult(qtyDTOList);
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
+		}
+		return holder;
+	}
+
 
 }

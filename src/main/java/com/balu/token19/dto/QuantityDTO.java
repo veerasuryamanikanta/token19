@@ -9,27 +9,13 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDTO {
-
-	private Long productId;
+public class QuantityDTO {
 
 	private Long quantityId;
 
-	private Long subcategoryId;
-
-	private String productName;
-
-	private String productDescription;
-
-	private String productImagePath;
-
-	private String productMrp;
-
-	private String productDiscount;
-
-	private String specialOffer;
-	
 	private String quantityName;
+	
+	private String quantityCode;
 
 	private String createdDate;
 
