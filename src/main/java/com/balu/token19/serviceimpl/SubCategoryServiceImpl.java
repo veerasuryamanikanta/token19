@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.balu.token19.domain.SubCategory;
 import com.balu.token19.dto.SubCategoryDTO;
+import com.balu.token19.repo.CategoryRepository;
 import com.balu.token19.repo.SubCategoryRepository;
 import com.balu.token19.service.SubCategoryService;
 
@@ -20,6 +21,9 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
 	@Autowired
 	private SubCategoryRepository subCategoryRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	/*
 	 * -----------------SAVE SUBCATEGORY -------------
@@ -28,6 +32,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 	public SubCategoryDTO saveSubCategory(SubCategoryDTO subCategoryDTO) {
 		SubCategory subCategory = new SubCategory();
 		mapper.map(subCategoryDTO, subCategory);
+		subCategory.setCategory(categoryRepository.getOne(subCategoryDTO.getCategoryId()));
 		SubCategory subCategoryData = subCategoryRepository.save(subCategory);
 		SubCategoryDTO subCategoryDtoData = new SubCategoryDTO();
 		mapper.map(subCategoryData, subCategoryDtoData);
@@ -45,6 +50,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 			for (SubCategory subCategory : subCategoryData) {
 				SubCategoryDTO subCategoryDtoData = new SubCategoryDTO();
 				mapper.map(subCategory, subCategoryDtoData);
+				subCategoryDtoData.setCategoryId(subCategory.getCategory().getCategoryId());
 				subCategoryDtoList.add(subCategoryDtoData);
 			}
 		}

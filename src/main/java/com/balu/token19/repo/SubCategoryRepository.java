@@ -10,7 +10,7 @@ import com.balu.token19.domain.SubCategory;
 
 public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> {
 
-	@Query(nativeQuery = true, value = "select * from subCategory where category_id =:categoryId")
+	@Query(nativeQuery = true, value = "select * from subcategory where category_id =:categoryId")
 	List<SubCategory> findByCategoryId(@Param("categoryId") Long categoryId);
 
 }
