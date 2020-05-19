@@ -2,9 +2,8 @@ package com.balu.token19.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,7 +51,8 @@ public class CartController {
 	 * -----------------GET CART ITEMS -------------
 	 */
 	@RequestMapping(value = "/list/{userId}", method = RequestMethod.GET)
-	public ReturnHolder getCartByUser(@PathParam("userId") Long userId) {
+	public ReturnHolder getCartByUser(@PathVariable("userId") Long userId) {
+		System.out.println("--------"+userId);
 		ReturnHolder holder = new ReturnHolder();
 		try {
 			if (userId != null) {
