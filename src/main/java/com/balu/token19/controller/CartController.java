@@ -51,7 +51,7 @@ public class CartController {
 	/*
 	 * -----------------GET CART ITEMS -------------
 	 */
-	@RequestMapping(value = "/list/{userId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/list/{userId}", method = RequestMethod.GET)
 	public ReturnHolder getCartByUser(@PathParam("userId") Long userId) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
