@@ -52,7 +52,6 @@ public class CartController {
 	 */
 	@RequestMapping(value = "/list/{userId}", method = RequestMethod.GET)
 	public ReturnHolder getCartByUser(@PathVariable("userId") Long userId) {
-		System.out.println("--------"+userId);
 		ReturnHolder holder = new ReturnHolder();
 		try {
 			if (userId != null) {
