@@ -11,5 +11,7 @@ public interface CartService {
 	CartDTO findByProduct(Long userId, Long productId);
 	
 	List<CartDTO> findByUserId(Long userId);
+	
+	String deletet(Long userId, Long productId);
 
 }

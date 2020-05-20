@@ -70,6 +70,11 @@ public class CartServiceImpl implements CartService {
 		}
 	}
 
+	
+	/*
+	 * -----------------GET CART ITEM -------------
+	 */
+	
 	@Override
 	public List<CartDTO> findByUserId(Long userId) {
 		List<Cart> cartList = cartRepository.findByUser(userId);
@@ -85,6 +90,21 @@ public class CartServiceImpl implements CartService {
 			}
 		}
 		return cartdtoList;
+	}
+
+	
+	/*
+	 * -----------------DELETE CART ITEM -------------
+	 */
+	@Override
+	public String deletet(Long userId, Long productId) {
+		try {
+			cartRepository.deletItem(userId, productId);
+			return "success";
+		} catch (Exception e) {
+			return "failed to delete" + e;
+		}
+
 	}
 
 }
