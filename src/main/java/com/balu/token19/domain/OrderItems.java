@@ -18,36 +18,26 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-public class Request extends Root {
+public class OrderItems extends Root {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "requestSeq")
-	@SequenceGenerator(name = "requestSeq", sequenceName = "REQUEST_ID_SEQ", allocationSize = 1)
-	private Long requestId;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "orderitemSeq")
+	@SequenceGenerator(name = "orderitemSeq", sequenceName = "ORDERITEM_ID_SEQ", allocationSize = 1)
+	private Long orderItemId;
+
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "userId")
-	public User user;
-	
+	@JoinColumn(name = "orderId")
+	public Order order;
+
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "shopdetailsId")
-	public ShopDetails shopdetails;
-	
+	@JoinColumn(name = "productId")
+	public Product product;
+
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "quantityId")
+	public Quantity quantity;
 
 	@NotNull
-	private String requestPath;
-
-	@NotNull
-	private String requestStatus;
-	
-	@NotNull
-	private String recieveTime;
-	
-	@NotNull
-	private String tokenNumber;
-	
-	@NotNull
-	private String requestType;
-
+	public String itemQuantity;
 
 }

@@ -29,22 +29,26 @@ public class User extends Root {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "userSeq")
 	@SequenceGenerator(name = "userSeq", sequenceName = "USER_ID_SEQ", allocationSize = 1)
 	private Long userId;
-	
+
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "roleId")
 	public Role role;
-	
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
 	public Set<ShopDetails> shopdetails;
-	
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
 	public Set<Request> request;
-	
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
 	public Set<Cart> cart;
+
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
+	public Set<Order> order;
 
 	@NotNull
 	private String userName;
@@ -52,10 +56,10 @@ public class User extends Root {
 	@Column(nullable = false, unique = true, updatable = true)
 	@NotNull
 	private String userNumber;
-	
+
 	@NotNull
 	private String userEmail;
-	
+
 	@NotNull
 	private String userAddress;
 

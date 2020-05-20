@@ -89,7 +89,7 @@ public class CartServiceImpl implements CartService {
 				saved_cartData.setProductName(cart.getProduct().getProductName());
 				saved_cartData.setProductDescription(cart.getProduct().getProductDescription());
 				saved_cartData.setProductImagePath(cart.getProduct().getProductImagePath());
-				saved_cartData.setProductMrp(cart.getProduct().getProductName());
+				saved_cartData.setProductMrp(cart.getProduct().getProductMrp());
 				saved_cartData.setProductDiscount(cart.getProduct().getProductDiscount());
 				saved_cartData.setSpecialOffer(cart.getProduct().getSpecialOffer());
 				saved_cartData.setQuantityName(cart.getProduct().getQuantity().getQuantityName());
