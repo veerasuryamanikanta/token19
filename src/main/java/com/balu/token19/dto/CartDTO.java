@@ -19,6 +19,20 @@ public class CartDTO {
 
 	private Long quantityId;
 
+	private String productName;
+
+	private String productDescription;
+
+	private String productImagePath;
+
+	private String productMrp;
+
+	private String productDiscount;
+
+	private String specialOffer;
+
+	private String quantityName;
+
 	private String createdDate;
 
 	private String itemQuantity;
