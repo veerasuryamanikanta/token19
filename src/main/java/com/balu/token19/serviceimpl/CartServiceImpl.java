@@ -109,9 +109,19 @@ public class CartServiceImpl implements CartService {
 			cartRepository.deletItem(userId, productId);
 			return "success";
 		} catch (Exception e) {
-			return "failed to delete" + e;
+			return "failed";
 		}
 
+	}
+
+	@Override
+	public String deletetByUserid(Long userId) {
+		try {
+			cartRepository.deletAllByUserId(userId);
+			return "success";
+		} catch (Exception e) {
+			return "failed";
+		}
 	}
 
 }

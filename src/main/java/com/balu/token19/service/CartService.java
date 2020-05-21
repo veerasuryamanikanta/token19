@@ -9,9 +9,11 @@ public interface CartService {
 	CartDTO saveCart(CartDTO cartDTO);
 
 	CartDTO findByProduct(Long userId, Long productId);
-	
+
 	List<CartDTO> findByUserId(Long userId);
-	
+
 	String deletet(Long userId, Long productId);
+
+	String deletetByUserid(Long userId);
 
 }

@@ -84,5 +84,29 @@ public class CartController {
 		}
 		return holder;
 	}
+	
+	/*
+	 * -----------------DELETE CART ITEMS -------------
+	 */
+	@RequestMapping(value = "/deleteAll/{userId}", method = RequestMethod.DELETE)
+	public ReturnHolder deleteAllByUserId(@PathVariable("userId") Long userId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (userId != null) {
+				String responce = cartService.deletetByUserid(userId);
+				if(responce.equalsIgnoreCase("failed")) {
+					holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete."));
+				}else {
+					holder.setResult(responce);
+				}
+				holder.setResult(responce);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete." + e));
+		}
+		return holder;
+	}
 
 }
