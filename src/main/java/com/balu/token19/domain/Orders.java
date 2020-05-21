@@ -22,11 +22,11 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-public class Order extends Root {
+public class Orders extends Root {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "orderSeq")
-	@SequenceGenerator(name = "orderSeq", sequenceName = "ORDER_ID_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "ordersSeq")
+	@SequenceGenerator(name = "ordersSeq", sequenceName = "ORDERS_ID_SEQ", allocationSize = 1)
 	private Long id;
 
 	@Column(unique=true)	
@@ -37,7 +37,7 @@ public class Order extends Root {
 	public User user;
 	
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.MERGE)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orders", cascade = CascadeType.MERGE)
 	public Set<OrderItems> orderitems;
 
 

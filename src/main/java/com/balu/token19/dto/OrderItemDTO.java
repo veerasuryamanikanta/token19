@@ -13,7 +13,7 @@ public class OrderItemDTO {
 
 	private Long orderItemId;
 
-	private Long orderId;
+	private Long id;
 	
 	private Long userId;
 

@@ -26,8 +26,8 @@ public class OrderItems extends Root {
 	private Long orderItemId;
 
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "orderId")
-	public Order order;
+	@JoinColumn(name = "id")
+	public Orders orders;
 
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId")

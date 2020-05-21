@@ -8,8 +8,8 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.balu.token19.domain.Order;
 import com.balu.token19.domain.OrderItems;
+import com.balu.token19.domain.Orders;
 import com.balu.token19.dto.OrderItemDTO;
 import com.balu.token19.dto.OrdersDTO;
 import com.balu.token19.repo.OrderItemsRepository;
@@ -50,16 +50,16 @@ public class OrderItemServiceImpl implements OrderItemService {
 			List<OrderItemDTO> orderItemDTOList = ordersDTO.getOrderItemDTOList();
 			List<OrderItems> orderItemsList = new ArrayList<OrderItems>();
 			if (orderItemDTOList.size() != 0) {
-				Order order = new Order();
+				Orders order = new Orders();
 				long rndNumber = Helper.createRandomInteger(55, 579026);
 				order.setOrderId("ORDER_TOKEN_" + rndNumber);
 				order.setUser(userRepository.getOne(ordersDTO.getUserId()));
-				Order orderData = orderRepository.save(order);
+				Orders orderData = orderRepository.save(order);
 				String orderid = orderData.getOrderId();
 				for (OrderItemDTO orderItemDTO : orderItemDTOList) {
 					OrderItems orderItems = new OrderItems();
 					mapper.map(orderItemDTO, orderItems);
-					orderItems.setOrder(orderRepository.findByOrderId(orderid));
+					orderItems.setOrders(orderRepository.findByOrderId(orderid));
 					orderItems.setProduct(productRepository.getOne(orderItemDTO.getProductId()));
 					orderItems.setQuantity(quantityRepository.getOne(orderItemDTO.getQuantityId()));
 					orderItemsList.add(orderItems);
