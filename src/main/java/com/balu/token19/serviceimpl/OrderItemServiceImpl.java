@@ -74,4 +74,43 @@ public class OrderItemServiceImpl implements OrderItemService {
 		}
 	}
 
+	/*
+	 * -----------------GET ORDER ITEM -------------
+	 */
+	@Override
+	public OrdersDTO getOrderItems(String orderId) {
+		try {
+			Orders orderData = orderRepository.findByOrderId(orderId);
+			List<OrderItems> orderItemsList = orderItemsRepository.findByOrderId(orderData.getId());
+			List<OrderItemDTO> orderItemDtoList = new ArrayList<>();
+			for (OrderItems orderItems : orderItemsList) {
+				OrderItemDTO orderitemsdto = new OrderItemDTO();
+				orderitemsdto.setOrderItemId(orderItems.getOrderItemId());
+				orderitemsdto.setId(orderItems.getOrders().getId());
+				orderitemsdto.setUserId(orderData.getUser().getUserId());
+				orderitemsdto.setProductId(orderItems.getProduct().getProductId());
+				orderitemsdto.setQuantityId(orderItems.getQuantity().getQuantityId());
+				orderitemsdto.setProductName(orderItems.getProduct().getProductName());
+				orderitemsdto.setProductDescription(orderItems.getProduct().getProductDescription());
+				orderitemsdto.setProductImagePath(orderItems.getProduct().getProductImagePath());
+				orderitemsdto.setProductDiscount(orderItems.getProduct().getProductMrp());
+				orderitemsdto.setSpecialOffer(orderItems.getProduct().getSpecialOffer());
+				orderitemsdto.setQuantityName(orderItems.getQuantity().getQuantityName());
+				orderitemsdto.setItemQuantity(orderItems.getItemQuantity());
+				orderitemsdto.setIsactive(true);
+				orderitemsdto.setCreatedDate(""+orderItems.getCreatedDate());
+				orderitemsdto.setUpdatedOn(""+orderItems.getUpdatedOn());
+				orderItemDtoList.add(orderitemsdto);
+			}
+			OrdersDTO orderdto = new OrdersDTO();
+			orderdto.setId(orderData.getId());
+			orderdto.setUserId(orderData.getUser().getUserId());
+			orderdto.setOrderId(orderData.getOrderId());
+			orderdto.setOrderItemDTOList(orderItemDtoList);
+			return orderdto;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }

@@ -6,4 +6,6 @@ public interface OrderItemService {
 
 	String saveOrderItem(OrdersDTO ordersDTO);
 
+	OrdersDTO getOrderItems(String orderId);
+
 }

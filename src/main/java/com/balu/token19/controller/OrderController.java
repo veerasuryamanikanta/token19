@@ -1,6 +1,7 @@
 package com.balu.token19.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,30 @@ public class OrderController {
 			}
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------SAVE CART ITEMS -------------
+	 */
+	@RequestMapping(value = "/list/{orderId}", method = RequestMethod.GET)
+	public ReturnHolder saveCategory(@PathVariable("orderId") String orderId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (orderId != null) {
+				OrdersDTO ordersDTO = orderItemService.getOrderItems(orderId);
+				if (ordersDTO != null) {
+					holder.setResult(ordersDTO);
+				} else {
+					holder = new ReturnHolder(false, new ErrorObject("error", "Data Emptys"));
+				}
+
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
 		}
 		return holder;
 	}
