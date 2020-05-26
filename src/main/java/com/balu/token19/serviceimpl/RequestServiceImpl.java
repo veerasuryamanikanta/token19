@@ -2,6 +2,7 @@ package com.balu.token19.serviceimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
@@ -11,12 +12,14 @@ import org.springframework.stereotype.Service;
 import com.balu.token19.domain.Request;
 import com.balu.token19.domain.ShopDetails;
 import com.balu.token19.domain.User;
+import com.balu.token19.dto.FcmDTO;
 import com.balu.token19.dto.RequestDTO;
 import com.balu.token19.dto.ShopDetailsDTO;
 import com.balu.token19.dto.UserDTO;
 import com.balu.token19.repo.RequestRepository;
 import com.balu.token19.repo.ShopDetailsRepository;
 import com.balu.token19.repo.UserRepository;
+import com.balu.token19.service.FcmService;
 import com.balu.token19.service.RequestService;
 
 @Service
@@ -28,10 +31,15 @@ public class RequestServiceImpl implements RequestService {
 	private RequestRepository requestRepository;
 
 	@Autowired
+	private FcmService fcmservice;
+
+	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
 	private ShopDetailsRepository shopdetailsRepository;
+
+	private String token = "dLcsO6O926c:APA91bFOP2Jb3BCvw2AyCrXvHFrOKsoT2bTvEKo1L65a59zt2vjdkmIB1u3_JHbV_jwStm315dCOFm6aGJrO2WYPJUmO2Q8riVmp_YRGfhbBMjtQvHLBctMW3sTx0bXHHfuZo3jxCFZO";
 
 	/*
 	 * -----------------SAVE REQUEST -------------
@@ -43,19 +51,36 @@ public class RequestServiceImpl implements RequestService {
 		request.setUser(userRepository.getOne(requestDTO.getUserId()));
 		request.setShopdetails(shopdetailsRepository.getOne(requestDTO.getShopDetailsId()));
 		Request requestData = requestRepository.save(request);
-		RequestDTO requestDtoData = new RequestDTO();
-		mapper.map(requestData, requestDtoData);
-		requestDtoData.setUserId(requestData.getUser().getUserId());
-		requestDtoData.setShopDetailsId(requestData.getShopdetails().getShopdetailsId());
-		User user = requestData.getUser();
-		UserDTO userdto = new UserDTO();
-		mapper.map(user, userdto);
-		requestDtoData.setUserDTO(userdto);
-		ShopDetails shopDetails = requestData.getShopdetails();
-		ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
-		mapper.map(shopDetails, shopDetailsDTO);
-		requestDtoData.setShopDetailsDTO(shopDetailsDTO);
-		return requestDtoData;
+		if (requestData != null) {
+			RequestDTO requestDtoData = new RequestDTO();
+			mapper.map(requestData, requestDtoData);
+			requestDtoData.setUserId(requestData.getUser().getUserId());
+			requestDtoData.setShopDetailsId(requestData.getShopdetails().getShopdetailsId());
+			User user = requestData.getUser();
+			UserDTO userdto = new UserDTO();
+			mapper.map(user, userdto);
+			requestDtoData.setUserDTO(userdto);
+			ShopDetails shopDetails = requestData.getShopdetails();
+			ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
+			mapper.map(shopDetails, shopDetailsDTO);
+			requestDtoData.setShopDetailsDTO(shopDetailsDTO);
+
+			try {
+				FcmDTO fcmdto = new FcmDTO();
+				fcmdto.setTo(token);
+				fcmdto.setTitle(requestData.getUser().getUserNumber());
+				fcmdto.setBody("you have a request from "+requestData.getUser().getUserNumber()+". So please check cnfirm order");
+				fcmdto.setImage(requestData.getRequestPath());
+				CompletableFuture<String> pushNotification = fcmservice.send(fcmdto);
+				CompletableFuture.allOf(pushNotification).join();
+				return requestDtoData;
+			} catch (Exception e) {
+				return null;
+			}
+		} else {
+			return null;
+		}
+
 	}
 
 	/*

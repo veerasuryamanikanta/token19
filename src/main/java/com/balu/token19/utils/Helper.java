@@ -13,12 +13,18 @@ public class Helper {
 			String senderValue, String message) {
 
 		try {
-//			String token = AppConstants.apikey + URLEncoder.encode(akvalue, AppConstants.utf);
-//			String secret = AppConstants.secret + URLEncoder.encode(skvalue, AppConstants.utf);
-//			String usetype = AppConstants.usetype + URLEncoder.encode(utype, AppConstants.utf);
-//			String mobile = AppConstants.phone + URLEncoder.encode(mobilenumber, AppConstants.utf);
-//			String messageText = AppConstants.message + URLEncoder.encode(rndNumber + message, AppConstants.utf);
-//			String senderId = AppConstants.senderid + URLEncoder.encode(senderValue, AppConstants.utf);
+			// String token = AppConstants.apikey + URLEncoder.encode(akvalue,
+			// AppConstants.utf);
+			// String secret = AppConstants.secret + URLEncoder.encode(skvalue,
+			// AppConstants.utf);
+			// String usetype = AppConstants.usetype + URLEncoder.encode(utype,
+			// AppConstants.utf);
+			// String mobile = AppConstants.phone + URLEncoder.encode(mobilenumber,
+			// AppConstants.utf);
+			// String messageText = AppConstants.message + URLEncoder.encode(rndNumber +
+			// message, AppConstants.utf);
+			// String senderId = AppConstants.senderid + URLEncoder.encode(senderValue,
+			// AppConstants.utf);
 
 			String username = AppConstants.username + "suryaaa";
 			String password = AppConstants.password + "Surya@7891";
@@ -30,7 +36,7 @@ public class Helper {
 			// URL obj = new URL(AppConstants.url + token + secret + usetype + mobile +
 			// messageText + senderId);
 
-			URL obj = new URL(AppConstants.url + username+password+from+to+messageText+type);
+			URL obj = new URL(AppConstants.url + username + password + from + to + messageText + type);
 
 			HttpURLConnection httpConnection = (HttpURLConnection) obj.openConnection();
 			httpConnection.setDoOutput(true);

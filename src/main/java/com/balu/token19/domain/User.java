@@ -66,4 +66,7 @@ public class User extends Root {
 	@NotNull
 	public String userImage;
 
+	@NotNull
+	public String uniqueID;
+
 }
