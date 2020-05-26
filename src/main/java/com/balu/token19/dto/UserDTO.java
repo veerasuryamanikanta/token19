@@ -26,6 +26,8 @@ public class UserDTO {
 	private String userImage;
 
 	private String uniqueID;
+	
+	private String createdDate;
 
 	private boolean isactive;
 

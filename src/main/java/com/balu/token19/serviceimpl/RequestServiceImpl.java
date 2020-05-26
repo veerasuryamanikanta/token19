@@ -69,7 +69,7 @@ public class RequestServiceImpl implements RequestService {
 			mapper.map(shopDetails, shopDetailsDTO);
 			requestDtoData.setShopDetailsDTO(shopDetailsDTO);
 			if (requestData.getUser().getUniqueID() != null) {
-				String notif_token = deviceRepository.findByuniqueId(requestData.getUser().getUniqueID());
+				String notif_token = deviceRepository.findByuniqueId((requestData.getShopdetails().getUser()).getUniqueID());
 				if (notif_token != null) {
 					token = notif_token;
 				} else {
@@ -82,8 +82,8 @@ public class RequestServiceImpl implements RequestService {
 			try {
 				FcmDTO fcmdto = new FcmDTO();
 				fcmdto.setTo(token);
-				fcmdto.setTitle(requestData.getUser().getUserNumber());
-				fcmdto.setBody("you have a request from " + requestData.getUser().getUserNumber()
+				fcmdto.setTitle(requestData.getShopdetails().getUser().getUserNumber());
+				fcmdto.setBody("you have a request from " + (requestData.getShopdetails().getUser().getUserNumber())
 						+ ". So please check cnfirm order");
 				fcmdto.setImage(requestData.getRequestPath());
 				CompletableFuture<String> pushNotification = fcmservice.send(fcmdto);
