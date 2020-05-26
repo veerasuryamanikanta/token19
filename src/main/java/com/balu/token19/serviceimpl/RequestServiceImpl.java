@@ -16,6 +16,7 @@ import com.balu.token19.dto.FcmDTO;
 import com.balu.token19.dto.RequestDTO;
 import com.balu.token19.dto.ShopDetailsDTO;
 import com.balu.token19.dto.UserDTO;
+import com.balu.token19.repo.DeviceRepository;
 import com.balu.token19.repo.RequestRepository;
 import com.balu.token19.repo.ShopDetailsRepository;
 import com.balu.token19.repo.UserRepository;
@@ -39,7 +40,10 @@ public class RequestServiceImpl implements RequestService {
 	@Autowired
 	private ShopDetailsRepository shopdetailsRepository;
 
-	private String token = "dLcsO6O926c:APA91bFOP2Jb3BCvw2AyCrXvHFrOKsoT2bTvEKo1L65a59zt2vjdkmIB1u3_JHbV_jwStm315dCOFm6aGJrO2WYPJUmO2Q8riVmp_YRGfhbBMjtQvHLBctMW3sTx0bXHHfuZo3jxCFZO";
+	@Autowired
+	private DeviceRepository deviceRepository;
+
+	private String token;
 
 	/*
 	 * -----------------SAVE REQUEST -------------
@@ -64,12 +68,23 @@ public class RequestServiceImpl implements RequestService {
 			ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
 			mapper.map(shopDetails, shopDetailsDTO);
 			requestDtoData.setShopDetailsDTO(shopDetailsDTO);
+			if (requestData.getUser().getUniqueID() != null) {
+				String notif_token = deviceRepository.findByuniqueId(requestData.getUser().getUniqueID());
+				if (notif_token != null) {
+					token = notif_token;
+				} else {
+					token = "";
+				}
+			} else {
+				token = "";
+			}
 
 			try {
 				FcmDTO fcmdto = new FcmDTO();
 				fcmdto.setTo(token);
 				fcmdto.setTitle(requestData.getUser().getUserNumber());
-				fcmdto.setBody("you have a request from "+requestData.getUser().getUserNumber()+". So please check cnfirm order");
+				fcmdto.setBody("you have a request from " + requestData.getUser().getUserNumber()
+						+ ". So please check cnfirm order");
 				fcmdto.setImage(requestData.getRequestPath());
 				CompletableFuture<String> pushNotification = fcmservice.send(fcmdto);
 				CompletableFuture.allOf(pushNotification).join();

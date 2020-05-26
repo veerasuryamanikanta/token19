@@ -6,9 +6,16 @@ import org.springframework.data.repository.query.Param;
 
 import com.balu.token19.domain.Device;
 
-public interface DeviceRepository extends JpaRepository<Device,Long>{
-	
+public interface DeviceRepository extends JpaRepository<Device, Long> {
+
 	@Query(nativeQuery = true, value = "select * from device where notification_id =:notificationId")
 	Device findByNotificationId(@Param("notificationId") String notificationId);
-	
+
+	// select notification_id from device where uniqueid ='3b0823637cc7972d' and
+	// updated_on in (select max(updated_on) from device where uniqueid
+	// ='3b0823637cc7972d');
+
+	@Query(nativeQuery = true, value = "select notification_id from device where uniqueid =:uniqueId and updated_on in (select max(updated_on) from device where uniqueid =:uniqueId)")
+	String findByuniqueId(@Param("uniqueId") String uniqueId);
+
 }
