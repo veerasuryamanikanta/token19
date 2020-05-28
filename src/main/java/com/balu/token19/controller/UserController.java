@@ -54,7 +54,7 @@ public class UserController {
 							}
 						}
 					} else {
-						userDtodata = userService.saveUser(userDtodata);
+						userDtodata = userService.saveUser(userDTO);
 					}
 
 					long rndNumber = Helper.createRandomInteger(111, 579026);
