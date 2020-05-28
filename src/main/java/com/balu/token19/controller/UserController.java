@@ -53,25 +53,42 @@ public class UserController {
 								userDtodata = userService.saveUser(userDtodata);
 							}
 						}
-					} else {
-						userDtodata = userService.saveUser(userDTO);
-					}
 
-					long rndNumber = Helper.createRandomInteger(111, 579026);
-					if (Helper.sendOTP(userDtodata.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
-							AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
-							AppConstants.otpMessage)) {
-						OtpDTO otpdto = new OtpDTO();
-						otpdto.setUserNumber(userDtodata.getUserNumber());
-						otpdto.setOtpCode("" + rndNumber);
-						String otpdtodaata = otpService.updateOtp(otpdto);
-						if (otpdtodaata.equalsIgnoreCase("success")) {
-							holder.setResult(userDtodata);
+						long rndNumber = Helper.createRandomInteger(111, 579026);
+						if (Helper.sendOTP(userDtodata.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
+								AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
+								AppConstants.otpMessage)) {
+							OtpDTO otpdto = new OtpDTO();
+							otpdto.setUserNumber(userDtodata.getUserNumber());
+							otpdto.setOtpCode("" + rndNumber);
+							String otpdtodaata = otpService.updateOtp(otpdto);
+							if (otpdtodaata.equalsIgnoreCase("success")) {
+								holder.setResult(userDtodata);
+							} else {
+								holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
+							}
 						} else {
 							holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
 						}
+
 					} else {
-						holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
+						userDtodata = userService.saveUser(userDTO);
+						long rndNumber = Helper.createRandomInteger(111, 579026);
+						if (Helper.sendOTP(userDtodata.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
+								AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
+								AppConstants.otpMessage)) {
+							OtpDTO otpdto = new OtpDTO();
+							otpdto.setUserNumber(userDtodata.getUserNumber());
+							otpdto.setOtpCode("" + rndNumber);
+							OtpDTO otpdtodaata = otpService.saveOtp(otpdto);
+							if (otpdtodaata != null) {
+								holder.setResult(userDtodata);
+							} else {
+								holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
+							}
+						} else {
+							holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
+						}
 					}
 				}
 			} else {
