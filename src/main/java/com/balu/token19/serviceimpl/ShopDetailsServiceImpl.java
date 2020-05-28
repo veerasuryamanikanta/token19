@@ -8,9 +8,15 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.balu.token19.domain.ShopCategory;
 import com.balu.token19.domain.ShopDetails;
+import com.balu.token19.domain.ShopSubCategory;
+import com.balu.token19.dto.ShopCategoryDTO;
 import com.balu.token19.dto.ShopDetailsDTO;
+import com.balu.token19.dto.ShopSubCategoryDTO;
+import com.balu.token19.repo.ShopCategoryRepository;
 import com.balu.token19.repo.ShopDetailsRepository;
+import com.balu.token19.repo.ShopSubCategoryRepository;
 import com.balu.token19.repo.UserRepository;
 import com.balu.token19.service.ShopDetailsService;
 
@@ -25,6 +31,12 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private ShopCategoryRepository shopcategoryRepository;
+
+	@Autowired
+	private ShopSubCategoryRepository shopsubcategoryRepository;
+
 	/*
 	 * ----------------SAVE SHOP DETAILS--------------------
 	 */
@@ -32,11 +44,13 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 	public ShopDetailsDTO saveShopDetails(ShopDetailsDTO shopDetailsDTO) {
 		ShopDetails shopdetails = new ShopDetails();
 		mapper.map(shopDetailsDTO, shopdetails);
+		shopdetails.setShopsubcategory(shopsubcategoryRepository.getOne(shopDetailsDTO.getShopsubcategoryId()));
 		shopdetails.setUser(userRepository.getOne(shopDetailsDTO.getUserId()));
 		ShopDetails shopDetailsData = shopDetailsRepository.save(shopdetails);
 		ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
 		mapper.map(shopDetailsData, shopdetailsDtoData);
 		shopdetailsDtoData.setUserId(shopDetailsData.getUser().getUserId());
+		shopdetailsDtoData.setShopsubcategoryId(shopDetailsData.getShopsubcategory().getShopsubcategoryId());
 		return shopdetailsDtoData;
 	}
 
@@ -49,6 +63,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 		if (shopdetails != null) {
 			ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
 			shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
+			shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
 			mapper.map(shopdetails, shopdetailsDtoData);
 			return shopdetailsDtoData;
 		} else {
@@ -69,6 +84,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 				ShopDetails shopdetails = (ShopDetails) shopdetailsList.get(i);
 				ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
 				shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
+				shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
 				mapper.map(shopdetails, shopdetailsDtoData);
 				shopdetailsDtoList.add(shopdetailsDtoData);
 			}
@@ -114,15 +130,87 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 			if (shopDetailsDTO.getShopImage() == null) {
 				shopdetails.setShopImage(shopDetailsById.getShopImage());
 			}
+
+			if (shopDetailsDTO.getShopsubcategoryId() == null) {
+				shopdetails.setShopsubcategory(
+						shopsubcategoryRepository.getOne(shopDetailsById.getShopsubcategory().getShopsubcategoryId()));
+			}
+
+			shopdetails.setCreatedDate(shopDetailsById.getCreatedDate());
+
 			ShopDetails shopDetailsData = shopDetailsRepository.save(shopdetails);
 			ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
 			mapper.map(shopDetailsData, shopdetailsDtoData);
 			shopdetailsDtoData.setUserId(shopDetailsData.getUser().getUserId());
+			shopdetailsDtoData.setShopsubcategoryId(shopDetailsData.getShopsubcategory().getShopsubcategoryId());
 			return shopdetailsDtoData;
 		} else {
 			return null;
 		}
 
+	}
+
+	/*
+	 * ----------------SAVE SHOP CATEGORY --------------------
+	 */
+
+	@Override
+	public ShopCategoryDTO saveShopCategory(ShopCategoryDTO shopcategoryDTO) {
+		ShopCategory shopcategory = new ShopCategory();
+		mapper.map(shopcategoryDTO, shopcategory);
+		ShopCategory shopcategoryData = shopcategoryRepository.save(shopcategory);
+		ShopCategoryDTO shopcategoryDtoData = new ShopCategoryDTO();
+		mapper.map(shopcategoryData, shopcategoryDtoData);
+		return shopcategoryDtoData;
+	}
+
+	/*
+	 * ----------------LIST OF SHOP CATEGORY --------------------
+	 */
+	@Override
+	public List<ShopCategoryDTO> findAllShopCategories() {
+		List<ShopCategory> shopcategoryData = shopcategoryRepository.findAll();
+		List<ShopCategoryDTO> shopcategoryDtoList = new ArrayList<>();
+		if (shopcategoryData.size() != 0) {
+			for (ShopCategory shopcategory : shopcategoryData) {
+				ShopCategoryDTO shopcategoryDtoData = new ShopCategoryDTO();
+				mapper.map(shopcategory, shopcategoryDtoData);
+				shopcategoryDtoList.add(shopcategoryDtoData);
+			}
+		}
+		return shopcategoryDtoList;
+	}
+
+	/*
+	 * ----------------SAVE SHOP SUB CATEGORY --------------------
+	 */
+	@Override
+	public ShopSubCategoryDTO saveShopSubCategory(ShopSubCategoryDTO shopsubCategoryDTO) {
+		ShopSubCategory shopsubCategory = new ShopSubCategory();
+		mapper.map(shopsubCategoryDTO, shopsubCategory);
+		shopsubCategory.setShopcategory(shopcategoryRepository.getOne(shopsubCategoryDTO.getShopcategoryId()));
+		ShopSubCategory shopsubCategoryData = shopsubcategoryRepository.save(shopsubCategory);
+		ShopSubCategoryDTO shopsubCategoryDtoData = new ShopSubCategoryDTO();
+		mapper.map(shopsubCategoryData, shopsubCategoryDtoData);
+		return shopsubCategoryDtoData;
+	}
+
+	/*
+	 * ----------------LIST OF SHOP SUB CATEGORY --------------------
+	 */
+	@Override
+	public List<ShopSubCategoryDTO> findShopSubCategoriesByShopCategryId(Long id) {
+		List<ShopSubCategory> shopsubCategoryData = shopsubcategoryRepository.findByShopCategoryId(id);
+		List<ShopSubCategoryDTO> shopsubCategoryDtoList = new ArrayList<>();
+		if (shopsubCategoryData.size() != 0) {
+			for (ShopSubCategory shopsubCategory : shopsubCategoryData) {
+				ShopSubCategoryDTO shopsubCategoryDtoData = new ShopSubCategoryDTO();
+				mapper.map(shopsubCategory, shopsubCategoryDtoData);
+				shopsubCategoryDtoData.setShopcategoryId(shopsubCategory.getShopcategory().getShopcategoryId());
+				shopsubCategoryDtoList.add(shopsubCategoryDtoData);
+			}
+		}
+		return shopsubCategoryDtoList;
 	}
 
 }

@@ -21,7 +21,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.balu.token19.dto.ErrorObject;
 import com.balu.token19.dto.ReturnHolder;
+import com.balu.token19.dto.ShopCategoryDTO;
 import com.balu.token19.dto.ShopDetailsDTO;
+import com.balu.token19.dto.ShopSubCategoryDTO;
 import com.balu.token19.service.FileStorageService;
 import com.balu.token19.service.ShopDetailsService;
 
@@ -131,6 +133,77 @@ public class ShopController {
 
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------SAVE CATEGORY -------------
+	 */
+	@RequestMapping(value = "/category/save", method = RequestMethod.POST)
+	public ReturnHolder saveCategory(@RequestBody ShopCategoryDTO shopcategoryDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (shopcategoryDTO != null) {
+				ShopCategoryDTO shopcategoryDTOData = shopDetailsService.saveShopCategory(shopcategoryDTO);
+				holder.setResult(shopcategoryDTOData);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------CATEGORY LIST -------------
+	 */
+	@RequestMapping(value = "/category/list", method = RequestMethod.GET)
+	public ReturnHolder getCategories() {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			List<ShopCategoryDTO> shopcategoryDTOList = shopDetailsService.findAllShopCategories();
+			holder.setResult(shopcategoryDTOList);
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------SAVE SUBCATEGORY -------------
+	 */
+	@RequestMapping(value = "/subcategory/save", method = RequestMethod.POST)
+	public ReturnHolder saveSubCategory(@RequestBody ShopSubCategoryDTO shopsubCategoryDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (shopsubCategoryDTO != null) {
+				ShopSubCategoryDTO shopsubCategoryDTOData = shopDetailsService.saveShopSubCategory(shopsubCategoryDTO);
+				holder.setResult(shopsubCategoryDTOData);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------SUBCATEGORY LIST BY ID-------------
+	 */
+	@RequestMapping(value = "/subcategory/list/{shopcategoryId}", method = RequestMethod.GET)
+	public ReturnHolder getSubCategoriesbyId(@PathVariable("shopcategoryId") Long shopcategoryId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			List<ShopSubCategoryDTO> shopsubCategoryDTOList = shopDetailsService
+					.findShopSubCategoriesByShopCategryId(shopcategoryId);
+			holder.setResult(shopsubCategoryDTOList);
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
 		}
 		return holder;
 	}

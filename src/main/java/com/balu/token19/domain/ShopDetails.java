@@ -34,6 +34,10 @@ public class ShopDetails extends Root {
 	@JoinColumn(name = "userId")
 	public User user;
 	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "subcategoryId")
+	public ShopSubCategory shopsubcategory;
+	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "shopdetails", cascade = CascadeType.MERGE)
 	public Set<Request> request;
