@@ -50,6 +50,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 		ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
 		mapper.map(shopDetailsData, shopdetailsDtoData);
 		shopdetailsDtoData.setUserId(shopDetailsData.getUser().getUserId());
+		shopdetailsDtoData.setUserNumber(shopDetailsData.getUser().getUserNumber());
 		shopdetailsDtoData.setShopsubcategoryId(shopDetailsData.getShopsubcategory().getShopsubcategoryId());
 		return shopdetailsDtoData;
 	}
@@ -63,6 +64,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 		if (shopdetails != null) {
 			ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
 			shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
+			shopdetailsDtoData.setUserNumber(shopdetails.getUser().getUserNumber());
 			shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
 			mapper.map(shopdetails, shopdetailsDtoData);
 			return shopdetailsDtoData;
@@ -84,6 +86,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 				ShopDetails shopdetails = (ShopDetails) shopdetailsList.get(i);
 				ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
 				shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
+				shopdetailsDtoData.setUserNumber(shopdetails.getUser().getUserNumber());
 				shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
 				mapper.map(shopdetails, shopdetailsDtoData);
 				shopdetailsDtoList.add(shopdetailsDtoData);

@@ -19,6 +19,8 @@ public class ShopDetailsDTO {
 	
 	private String shopName;
 	
+	private String userNumber;
+	
 	private String ownerName;
 	
 	private String pincode;
