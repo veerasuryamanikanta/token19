@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.balu.token19.domain.Cart;
+import com.balu.token19.domain.ProductImages;
 import com.balu.token19.dto.CartDTO;
+import com.balu.token19.dto.ProductImagesDTO;
 import com.balu.token19.repo.CartRepository;
+import com.balu.token19.repo.ProductImagesRepository;
+import com.balu.token19.repo.ProductQuantityRepository;
 import com.balu.token19.repo.ProductRepository;
-import com.balu.token19.repo.QuantityRepository;
 import com.balu.token19.repo.UserRepository;
 import com.balu.token19.service.CartService;
 
@@ -31,7 +34,10 @@ public class CartServiceImpl implements CartService {
 	private ProductRepository productRepository;
 
 	@Autowired
-	private QuantityRepository quantityRepository;
+	private ProductQuantityRepository productQuantityRepository;
+
+	@Autowired
+	private ProductImagesRepository productImagesRepository;
 
 	/*
 	 * -----------------SAVE CART ITEM -------------
@@ -42,13 +48,13 @@ public class CartServiceImpl implements CartService {
 		mapper.map(cartDTO, cart);
 		cart.setUser(userRepository.getOne(cartDTO.getUserId()));
 		cart.setProduct(productRepository.getOne(cartDTO.getProductId()));
-		cart.setQuantity(quantityRepository.getOne(cartDTO.getQuantityId()));
+		cart.setProductquantities(productQuantityRepository.getOne(cartDTO.getProductQuantityId()));
 		Cart cartData = cartRepository.save(cart);
 		CartDTO saved_cartData = new CartDTO();
 		mapper.map(cartData, saved_cartData);
 		saved_cartData.setUserId(cartData.getUser().getUserId());
 		saved_cartData.setProductId(cartData.getProduct().getProductId());
-		saved_cartData.setQuantityId(cartData.getQuantity().getQuantityId());
+		saved_cartData.setProductQuantityId(cartData.getProductquantities().getProductquantityId());
 		return saved_cartData;
 	}
 
@@ -63,18 +69,17 @@ public class CartServiceImpl implements CartService {
 			mapper.map(cart, saved_cartData);
 			saved_cartData.setUserId(cart.getUser().getUserId());
 			saved_cartData.setProductId(cart.getProduct().getProductId());
-			saved_cartData.setQuantityId(cart.getQuantity().getQuantityId());
+			saved_cartData.setProductQuantityId(cart.getProductquantities().getProductquantityId());
 			return saved_cartData;
 		} else {
 			return null;
 		}
 	}
 
-	
 	/*
 	 * -----------------GET CART ITEM -------------
 	 */
-	
+
 	@Override
 	public List<CartDTO> findByUserId(Long userId) {
 		List<Cart> cartList = cartRepository.findByUser(userId);
@@ -85,21 +90,30 @@ public class CartServiceImpl implements CartService {
 				mapper.map(cart, saved_cartData);
 				saved_cartData.setUserId(cart.getUser().getUserId());
 				saved_cartData.setProductId(cart.getProduct().getProductId());
-				saved_cartData.setQuantityId(cart.getQuantity().getQuantityId());
+				saved_cartData.setProductQuantityId(cart.getProductquantities().getProductquantityId());
 				saved_cartData.setProductName(cart.getProduct().getProductName());
-				/*saved_cartData.setProductDescription(cart.getProduct().getProductDescription());
-				saved_cartData.setProductImagePath(cart.getProduct().getProductImagePath());
-				saved_cartData.setProductMrp(cart.getProduct().getProductMrp());
-				saved_cartData.setProductDiscount(cart.getProduct().getProductDiscount());
-				saved_cartData.setSpecialOffer(cart.getProduct().getSpecialOffer());
-				saved_cartData.setQuantityName(cart.getProduct().getQuantity().getQuantityName());*/
+				saved_cartData.setProductDescription(cart.getProduct().getShortDescription());
+
+				List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
+				List<ProductImages> productImagesList = productImagesRepository
+						.findByProductQuantityId(cart.getProductquantities().getProductquantityId());
+
+				for (ProductImages productImages : productImagesList) {
+					ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
+					mapper.map(productImages, ProductImagesDto);
+					productImagesDTOList.add(ProductImagesDto);
+				}
+				saved_cartData.setProductImages(productImagesDTOList);
+				saved_cartData.setProductMrp(cart.getProductquantities().getMrpprice());
+				saved_cartData.setProductDiscount(cart.getProductquantities().getDiscount());
+				saved_cartData.setSpecialOffer(cart.getProductquantities().getSellingprice());
+				saved_cartData.setQuantityName(cart.getProductquantities().getQuantity().getQuantityName());
 				cartdtoList.add(saved_cartData);
 			}
 		}
 		return cartdtoList;
 	}
 
-	
 	/*
 	 * -----------------DELETE CART ITEM -------------
 	 */
