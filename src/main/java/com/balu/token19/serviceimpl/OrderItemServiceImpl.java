@@ -91,10 +91,10 @@ public class OrderItemServiceImpl implements OrderItemService {
 				orderitemsdto.setProductId(orderItems.getProduct().getProductId());
 				orderitemsdto.setQuantityId(orderItems.getQuantity().getQuantityId());
 				orderitemsdto.setProductName(orderItems.getProduct().getProductName());
-				orderitemsdto.setProductDescription(orderItems.getProduct().getProductDescription());
+				/*orderitemsdto.setProductDescription(orderItems.getProduct().getProductDescription());
 				orderitemsdto.setProductImagePath(orderItems.getProduct().getProductImagePath());
 				orderitemsdto.setProductDiscount(orderItems.getProduct().getProductMrp());
-				orderitemsdto.setSpecialOffer(orderItems.getProduct().getSpecialOffer());
+				orderitemsdto.setSpecialOffer(orderItems.getProduct().getSpecialOffer());*/
 				orderitemsdto.setQuantityName(orderItems.getQuantity().getQuantityName());
 				orderitemsdto.setItemQuantity(orderItems.getItemQuantity());
 				orderitemsdto.setIsactive(true);

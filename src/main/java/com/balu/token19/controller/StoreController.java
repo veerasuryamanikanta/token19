@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.balu.token19.dto.CategoryDTO;
 import com.balu.token19.dto.ErrorObject;
+import com.balu.token19.dto.ProductCategoryDTO;
 import com.balu.token19.dto.ProductDTO;
 import com.balu.token19.dto.QuantityDTO;
 import com.balu.token19.dto.ReturnHolder;
@@ -32,7 +33,7 @@ public class StoreController {
 
 	@Autowired
 	private ProductService productService;
-	
+
 	@Autowired
 	private QuantityService quantityService;
 
@@ -65,6 +66,41 @@ public class StoreController {
 		try {
 			List<CategoryDTO> categoryDTOList = categoryService.findAllCategories();
 			holder.setResult(categoryDTOList);
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------SAVE CATEGORY -------------
+	 */
+	@RequestMapping(value = "/productcategory/save", method = RequestMethod.POST)
+	public ReturnHolder saveProductCategory(@RequestBody ProductCategoryDTO productcategoryDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (productcategoryDTO != null) {
+				ProductCategoryDTO productcategoryDTOData = categoryService.saveProductCategory(productcategoryDTO);
+				holder.setResult(productcategoryDTOData);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------CATEGORY LIST -------------
+	 */
+	@RequestMapping(value = "/productcategory/list", method = RequestMethod.GET)
+	public ReturnHolder getProductCategories() {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			List<ProductCategoryDTO> productcategoryDTOList = categoryService.findAllProductCategories();
+			holder.setResult(productcategoryDTOList);
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
 		}
@@ -142,22 +178,6 @@ public class StoreController {
 	}
 
 	/*
-	 * -----------------ALL PRODUCTS LIST -------------
-	 */
-	@RequestMapping(value = "/product/list", method = RequestMethod.GET)
-	public ReturnHolder getProducts() {
-		ReturnHolder holder = new ReturnHolder();
-		try {
-			List<ProductDTO> productDTOList = productService.findAllProducts();
-			holder.setResult(productDTOList);
-		} catch (Exception e) {
-			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
-		}
-		return holder;
-	}
-	
-	
-	/*
 	 * -----------------SAVE QTY -------------
 	 */
 	@RequestMapping(value = "/quantity/save", method = RequestMethod.POST)
@@ -176,8 +196,7 @@ public class StoreController {
 		}
 		return holder;
 	}
-	
-	
+
 	/*
 	 * -----------------ALL QUANTITY LIST -------------
 	 */
@@ -192,6 +211,5 @@ public class StoreController {
 		}
 		return holder;
 	}
-
 
 }

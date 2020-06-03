@@ -11,21 +11,23 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDTO {
+public class ProductQuantitiesDTO {
 
-	private Long productId;
+	private Long productquantityId;
 
-	private Long subcategoryId;
+	private Long quantityId;
 
-	private Long productcategoryId;
+	private String description;
 
-	private List<ProductQuantitiesDTO> productQuantitiesDTOs;
+	private String mrpprice;
 
-	private String productName;
+	private String discount;
 
-	private String shortDescription;
+	private String sellingprice;
 
-	private String longDescription;
+	private Boolean isavailable;
+
+	private List<ProductImagesDTO> productImagesDTOs;
 
 	private String createdDate;
 

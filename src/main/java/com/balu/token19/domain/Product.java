@@ -32,11 +32,15 @@ public class Product extends Root {
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "subcategoryId")
 	public SubCategory subcategory;
-	
+
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "quantityId")
-	public Quantity quantity;
-	
+	@JoinColumn(name = "productcategoryId")
+	public ProductCategory productcategory;
+
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.MERGE)
+	public Set<ProductQuantities> productquantities;
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.MERGE)
 	public Set<Cart> cart;
@@ -45,18 +49,8 @@ public class Product extends Root {
 	private String productName;
 
 	@NotNull
-	private String productDescription;
+	private String shortDescription;
 
-	@NotNull
-	private String productImagePath;
-
-	@NotNull
-	private String productMrp;
-
-	@NotNull
-	private String productDiscount;
-
-	@NotNull
-	public String specialOffer;
+	private String longDescription;
 
 }

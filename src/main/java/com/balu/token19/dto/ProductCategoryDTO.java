@@ -1,7 +1,5 @@
 package com.balu.token19.dto;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,21 +9,13 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDTO {
-
-	private Long productId;
-
-	private Long subcategoryId;
+public class ProductCategoryDTO {
 
 	private Long productcategoryId;
 
-	private List<ProductQuantitiesDTO> productQuantitiesDTOs;
+	private String productcategoryName;
 
-	private String productName;
-
-	private String shortDescription;
-
-	private String longDescription;
+	private String productcategoryImage;
 
 	private String createdDate;
 

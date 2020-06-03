@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
@@ -21,27 +22,22 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Entity
-public class Quantity extends Root {
+@Table(name = "productcategory")
+public class ProductCategory extends Root {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "quantitySeq")
-	@SequenceGenerator(name = "quantitySeq", sequenceName = "QUANTITY_ID_SEQ", allocationSize = 1)
-	private Long quantityId;
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "productcategorySeq")
+	@SequenceGenerator(name = "productcategorySeq", sequenceName = "ITEM_CATEGORY_ID_SEQ", allocationSize = 1)
+	private Long productcategoryId;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quantity", cascade = CascadeType.MERGE)
-	public Set<ProductQuantities> productquantities;
-
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quantity", cascade = CascadeType.MERGE)
-	public Set<Cart> cart;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productcategory", cascade = CascadeType.MERGE)
+	public Set<Product> product;
 
 	@NotNull
 	@Column(unique = true)
-	public String quantityName;
+	public String productcategoryName;
 
-	@NotNull
-	@Column(unique = true)
-	public String quantityCode;
+	public String productcategoryImage;
 
 }

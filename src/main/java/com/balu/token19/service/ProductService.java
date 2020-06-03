@@ -10,6 +10,4 @@ public interface ProductService {
 
 	List<ProductDTO> findProductsBySubCategryId(Long id);
 
-	List<ProductDTO> findAllProducts();
-
 }
