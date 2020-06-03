@@ -27,7 +27,7 @@ public class Quantity extends Root {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "quantitySeq")
 	@SequenceGenerator(name = "quantitySeq", sequenceName = "QUANTITY_ID_SEQ", allocationSize = 1)
 	private Long quantityId;
-
+	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quantity", cascade = CascadeType.MERGE)
 	public Set<ProductQuantities> productquantities;

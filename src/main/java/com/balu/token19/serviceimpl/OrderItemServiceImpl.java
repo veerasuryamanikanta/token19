@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.balu.token19.domain.OrderItems;
 import com.balu.token19.domain.Orders;
+import com.balu.token19.domain.ProductImages;
 import com.balu.token19.dto.OrderItemDTO;
 import com.balu.token19.dto.OrdersDTO;
+import com.balu.token19.dto.ProductImagesDTO;
 import com.balu.token19.repo.OrderItemsRepository;
 import com.balu.token19.repo.OrderRepository;
+import com.balu.token19.repo.ProductImagesRepository;
+import com.balu.token19.repo.ProductQuantityRepository;
 import com.balu.token19.repo.ProductRepository;
-import com.balu.token19.repo.QuantityRepository;
 import com.balu.token19.repo.UserRepository;
 import com.balu.token19.service.OrderItemService;
 import com.balu.token19.utils.Helper;
@@ -35,10 +38,13 @@ public class OrderItemServiceImpl implements OrderItemService {
 	private ProductRepository productRepository;
 
 	@Autowired
-	private QuantityRepository quantityRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	private UserRepository userRepository;
+	private ProductQuantityRepository productQuantityRepository;
+
+	@Autowired
+	private ProductImagesRepository productImagesRepository;
 
 	/*
 	 * -----------------SAVE ORDER ITEM -------------
@@ -61,7 +67,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 					mapper.map(orderItemDTO, orderItems);
 					orderItems.setOrders(orderRepository.findByOrderId(orderid));
 					orderItems.setProduct(productRepository.getOne(orderItemDTO.getProductId()));
-					orderItems.setQuantity(quantityRepository.getOne(orderItemDTO.getQuantityId()));
+					orderItems.setProductquantities(
+							productQuantityRepository.getOne(orderItemDTO.getProductQuantityId()));
 					orderItemsList.add(orderItems);
 				}
 				orderItemsRepository.saveAll(orderItemsList);
@@ -89,17 +96,28 @@ public class OrderItemServiceImpl implements OrderItemService {
 				orderitemsdto.setId(orderItems.getOrders().getId());
 				orderitemsdto.setUserId(orderData.getUser().getUserId());
 				orderitemsdto.setProductId(orderItems.getProduct().getProductId());
-				orderitemsdto.setQuantityId(orderItems.getQuantity().getQuantityId());
+				orderitemsdto.setProductQuantityId(orderItems.getProductquantities().getProductquantityId());
 				orderitemsdto.setProductName(orderItems.getProduct().getProductName());
-				/*orderitemsdto.setProductDescription(orderItems.getProduct().getProductDescription());
-				orderitemsdto.setProductImagePath(orderItems.getProduct().getProductImagePath());
-				orderitemsdto.setProductDiscount(orderItems.getProduct().getProductMrp());
-				orderitemsdto.setSpecialOffer(orderItems.getProduct().getSpecialOffer());*/
-				orderitemsdto.setQuantityName(orderItems.getQuantity().getQuantityName());
+				orderitemsdto.setProductDescription(orderItems.getProduct().getShortDescription());
+				List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
+				List<ProductImages> productImagesList = productImagesRepository
+						.findByProductQuantityId(orderItems.getProductquantities().getProductquantityId());
+
+				for (ProductImages productImages : productImagesList) {
+					ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
+					mapper.map(productImages, ProductImagesDto);
+					productImagesDTOList.add(ProductImagesDto);
+				}
+
+				orderitemsdto.setProductImages(productImagesDTOList);
+				orderitemsdto.setProductMrp(orderItems.getProductquantities().getMrpprice());
+				orderitemsdto.setSpecialOffer(orderItems.getProductquantities().getSellingprice());
+				orderitemsdto.setQuantityName(orderItems.getProductquantities().getQuantity().getQuantityName());
+				orderitemsdto.setQuantity(orderItems.getProductquantities().getDescription());
 				orderitemsdto.setItemQuantity(orderItems.getItemQuantity());
 				orderitemsdto.setIsactive(true);
-				orderitemsdto.setCreatedDate(""+orderItems.getCreatedDate());
-				orderitemsdto.setUpdatedOn(""+orderItems.getUpdatedOn());
+				orderitemsdto.setCreatedDate("" + orderItems.getCreatedDate());
+				orderitemsdto.setUpdatedOn("" + orderItems.getUpdatedOn());
 				orderItemDtoList.add(orderitemsdto);
 			}
 			OrdersDTO orderdto = new OrdersDTO();

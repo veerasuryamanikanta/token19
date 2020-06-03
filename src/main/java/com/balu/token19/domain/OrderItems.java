@@ -34,8 +34,8 @@ public class OrderItems extends Root {
 	public Product product;
 
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "quantityId")
-	public Quantity quantity;
+	@JoinColumn(name = "productquantityId")
+	public ProductQuantities productquantities;
 
 	@NotNull
 	public String itemQuantity;

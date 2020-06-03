@@ -1,5 +1,7 @@
 package com.balu.token19.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,19 +21,21 @@ public class OrderItemDTO {
 
 	private Long productId;
 
-	private Long quantityId;
+	private Long productQuantityId;
 
 	private String productName;
 
 	private String productDescription;
 
-	private String productImagePath;
+	private List<ProductImagesDTO> productImages;
 
 	private String productMrp;
 
 	private String productDiscount;
 
 	private String specialOffer;
+	
+	private String quantity;
 
 	private String quantityName;
 
