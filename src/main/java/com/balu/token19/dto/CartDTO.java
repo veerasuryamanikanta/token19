@@ -32,6 +32,8 @@ public class CartDTO {
 	private String productDiscount;
 
 	private String specialOffer;
+	
+	private String quantity;
 
 	private String quantityName;
 
