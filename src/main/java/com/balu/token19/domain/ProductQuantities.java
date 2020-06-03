@@ -37,6 +37,10 @@ public class ProductQuantities extends Root {
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "productId")
 	public Product product;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productquantities", cascade = CascadeType.MERGE)
+	public Set<Cart> cart;
 
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productquantities", cascade = CascadeType.MERGE)

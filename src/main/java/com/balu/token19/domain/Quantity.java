@@ -32,10 +32,6 @@ public class Quantity extends Root {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quantity", cascade = CascadeType.MERGE)
 	public Set<ProductQuantities> productquantities;
 
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "quantity", cascade = CascadeType.MERGE)
-	public Set<Cart> cart;
-
 	@NotNull
 	@Column(unique = true)
 	public String quantityName;
