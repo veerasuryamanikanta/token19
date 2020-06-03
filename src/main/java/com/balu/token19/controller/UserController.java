@@ -44,12 +44,10 @@ public class UserController {
 					if (userDtodata != null) {
 						if (userDtodata.getUniqueID() == null) {
 							userDtodata.setUniqueID(userDTO.getUniqueID());
-							userDtodata.setCreatedDate(userDtodata.getCreatedDate());
 							userDtodata = userService.saveUser(userDtodata);
 						} else {
 							if (!userDtodata.getUniqueID().equalsIgnoreCase(userDTO.getUniqueID())) {
 								userDtodata.setUniqueID(userDTO.getUniqueID());
-								userDtodata.setCreatedDate(userDtodata.getCreatedDate());
 								userDtodata = userService.saveUser(userDtodata);
 							}
 						}

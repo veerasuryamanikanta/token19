@@ -13,13 +13,14 @@ import lombok.Data;
 @MappedSuperclass
 @Data
 public class Root {
-	
+
 	@CreationTimestamp
+	@Column(updatable = false)
 	private Timestamp createdDate;
-	
+
 	@UpdateTimestamp
 	private Timestamp updatedOn;
-	
+
 	@Column(columnDefinition = "boolean default true")
 	public Boolean isactive = true;
 }
