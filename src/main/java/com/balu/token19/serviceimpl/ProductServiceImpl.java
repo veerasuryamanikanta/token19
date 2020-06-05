@@ -45,46 +45,52 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductImagesRepository productImagesRepository;
 
-	/*
-	 * -----------------SAVE SUBCATEGORY -------------
-	 */
 	@Override
-	public ProductDTO saveProduct(ProductDTO productDTO) {
+	public String saveProductItems(ProductDTO productDTO) {
+		try {
+			List<ProductQuantitiesDTO> productQuantitiesDTOs = productDTO.getProductQuantitiesDTOs();
+			if (productQuantitiesDTOs.size() != 0) {
+				for (ProductQuantitiesDTO productQuantitiesDTO : productQuantitiesDTOs) {
+					ProductQuantities productQuantities = new ProductQuantities();
+					mapper.map(productQuantitiesDTO, productQuantities);
+					productQuantities.setQuantity(quantityRepository.getOne(productQuantitiesDTO.getQuantityId()));
+					productQuantities.setProduct(productRepository.getOne(productDTO.getProductId()));
+					ProductQuantities productQuantitiesData = productquantityRepository.save(productQuantities);
+					Long producttQuantityId = productQuantitiesData.getProductquantityId();
 
-		List<ProductQuantitiesDTO> productQuantitiesDTOs = productDTO.getProductQuantitiesDTOs();
-		if (productQuantitiesDTOs.size() != 0) {
-			Product product = new Product();
-			mapper.map(productDTO, product);
-			product.setSubcategory(subCategoryRepository.getOne(productDTO.getSubcategoryId()));
-			product.setProductcategory(productcategoryRepository.getOne(productDTO.getProductcategoryId()));
-			Product productData = productRepository.save(product);
-			Long productId = productData.getProductId();
-			for (ProductQuantitiesDTO productQuantitiesDTO : productQuantitiesDTOs) {
-				ProductQuantities productQuantities = new ProductQuantities();
-				mapper.map(productQuantitiesDTO, productQuantities);
-				productQuantities.setQuantity(quantityRepository.getOne(productQuantitiesDTO.getQuantityId()));
-				productQuantities.setProduct(productRepository.getOne(productId));
-				ProductQuantities productQuantitiesData = productquantityRepository.save(productQuantities);
-				Long producttQuantityId = productQuantitiesData.getProductquantityId();
-
-				List<ProductImagesDTO> productImagesDTOs = productQuantitiesDTO.getProductImagesDTOs();
-				if (productImagesDTOs.size() != 0) {
-					for (ProductImagesDTO productImagesDTO : productImagesDTOs) {
-						ProductImages productimage = new ProductImages();
-						mapper.map(productImagesDTO, productimage);
-						productimage.setProductquantities(productquantityRepository.getOne(producttQuantityId));
-						productImagesRepository.save(productimage);
+					List<ProductImagesDTO> productImagesDTOs = productQuantitiesDTO.getProductImagesDTOs();
+					if (productImagesDTOs.size() != 0) {
+						for (ProductImagesDTO productImagesDTO : productImagesDTOs) {
+							ProductImages productimage = new ProductImages();
+							mapper.map(productImagesDTO, productimage);
+							productimage.setProductquantities(productquantityRepository.getOne(producttQuantityId));
+							productImagesRepository.save(productimage);
+						}
 					}
 				}
 			}
-			ProductDTO return_productdto = new ProductDTO();
-			mapper.map(productData, return_productdto);
-			return_productdto.setSubcategoryId(productData.getSubcategory().getSubcategoryId());
-			return_productdto.setProductcategoryId(productData.getProductcategory().getProductcategoryId());
-			return return_productdto;
-		} else {
-			return null;
+			return "success";
+		} catch (Exception e) {
+			return "failed";
 		}
+
+	}
+
+	/*
+	 * -----------------SAVE PRODUCT GROUP -------------
+	 */
+	@Override
+	public ProductDTO saveProduct(ProductDTO productDTO) {
+		Product product = new Product();
+		mapper.map(productDTO, product);
+		product.setSubcategory(subCategoryRepository.getOne(productDTO.getSubcategoryId()));
+		product.setProductcategory(productcategoryRepository.getOne(productDTO.getProductcategoryId()));
+		Product productData = productRepository.save(product);
+		ProductDTO return_productdto = new ProductDTO();
+		mapper.map(productData, return_productdto);
+		return_productdto.setSubcategoryId(productData.getSubcategory().getSubcategoryId());
+		return_productdto.setProductcategoryId(productData.getProductcategory().getProductcategoryId());
+		return return_productdto;
 	}
 
 	/*

@@ -145,12 +145,33 @@ public class StoreController {
 	/*
 	 * -----------------SAVE PRODUCT -------------
 	 */
-	@RequestMapping(value = "/product/save", method = RequestMethod.POST)
-	public ReturnHolder saveProduct(@RequestBody ProductDTO productDTO) {
+	@RequestMapping(value = "/product/group/save", method = RequestMethod.POST)
+	public ReturnHolder saveProductGroup(@RequestBody ProductDTO productDTO) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
 			if (productDTO != null) {
 				ProductDTO productDTOData = productService.saveProduct(productDTO);
+				holder.setResult(productDTOData);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save." + e));
+		}
+		return holder;
+	}
+	
+	
+	/*
+	 * -----------------SAVE PRODUCT -------------
+	 */
+	@RequestMapping(value = "/product/save", method = RequestMethod.POST)
+	public ReturnHolder saveProducts(@RequestBody ProductDTO productDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (productDTO != null) {
+				String productDTOData = productService.saveProductItems(productDTO);
 				holder.setResult(productDTOData);
 			} else {
 				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
