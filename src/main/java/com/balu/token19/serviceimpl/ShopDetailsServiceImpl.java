@@ -52,6 +52,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 		shopdetailsDtoData.setUserId(shopDetailsData.getUser().getUserId());
 		shopdetailsDtoData.setUserNumber(shopDetailsData.getUser().getUserNumber());
 		shopdetailsDtoData.setShopsubcategoryId(shopDetailsData.getShopsubcategory().getShopsubcategoryId());
+		shopdetailsDtoData.setCategoryName(shopDetailsData.getShopsubcategory().getShopcategory().getShopcategoryName());
 		return shopdetailsDtoData;
 	}
 
@@ -66,6 +67,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 			shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
 			shopdetailsDtoData.setUserNumber(shopdetails.getUser().getUserNumber());
 			shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
+			shopdetailsDtoData.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
 			mapper.map(shopdetails, shopdetailsDtoData);
 			return shopdetailsDtoData;
 		} else {
@@ -88,6 +90,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 				shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
 				shopdetailsDtoData.setUserNumber(shopdetails.getUser().getUserNumber());
 				shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
+				shopdetailsDtoData.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
 				mapper.map(shopdetails, shopdetailsDtoData);
 				shopdetailsDtoList.add(shopdetailsDtoData);
 			}
@@ -146,6 +149,7 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 			mapper.map(shopDetailsData, shopdetailsDtoData);
 			shopdetailsDtoData.setUserId(shopDetailsData.getUser().getUserId());
 			shopdetailsDtoData.setShopsubcategoryId(shopDetailsData.getShopsubcategory().getShopsubcategoryId());
+			shopdetailsDtoData.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
 			return shopdetailsDtoData;
 		} else {
 			return null;

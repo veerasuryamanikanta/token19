@@ -17,6 +17,8 @@ public class ShopDetailsDTO {
 	
 	private Long shopsubcategoryId;
 	
+	private String categoryName;
+	
 	private String shopName;
 	
 	private String userNumber;
