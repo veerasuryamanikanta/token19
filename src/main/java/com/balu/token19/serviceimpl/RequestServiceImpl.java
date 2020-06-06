@@ -69,7 +69,8 @@ public class RequestServiceImpl implements RequestService {
 			mapper.map(shopDetails, shopDetailsDTO);
 			requestDtoData.setShopDetailsDTO(shopDetailsDTO);
 			if (requestData.getUser().getUniqueID() != null) {
-				String notif_token = deviceRepository.findByuniqueId(requestData.getShopdetails().getUser().getUniqueID());
+				String notif_token = deviceRepository
+						.findByuniqueId(requestData.getShopdetails().getUser().getUniqueID());
 				if (notif_token != null) {
 					token = notif_token;
 				} else {
@@ -182,7 +183,11 @@ public class RequestServiceImpl implements RequestService {
 				request.setRequestStatus(requestData.getRequestStatus());
 			}
 
-			if (requestDTO.getTokenNumber() == null) {
+			try {
+				int tokennumber = requestRepository
+						.findTodayRequestByShopId(requestData.getShopdetails().getShopdetailsId());
+				request.setTokenNumber(String.valueOf(tokennumber));
+			} catch (Exception e) {
 				request.setTokenNumber(requestData.getTokenNumber());
 			}
 

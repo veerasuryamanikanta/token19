@@ -123,7 +123,7 @@ public class RequestController {
 			}
 
 		} catch (Exception e) {
-			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."+e));
 		}
 		return holder;
 	}
