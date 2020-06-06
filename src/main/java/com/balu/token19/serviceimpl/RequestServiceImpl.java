@@ -186,7 +186,7 @@ public class RequestServiceImpl implements RequestService {
 			try {
 				int tokennumber = requestRepository
 						.findTodayRequestByShopId(requestData.getShopdetails().getShopdetailsId());
-				request.setTokenNumber(String.valueOf(tokennumber));
+				request.setTokenNumber(String.valueOf(tokennumber+1));
 			} catch (Exception e) {
 				request.setTokenNumber(requestData.getTokenNumber());
 			}
