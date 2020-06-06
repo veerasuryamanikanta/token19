@@ -17,7 +17,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 	List<Request> findByUserId(@Param("userId") Long userId);
 
 	@Query(nativeQuery = true, value = "select count(*) from request where shopdetails_id =:shopdetailsId "
-			+ "and DATE(created_date) = CURDATE() and and request_status ='confirm' ")
+			+ "and DATE(created_date) = CURDATE() and request_status ='confirm' ")
 	int findTodayRequestByShopId(@Param("shopdetailsId") Long shopdetailsId);
 
 }
