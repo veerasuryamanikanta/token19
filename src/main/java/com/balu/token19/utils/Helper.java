@@ -56,6 +56,7 @@ public class Helper {
 			return true;
 		} catch (Exception ex) {
 			return false;
+			
 		}
 	}
 

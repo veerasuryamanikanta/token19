@@ -41,6 +41,10 @@ public class ShopDetails extends Root {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "shopdetails", cascade = CascadeType.MERGE)
 	public Set<Request> request;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "shopdetails", cascade = CascadeType.MERGE)
+	public Set<Services> services;
 
 	@NotNull
 	private String shopName;

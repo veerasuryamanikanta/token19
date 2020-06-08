@@ -58,6 +58,7 @@ public class UserController {
 						if (Helper.sendOTP(userDtodata.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
 								AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
 								AppConstants.otpMessage)) {
+							System.out.println("----"+rndNumber);
 							OtpDTO otpdto = new OtpDTO();
 							otpdto.setUserNumber(userDtodata.getUserNumber());
 							otpdto.setOtpCode("" + rndNumber);

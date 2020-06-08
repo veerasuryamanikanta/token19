@@ -49,6 +49,10 @@ public class User extends Root {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
 	public Set<Orders> orders;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
+	public Set<Services> services;
 
 	@NotNull
 	private String userName;
