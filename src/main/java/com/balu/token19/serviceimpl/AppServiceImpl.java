@@ -65,4 +65,21 @@ public class AppServiceImpl implements AppService {
 		return servicsdtoList;
 	}
 
+	@Override
+	public List<ServicesDTO> findByServicesId(List<Long> serviceIdList) {
+		List<ServicesDTO> servicsdtoList = new ArrayList<ServicesDTO>();
+		if (serviceIdList.size() != 0) {
+			for (int i = 0; i < serviceIdList.size(); i++) {
+				Long serviceid = serviceIdList.get(i);
+				ServicesDTO servicedto = new ServicesDTO();
+				Services servicsData = serviceRepository.getOne(new Long(serviceid));
+				mapper.map(servicsData, servicedto);
+				servicedto.setUserId(servicsData.getUser().getUserId());
+				servicedto.setShopdetailsId(servicsData.getShopdetails().getShopdetailsId());
+				servicsdtoList.add(servicedto);
+			}
+		}
+		return servicsdtoList;
+	}
+
 }

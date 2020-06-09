@@ -10,4 +10,6 @@ public interface AppService {
 
 	List<ServicesDTO> findByShopId(Long shopdetailsId);
 
+	List<ServicesDTO> findByServicesId(List<Long> values);
+
 }
