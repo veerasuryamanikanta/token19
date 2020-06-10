@@ -106,9 +106,7 @@ public class ProductServiceImpl implements ProductService {
 				mapper.map(product, productDtoData);
 				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
 				productDtoData.setProductcategoryId(product.getProductcategory().getProductcategoryId());
-
 				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
-
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
 						.findByAvailableProduct(product.getProductId(), userId, subcategoryId);
 				if (productQuantitiesList.size() != 0) {
