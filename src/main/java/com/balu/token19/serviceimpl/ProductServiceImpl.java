@@ -97,8 +97,8 @@ public class ProductServiceImpl implements ProductService {
 	 * -----------------GET PRODUCTS BY SUBCATEGORY ID-------------
 	 */
 	@Override
-	public List<ProductDTO> findProductsBySubCategryId(Long id, Long userId, Long subcategoryId) {
-		List<Product> productData = productRepository.findProductBySubCategoryId(id);
+	public List<ProductDTO> findProductsBySubCategryId(Long subcategoryId, Long shopdetailsId) {
+		List<Product> productData = productRepository.findProductBySubCategoryId(subcategoryId);
 		List<ProductDTO> productDtoList = new ArrayList<>();
 		if (productData.size() != 0) {
 			for (Product product : productData) {
@@ -107,8 +107,10 @@ public class ProductServiceImpl implements ProductService {
 				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
 				productDtoData.setProductcategoryId(product.getProductcategory().getProductcategoryId());
 				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
+				
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
-						.findByAvailableProduct(product.getProductId(), userId, subcategoryId);
+						.findByAvailableProduct(product.getProductId(), shopdetailsId,subcategoryId);
+				
 				if (productQuantitiesList.size() != 0) {
 					for (ProductQuantities productQuantities : productQuantitiesList) {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();

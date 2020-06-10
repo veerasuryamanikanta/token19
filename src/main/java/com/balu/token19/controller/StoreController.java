@@ -185,13 +185,12 @@ public class StoreController {
 	/*
 	 * -----------------PRODUCT LIST BY ID-------------
 	 */
-	@RequestMapping(value = "/product/list/{productId}/{userId}/{subcategoryId}", method = RequestMethod.GET)
-	public ReturnHolder getProductsbyId(@PathVariable("productId") Long productId, @PathVariable("userId") Long userId,
-			@PathVariable("subcategoryId") Long subcategoryId) {
+	@RequestMapping(value = "/product/list/{subcategoryId}/{shopdetailsId}", method = RequestMethod.GET)
+	public ReturnHolder getProductsbyId(@PathVariable("subcategoryId") Long subcategoryId,
+			@PathVariable("shopdetailsId") Long shopdetailsId) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
-			List<ProductDTO> productDTOList = productService.findProductsBySubCategryId(productId, userId,
-					subcategoryId);
+			List<ProductDTO> productDTOList = productService.findProductsBySubCategryId(subcategoryId, shopdetailsId);
 			holder.setResult(productDTOList);
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
