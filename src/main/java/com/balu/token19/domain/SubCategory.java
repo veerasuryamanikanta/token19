@@ -38,6 +38,10 @@ public class SubCategory extends Root {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subcategory", cascade = CascadeType.MERGE)
 	public Set<Product> product;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subcategory", cascade = CascadeType.MERGE)
+	public Set<ProductsAvailablity> productsavailablity;
 
 	@NotNull
 	public String subcategoryName;

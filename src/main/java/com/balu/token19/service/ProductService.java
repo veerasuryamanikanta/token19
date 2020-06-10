@@ -8,7 +8,7 @@ public interface ProductService {
 
 	ProductDTO saveProduct(ProductDTO productDTO);
 
-	List<ProductDTO> findProductsBySubCategryId(Long id);
+	List<ProductDTO> findProductsBySubCategryId(Long id,Long userId,Long subcategoryId);
 
 	String saveProductItems(ProductDTO productDTO);
 

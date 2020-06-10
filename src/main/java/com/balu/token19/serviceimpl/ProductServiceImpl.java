@@ -97,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
 	 * -----------------GET PRODUCTS BY SUBCATEGORY ID-------------
 	 */
 	@Override
-	public List<ProductDTO> findProductsBySubCategryId(Long id) {
+	public List<ProductDTO> findProductsBySubCategryId(Long id, Long userId, Long subcategoryId) {
 		List<Product> productData = productRepository.findProductBySubCategoryId(id);
 		List<ProductDTO> productDtoList = new ArrayList<>();
 		if (productData.size() != 0) {
@@ -110,27 +110,29 @@ public class ProductServiceImpl implements ProductService {
 				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
 
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
-						.findByProductId(product.getProductId());
+						.findByAvailableProduct(product.getProductId(), userId, subcategoryId);
+				if (productQuantitiesList.size() != 0) {
+					for (ProductQuantities productQuantities : productQuantitiesList) {
+						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
+						mapper.map(productQuantities, productQuantitiesDTO);
+						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
 
-				for (ProductQuantities productQuantities : productQuantitiesList) {
-					ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
-					mapper.map(productQuantities, productQuantitiesDTO);
-					productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
+						List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
+						List<ProductImages> productImagesList = productImagesRepository
+								.findByProductQuantityId(productQuantities.getProductquantityId());
 
-					List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
-					List<ProductImages> productImagesList = productImagesRepository
-							.findByProductQuantityId(productQuantities.getProductquantityId());
-
-					for (ProductImages productImages : productImagesList) {
-						ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
-						mapper.map(productImages, ProductImagesDto);
-						productImagesDTOList.add(ProductImagesDto);
+						for (ProductImages productImages : productImagesList) {
+							ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
+							mapper.map(productImages, ProductImagesDto);
+							productImagesDTOList.add(ProductImagesDto);
+						}
+						productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
+						productQuantitiesDTOList.add(productQuantitiesDTO);
 					}
-					productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
-					productQuantitiesDTOList.add(productQuantitiesDTO);
+					productDtoData.setProductQuantitiesDTOs(productQuantitiesDTOList);
+					productDtoList.add(productDtoData);
 				}
-				productDtoData.setProductQuantitiesDTOs(productQuantitiesDTOList);
-				productDtoList.add(productDtoData);
+
 			}
 		}
 		return productDtoList;
