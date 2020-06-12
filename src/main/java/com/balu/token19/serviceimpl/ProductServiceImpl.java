@@ -97,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
 	 * -----------------GET PRODUCTS BY SUBCATEGORY ID-------------
 	 */
 	@Override
-	public List<ProductDTO> findProductsBySubCategryId(Long subcategoryId, Long shopdetailsId) {
+	public List<ProductDTO> findProductsBySubCategryAndShopId(Long subcategoryId, Long shopdetailsId) {
 		List<Product> productData = productRepository.findProductBySubCategoryId(subcategoryId);
 		List<ProductDTO> productDtoList = new ArrayList<>();
 		if (productData.size() != 0) {
@@ -126,6 +126,49 @@ public class ProductServiceImpl implements ProductService {
 							mapper.map(productImages, ProductImagesDto);
 							productImagesDTOList.add(ProductImagesDto);
 						}
+						productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
+						productQuantitiesDTOList.add(productQuantitiesDTO);
+					}
+					productDtoData.setProductQuantitiesDTOs(productQuantitiesDTOList);
+					productDtoList.add(productDtoData);
+				}
+
+			}
+		}
+		return productDtoList;
+	}
+
+	@Override
+	public List<ProductDTO> findProductsBySubCategryId(Long subcategoryId) {
+		List<Product> productData = productRepository.findProductBySubCategoryId(subcategoryId);
+		List<ProductDTO> productDtoList = new ArrayList<>();
+		if (productData.size() != 0) {
+			for (Product product : productData) {
+				ProductDTO productDtoData = new ProductDTO();
+				mapper.map(product, productDtoData);
+				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
+				productDtoData.setProductcategoryId(product.getProductcategory().getProductcategoryId());
+				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
+				
+				List<ProductQuantities> productQuantitiesList = productquantityRepository
+						.findByProductId(product.getProductId());
+				
+				if (productQuantitiesList.size() != 0) {
+					for (ProductQuantities productQuantities : productQuantitiesList) {
+						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
+						mapper.map(productQuantities, productQuantitiesDTO);
+						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
+
+						List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
+						List<ProductImages> productImagesList = productImagesRepository
+								.findByProductQuantityId(productQuantities.getProductquantityId());
+
+						for (ProductImages productImages : productImagesList) {
+							ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
+							mapper.map(productImages, ProductImagesDto);
+							productImagesDTOList.add(ProductImagesDto);
+						}
+						
 						productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
 						productQuantitiesDTOList.add(productQuantitiesDTO);
 					}

@@ -16,7 +16,7 @@ public interface ProductQuantityRepository extends JpaRepository<ProductQuantiti
 	@Query(nativeQuery = true, value = "select * from productquantities where product_id =:productId "
 			+ "and productquantity_id not in (select productquantity_id from products_availablity where shopdetails_id =:shopdetailsId "
 			+ "and subcategory_id =:subcategoryId and isavailable =false)")
-	List<ProductQuantities> findByAvailableProduct(@Param("productId") Long productId, @Param("shopdetailsId") Long shopdetailsId,
-			@Param("subcategoryId") Long subcategoryId);
+	List<ProductQuantities> findByAvailableProduct(@Param("productId") Long productId,
+			@Param("shopdetailsId") Long shopdetailsId, @Param("subcategoryId") Long subcategoryId);
 
 }
