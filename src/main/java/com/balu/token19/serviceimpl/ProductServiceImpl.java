@@ -11,9 +11,11 @@ import org.springframework.stereotype.Service;
 import com.balu.token19.domain.Product;
 import com.balu.token19.domain.ProductImages;
 import com.balu.token19.domain.ProductQuantities;
+import com.balu.token19.domain.ProductsAvailablity;
 import com.balu.token19.dto.ProductDTO;
 import com.balu.token19.dto.ProductImagesDTO;
 import com.balu.token19.dto.ProductQuantitiesDTO;
+import com.balu.token19.repo.ProductAvailabilityRepository;
 import com.balu.token19.repo.ProductCategoryRepository;
 import com.balu.token19.repo.ProductImagesRepository;
 import com.balu.token19.repo.ProductQuantityRepository;
@@ -44,6 +46,9 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductImagesRepository productImagesRepository;
+
+	@Autowired
+	private ProductAvailabilityRepository productAvailabilityRepository;
 
 	@Override
 	public String saveProductItems(ProductDTO productDTO) {
@@ -107,10 +112,10 @@ public class ProductServiceImpl implements ProductService {
 				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
 				productDtoData.setProductcategoryId(product.getProductcategory().getProductcategoryId());
 				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
-				
+
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
-						.findByAvailableProduct(product.getProductId(), shopdetailsId,subcategoryId);
-				
+						.findByAvailableProduct(product.getProductId(), shopdetailsId, subcategoryId);
+
 				if (productQuantitiesList.size() != 0) {
 					for (ProductQuantities productQuantities : productQuantitiesList) {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
@@ -139,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductDTO> findProductsBySubCategryId(Long subcategoryId) {
+	public List<ProductDTO> findProductsBySubCategryId(Long subcategoryId, Long userId) {
 		List<Product> productData = productRepository.findProductBySubCategoryId(subcategoryId);
 		List<ProductDTO> productDtoList = new ArrayList<>();
 		if (productData.size() != 0) {
@@ -159,6 +164,15 @@ public class ProductServiceImpl implements ProductService {
 						mapper.map(productQuantities, productQuantitiesDTO);
 						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
 
+						ProductsAvailablity pavailability = productAvailabilityRepository.findByIsAvailable(userId,
+								productQuantities.getProductquantityId(), true);
+						if(pavailability!=null){
+							productQuantitiesDTO.setIsavailable(pavailability.getIsavailable());
+						}else {
+							productQuantitiesDTO.setIsavailable(true);
+						}
+						
+						
 						List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
 						List<ProductImages> productImagesList = productImagesRepository
 								.findByProductQuantityId(productQuantities.getProductquantityId());

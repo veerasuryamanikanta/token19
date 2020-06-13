@@ -190,23 +190,24 @@ public class StoreController {
 			@PathVariable("shopdetailsId") Long shopdetailsId) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
-			List<ProductDTO> productDTOList = productService.findProductsBySubCategryAndShopId(subcategoryId, shopdetailsId);
+			List<ProductDTO> productDTOList = productService.findProductsBySubCategryAndShopId(subcategoryId,
+					shopdetailsId);
 			holder.setResult(productDTOList);
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
 		}
 		return holder;
 	}
-	
-	
+
 	/*
 	 * -----------------PRODUCT LIST BY ID-------------
 	 */
-	@RequestMapping(value = "/product/list/{subcategoryId}", method = RequestMethod.GET)
-	public ReturnHolder getProductsbySubCatId(@PathVariable("subcategoryId") Long subcategoryId) {
+	@RequestMapping(value = "/productlist/{subcategoryId}/{userId}", method = RequestMethod.GET)
+	public ReturnHolder getProductsbySubCatId(@PathVariable("subcategoryId") Long subcategoryId,
+			@PathVariable("userId") Long userId) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
-			List<ProductDTO> productDTOList = productService.findProductsBySubCategryId(subcategoryId);
+			List<ProductDTO> productDTOList = productService.findProductsBySubCategryId(subcategoryId, userId);
 			holder.setResult(productDTOList);
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
