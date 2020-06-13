@@ -95,8 +95,7 @@ public class PAServiceImpl implements ProductAvailibilityService {
 	@Override
 	public String isAvailableProduct(Long productquantityId, Long userId) {
 		try {
-			ProductsAvailablity padata = productAvailabilityRepository.findByIsAvailable(userId, productquantityId,
-					true);
+			ProductsAvailablity padata = productAvailabilityRepository.findByIsAvailable(userId, productquantityId);
 			return String.valueOf(padata.getIsavailable());
 		} catch (Exception e) {
 			return "false";

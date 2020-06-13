@@ -30,8 +30,8 @@ public interface ProductAvailabilityRepository extends JpaRepository<ProductsAva
 			@Param("productquantityId") Long productquantityId);
 
 	@Query(nativeQuery = true, value = "select * from products_availablity where user_id =:userId"
-			+ " and productquantity_id =:productquantityId and isavailable =:value")
+			+ " and productquantity_id =:productquantityId ")
 	ProductsAvailablity findByIsAvailable(@Param("userId") Long userId,
-			@Param("productquantityId") Long productquantityId, @Param("value") boolean value);
+			@Param("productquantityId") Long productquantityId);
 
 }

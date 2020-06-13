@@ -163,12 +163,16 @@ public class ProductServiceImpl implements ProductService {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
 						mapper.map(productQuantities, productQuantitiesDTO);
 						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
-
+						
 						ProductsAvailablity pavailability = productAvailabilityRepository.findByIsAvailable(userId,
-								productQuantities.getProductquantityId(), true);
+								productQuantities.getProductquantityId());
+						
+						
 						if(pavailability!=null){
+							
 							productQuantitiesDTO.setIsavailable(pavailability.getIsavailable());
 						}else {
+							
 							productQuantitiesDTO.setIsavailable(true);
 						}
 						
