@@ -1,6 +1,7 @@
 package com.balu.token19.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,21 @@ public class PAController {
 
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------PRODUCT LIST BY ID-------------
+	 */
+	@RequestMapping(value = "/list/{userId}/{productquantityId}", method = RequestMethod.GET)
+	public ReturnHolder getProductsbySubCatId(@PathVariable("productquantityId") Long productquantityId,
+			@PathVariable("userId") Long userId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			holder.setResult(productAvailibilityService.isAvailableProduct(productquantityId, userId));
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
 		}
 		return holder;
 	}

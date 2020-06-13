@@ -71,7 +71,7 @@ public class PAServiceImpl implements ProductAvailibilityService {
 					productAvailabilitydto.setProductquantityId(padata.getProductquantities().getProductquantityId());
 					productAvailabilitydto.setIsavailable(true);
 					return productAvailabilitydto;
-					
+
 				} else {
 
 					productAvailabilityRepository.updateAvailibility(productAvailabilityDTO.getUserId(),
@@ -83,11 +83,23 @@ public class PAServiceImpl implements ProductAvailibilityService {
 					productAvailabilitydto.setProductquantityId(padata.getProductquantities().getProductquantityId());
 					productAvailabilitydto.setIsavailable(false);
 					return productAvailabilitydto;
-					
+
 				}
 			}
 		} catch (Exception e) {
 			return null;
+		}
+
+	}
+
+	@Override
+	public String isAvailableProduct(Long productquantityId, Long userId) {
+		try {
+			ProductsAvailablity padata = productAvailabilityRepository.findByIsAvailable(userId, productquantityId,
+					true);
+			return String.valueOf(padata.getIsavailable());
+		} catch (Exception e) {
+			return "false";
 		}
 
 	}

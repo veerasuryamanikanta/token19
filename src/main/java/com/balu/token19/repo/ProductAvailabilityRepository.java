@@ -1,5 +1,7 @@
 package com.balu.token19.repo;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +23,15 @@ public interface ProductAvailabilityRepository extends JpaRepository<ProductsAva
 			+ "productquantity_id =:productquantityId")
 	void updateAvailibility(@Param("userId") Long userId, @Param("productquantityId") Long productquantityId,
 			@Param("value") boolean value);
+
+	@Query(nativeQuery = true, value = "select * from products_availablity where user_id =:userId"
+			+ " and productquantity_id =:productquantityId and shopdetails_id =1 and subcategory_id =1;")
+	List<ProductsAvailablity> findByAvaialbility(@Param("userId") Long userId,
+			@Param("productquantityId") Long productquantityId);
+
+	@Query(nativeQuery = true, value = "select * from products_availablity where user_id =:userId"
+			+ " and productquantity_id =:productquantityId and isavailable =:value")
+	ProductsAvailablity findByIsAvailable(@Param("userId") Long userId,
+			@Param("productquantityId") Long productquantityId, @Param("value") boolean value);
 
 }
