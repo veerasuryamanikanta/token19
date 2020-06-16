@@ -139,7 +139,8 @@ public class ProductServiceImpl implements ProductService {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
 						mapper.map(productQuantities, productQuantitiesDTO);
 						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
-
+						productQuantitiesDTO.setDescription(productQuantities.getDescription() + " "
+								+ productQuantities.getQuantity().getQuantityCode());
 						List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
 						List<ProductImages> productImagesList = productImagesRepository
 								.findByProductQuantityId(productQuantities.getProductquantityId());
@@ -149,6 +150,7 @@ public class ProductServiceImpl implements ProductService {
 							mapper.map(productImages, ProductImagesDto);
 							productImagesDTOList.add(ProductImagesDto);
 						}
+
 						productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
 						productQuantitiesDTOList.add(productQuantitiesDTO);
 					}
@@ -181,7 +183,8 @@ public class ProductServiceImpl implements ProductService {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
 						mapper.map(productQuantities, productQuantitiesDTO);
 						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
-
+						productQuantitiesDTO.setDescription(productQuantities.getDescription() + " "
+								+ productQuantities.getQuantity().getQuantityCode());
 						ProductsAvailablity pavailability = productAvailabilityRepository.findByIsAvailable(userId,
 								productQuantities.getProductquantityId());
 
