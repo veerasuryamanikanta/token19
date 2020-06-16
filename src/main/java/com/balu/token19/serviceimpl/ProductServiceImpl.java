@@ -56,20 +56,26 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductQuantitiesDTO> productQuantitiesDTOs = productDTO.getProductQuantitiesDTOs();
 			if (productQuantitiesDTOs.size() != 0) {
 				for (ProductQuantitiesDTO productQuantitiesDTO : productQuantitiesDTOs) {
-					ProductQuantities productQuantities = new ProductQuantities();
-					mapper.map(productQuantitiesDTO, productQuantities);
-					productQuantities.setQuantity(quantityRepository.getOne(productQuantitiesDTO.getQuantityId()));
-					productQuantities.setProduct(productRepository.getOne(productDTO.getProductId()));
-					ProductQuantities productQuantitiesData = productquantityRepository.save(productQuantities);
-					Long producttQuantityId = productQuantitiesData.getProductquantityId();
 
-					List<ProductImagesDTO> productImagesDTOs = productQuantitiesDTO.getProductImagesDTOs();
-					if (productImagesDTOs.size() != 0) {
-						for (ProductImagesDTO productImagesDTO : productImagesDTOs) {
-							ProductImages productimage = new ProductImages();
-							mapper.map(productImagesDTO, productimage);
-							productimage.setProductquantities(productquantityRepository.getOne(producttQuantityId));
-							productImagesRepository.save(productimage);
+					String quantity = productQuantitiesDTO.getDescription();
+					ProductQuantities productQuantities = new ProductQuantities();
+					ProductQuantities exists_productQuantitiesData = productquantityRepository
+							.findByProductIdAnddescription(productDTO.getProductId(), quantity);
+
+					if (exists_productQuantitiesData == null) {
+						mapper.map(productQuantitiesDTO, productQuantities);
+						productQuantities.setQuantity(quantityRepository.getOne(productQuantitiesDTO.getQuantityId()));
+						productQuantities.setProduct(productRepository.getOne(productDTO.getProductId()));
+						ProductQuantities productQuantitiesData = productquantityRepository.save(productQuantities);
+						Long producttQuantityId = productQuantitiesData.getProductquantityId();
+						List<ProductImagesDTO> productImagesDTOs = productQuantitiesDTO.getProductImagesDTOs();
+						if (productImagesDTOs.size() != 0) {
+							for (ProductImagesDTO productImagesDTO : productImagesDTOs) {
+								ProductImages productimage = new ProductImages();
+								mapper.map(productImagesDTO, productimage);
+								productimage.setProductquantities(productquantityRepository.getOne(producttQuantityId));
+								productImagesRepository.save(productimage);
+							}
 						}
 					}
 				}
@@ -86,16 +92,28 @@ public class ProductServiceImpl implements ProductService {
 	 */
 	@Override
 	public ProductDTO saveProduct(ProductDTO productDTO) {
-		Product product = new Product();
-		mapper.map(productDTO, product);
-		product.setSubcategory(subCategoryRepository.getOne(productDTO.getSubcategoryId()));
-		product.setProductcategory(productcategoryRepository.getOne(productDTO.getProductcategoryId()));
-		Product productData = productRepository.save(product);
-		ProductDTO return_productdto = new ProductDTO();
-		mapper.map(productData, return_productdto);
-		return_productdto.setSubcategoryId(productData.getSubcategory().getSubcategoryId());
-		return_productdto.setProductcategoryId(productData.getProductcategory().getProductcategoryId());
-		return return_productdto;
+		try {
+			ProductDTO return_productdto = new ProductDTO();
+			Product product = new Product();
+			String productName = productDTO.getProductName();
+			Product exists_product = productRepository.findProductByName(productName);
+			if (exists_product != null) {
+				mapper.map(exists_product, return_productdto);
+				return_productdto.setSubcategoryId(exists_product.getSubcategory().getSubcategoryId());
+				return_productdto.setProductcategoryId(exists_product.getProductcategory().getProductcategoryId());
+			} else {
+				mapper.map(productDTO, product);
+				product.setSubcategory(subCategoryRepository.getOne(productDTO.getSubcategoryId()));
+				product.setProductcategory(productcategoryRepository.getOne(productDTO.getProductcategoryId()));
+				Product productData = productRepository.save(product);
+				mapper.map(productData, return_productdto);
+				return_productdto.setSubcategoryId(productData.getSubcategory().getSubcategoryId());
+				return_productdto.setProductcategoryId(productData.getProductcategory().getProductcategoryId());
+			}
+			return return_productdto;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/*
@@ -154,29 +172,27 @@ public class ProductServiceImpl implements ProductService {
 				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
 				productDtoData.setProductcategoryId(product.getProductcategory().getProductcategoryId());
 				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
-				
+
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
 						.findByProductId(product.getProductId());
-				
+
 				if (productQuantitiesList.size() != 0) {
 					for (ProductQuantities productQuantities : productQuantitiesList) {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
 						mapper.map(productQuantities, productQuantitiesDTO);
 						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
-						
+
 						ProductsAvailablity pavailability = productAvailabilityRepository.findByIsAvailable(userId,
 								productQuantities.getProductquantityId());
-						
-						
-						if(pavailability!=null){
-							
+
+						if (pavailability != null) {
+
 							productQuantitiesDTO.setIsavailable(pavailability.getIsavailable());
-						}else {
-							
+						} else {
+
 							productQuantitiesDTO.setIsavailable(true);
 						}
-						
-						
+
 						List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
 						List<ProductImages> productImagesList = productImagesRepository
 								.findByProductQuantityId(productQuantities.getProductquantityId());
@@ -186,7 +202,7 @@ public class ProductServiceImpl implements ProductService {
 							mapper.map(productImages, ProductImagesDto);
 							productImagesDTOList.add(ProductImagesDto);
 						}
-						
+
 						productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
 						productQuantitiesDTOList.add(productQuantitiesDTO);
 					}
