@@ -7,5 +7,8 @@ public interface DeviceService {
 	DeviceDTO saveDevice(DeviceDTO deviceDTO);
 	
 	DeviceDTO findByNotificationId(String notificationId);
+	
+	
+	DeviceDTO findByDeviceId(String deviceId);
 		
 }

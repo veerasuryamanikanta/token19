@@ -119,9 +119,21 @@ public class AdminController {
 		ReturnHolder holder = new ReturnHolder();
 		try {
 			if (deviceDTO != null) {
-				DeviceDTO devicedto = deviceService.findByNotificationId(deviceDTO.getNotificationId());
+				DeviceDTO devicedto = deviceService.findByDeviceId(deviceDTO.getUniqueID());
 				if (devicedto != null) {
-					holder = new ReturnHolder(false, new ErrorObject("error", "Device Already Registered."));
+					String notificationId = devicedto.getNotificationId();
+					if (notificationId.equalsIgnoreCase(deviceDTO.getNotificationId())) {
+						holder = new ReturnHolder(false, new ErrorObject("error", "Device Already Registered."));
+					} else {
+						if (deviceDTO.getNotificationId().equalsIgnoreCase("")) {
+							holder = new ReturnHolder(false,
+									new ErrorObject("error", "Notificatoin Id Must Not Be Empty.."));
+						} else {
+							DeviceDTO deviceDtodata = deviceService.saveDevice(devicedto);
+							holder.setResult(deviceDtodata);
+						}
+					}
+
 				} else {
 					if (deviceDTO.getNotificationId().equalsIgnoreCase("")) {
 						holder = new ReturnHolder(false,

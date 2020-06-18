@@ -45,5 +45,26 @@ public class DeviceServiceImpl implements DeviceService {
 			return null;
 		}
 	}
+	
+	/*
+	 * -----------------GET DEVICE INFO BY DEVICE ID -------------
+	 */
+
+	@Override
+	public DeviceDTO findByDeviceId(String deviceId) {
+		try {
+			Device deviceData = deviceRepository.findByDeviceId(deviceId);
+			if (deviceData != null) {
+				DeviceDTO deviceDtoData = new DeviceDTO();
+				mapper.map(deviceData, deviceDtoData);
+				return deviceDtoData;
+			} else {
+				return null;
+			}
+		}catch (Exception e) {
+			return null;
+		}
+		
+	}
 
 }
