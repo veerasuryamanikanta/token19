@@ -129,8 +129,8 @@ public class AdminController {
 							holder = new ReturnHolder(false,
 									new ErrorObject("error", "Notificatoin Id Must Not Be Empty.."));
 						} else {
-							devicedto.setCreatedDate("" + devicedto.getCreatedDate());
-							devicedto.setUpdatedOn("" + devicedto.getUpdatedOn());
+							devicedto.setCreatedDate("");
+							devicedto.setUpdatedOn("");
 							DeviceDTO deviceDtodata = deviceService.saveDevice(devicedto);
 							holder.setResult(deviceDtodata);
 						}
