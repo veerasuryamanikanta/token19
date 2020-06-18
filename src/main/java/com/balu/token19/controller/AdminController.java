@@ -131,6 +131,7 @@ public class AdminController {
 						} else {
 							devicedto.setCreatedDate("");
 							devicedto.setUpdatedOn("");
+							devicedto.setNotificationId(deviceDTO.getNotificationId());
 							DeviceDTO deviceDtodata = deviceService.saveDevice(devicedto);
 							holder.setResult(deviceDtodata);
 						}
