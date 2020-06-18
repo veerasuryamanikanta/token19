@@ -87,6 +87,7 @@ public class RequestServiceImpl implements RequestService {
 				fcmdto.setBody("you have a request from " + requestData.getUser().getUserNumber()
 						+ ". So please check cnfirm order");
 				fcmdto.setImage(requestData.getRequestPath());
+				fcmdto.setRequestdto(requestDtoData);
 				CompletableFuture<String> pushNotification = fcmservice.send(fcmdto);
 				CompletableFuture.allOf(pushNotification).join();
 				return requestDtoData;
