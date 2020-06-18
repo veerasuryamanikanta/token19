@@ -33,6 +33,7 @@ public class FcmServiceImpl implements FcmService {
 			data.put("title", fcmDTO.getTitle());
 			data.put("body", fcmDTO.getBody());
 			data.put("image", fcmDTO.getImage());
+			data.put("requestdto", fcmDTO.getRequestdto());
 			JSONObject body = new JSONObject();
 			body.put("to", fcmDTO.getTo());
 			body.put("data", data);
