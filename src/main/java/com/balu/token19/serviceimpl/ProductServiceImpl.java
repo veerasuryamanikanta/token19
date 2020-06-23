@@ -178,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
 						.findByProductId(product.getProductId());
 
-				if (productQuantitiesList.size() != 0) {
+				//if (productQuantitiesList.size() != 0) {
 					for (ProductQuantities productQuantities : productQuantitiesList) {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
 						mapper.map(productQuantities, productQuantitiesDTO);
@@ -211,7 +211,7 @@ public class ProductServiceImpl implements ProductService {
 					}
 					productDtoData.setProductQuantitiesDTOs(productQuantitiesDTOList);
 					productDtoList.add(productDtoData);
-				}
+				//}
 
 			}
 		}
