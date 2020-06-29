@@ -13,5 +13,10 @@ public interface ProductService {
 	List<ProductDTO> findProductsBySubCategryId(Long subcategoryId,Long userId);
 
 	String saveProductItems(ProductDTO productDTO);
+	
+	String deleteQuantityImage(Long productimageId);
+	
+	String deleteQuantity(Long productquantityId);
+	
 
 }

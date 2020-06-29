@@ -249,5 +249,46 @@ public class StoreController {
 		}
 		return holder;
 	}
+	
+	
+	/*
+	 * -----------------DELETE IMAGE QUANTITY -------------
+	 */
+	@RequestMapping(value = "/quantity/images/delete/{productimageId}", method = RequestMethod.DELETE)
+	public ReturnHolder deleteQuantitiyImage(@PathVariable("productimageId") Long productimageId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			String status = productService.deleteQuantityImage(productimageId);
+			if(status.equalsIgnoreCase("success")) {
+				holder.setResult("success");
+			}else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete."));
+			}
+			
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete." + e));
+		}
+		return holder;
+	}
+	
+	/*
+	 * -----------------DELETE QUANTITY -------------
+	 */
+	@RequestMapping(value = "/quantity/delete/{productquantityId}", method = RequestMethod.DELETE)
+	public ReturnHolder deleteQuantitiy(@PathVariable("productquantityId") Long productquantityId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			String status = productService.deleteQuantity(productquantityId);
+			if(status.equalsIgnoreCase("success")) {
+				holder.setResult("success");
+			}else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete."));
+			}
+			
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete." + e));
+		}
+		return holder;
+	}
 
 }

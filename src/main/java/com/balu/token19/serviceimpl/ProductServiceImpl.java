@@ -139,8 +139,7 @@ public class ProductServiceImpl implements ProductService {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
 						mapper.map(productQuantities, productQuantitiesDTO);
 						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
-						productQuantitiesDTO.setDescription(productQuantities.getDescription() + " "
-								+ productQuantities.getQuantity().getQuantityCode());
+						productQuantitiesDTO.setDescription(productQuantities.getDescription());
 						List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
 						List<ProductImages> productImagesList = productImagesRepository
 								.findByProductQuantityId(productQuantities.getProductquantityId());
@@ -183,8 +182,7 @@ public class ProductServiceImpl implements ProductService {
 						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
 						mapper.map(productQuantities, productQuantitiesDTO);
 						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
-						productQuantitiesDTO.setDescription(productQuantities.getDescription() + " "
-								+ productQuantities.getQuantity().getQuantityCode());
+						productQuantitiesDTO.setDescription(productQuantities.getDescription());
 						ProductsAvailablity pavailability = productAvailabilityRepository.findByIsAvailable(userId,
 								productQuantities.getProductquantityId());
 
@@ -216,6 +214,28 @@ public class ProductServiceImpl implements ProductService {
 			}
 		}
 		return productDtoList;
+	}
+
+	@Override
+	public String deleteQuantityImage(Long productimageId) {
+		try {
+			productImagesRepository.deleteById(productimageId);
+			return "success";
+		}catch (Exception e) {
+			return null;
+		}
+		
+	}
+	
+	@Override
+	public String deleteQuantity(Long productquantityId) {
+		try {
+			productquantityRepository.deleteById(productquantityId);
+			return "success";
+		}catch (Exception e) {
+			return null;
+		}
+		
 	}
 
 }
