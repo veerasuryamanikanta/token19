@@ -22,6 +22,8 @@ public class ProductDTO {
 	private List<ProductQuantitiesDTO> productQuantitiesDTOs;
 
 	private String productName;
+	
+	private String productCategoryName;
 
 	private String shortDescription;
 

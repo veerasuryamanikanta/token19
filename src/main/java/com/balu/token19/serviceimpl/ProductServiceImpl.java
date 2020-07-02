@@ -129,6 +129,7 @@ public class ProductServiceImpl implements ProductService {
 				mapper.map(product, productDtoData);
 				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
 				productDtoData.setProductcategoryId(product.getProductcategory().getProductcategoryId());
+				productDtoData.setProductCategoryName(product.getProductcategory().getProductcategoryName());
 				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
 
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
@@ -172,6 +173,7 @@ public class ProductServiceImpl implements ProductService {
 				mapper.map(product, productDtoData);
 				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
 				productDtoData.setProductcategoryId(product.getProductcategory().getProductcategoryId());
+				productDtoData.setProductCategoryName(product.getProductcategory().getProductcategoryName());
 				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
 
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
