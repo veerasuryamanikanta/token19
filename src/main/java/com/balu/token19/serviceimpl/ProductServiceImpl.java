@@ -12,6 +12,7 @@ import com.balu.token19.domain.Product;
 import com.balu.token19.domain.ProductImages;
 import com.balu.token19.domain.ProductQuantities;
 import com.balu.token19.domain.ProductsAvailablity;
+import com.balu.token19.dto.ProductAvailabilityDTO;
 import com.balu.token19.dto.ProductDTO;
 import com.balu.token19.dto.ProductImagesDTO;
 import com.balu.token19.dto.ProductQuantitiesDTO;
@@ -119,6 +120,72 @@ public class ProductServiceImpl implements ProductService {
 	/*
 	 * -----------------GET PRODUCTS BY SUBCATEGORY ID-------------
 	 */
+
+	@Override
+	public List<ProductDTO> availableProductsBySubCategryAndShopId(Long subcategoryId, Long shopdetailsId) {
+		List<ProductDTO> productDtoList = new ArrayList<>();
+		try {
+			List<ProductsAvailablity> productAvailabilityData = productAvailabilityRepository.findByShopId(subcategoryId,
+					shopdetailsId);
+			if (productAvailabilityData.size() != 0) {
+				for (ProductsAvailablity productsAvailablity : productAvailabilityData) {
+					Long productId = productsAvailablity.getProductquantities().getProduct().getProductId();
+					Product productData = productRepository.getOne(productId);
+					ProductDTO productDtoData = new ProductDTO();
+					mapper.map(productData, productDtoData);
+					productDtoData.setSubcategoryId(productData.getSubcategory().getSubcategoryId());
+					productDtoData.setProductcategoryId(productData.getProductcategory().getProductcategoryId());
+					productDtoData.setProductCategoryName(productData.getProductcategory().getProductcategoryName());
+					List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
+					List<ProductQuantities> productQuantitiesList = productquantityRepository
+							.findByAvailableProduct(productData.getProductId(), shopdetailsId, subcategoryId);
+					if (productQuantitiesList.size() != 0) {
+						for (ProductQuantities productQuantities : productQuantitiesList) {
+							Long productQuantityId = productsAvailablity.getProductquantities().getProductquantityId();
+							Long currentpProductQuantityId= productQuantities.getProductquantityId();
+							if(productQuantityId == currentpProductQuantityId) {
+								ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
+								mapper.map(productQuantities, productQuantitiesDTO);
+								productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
+								productQuantitiesDTO.setDescription(productQuantities.getDescription());
+								productQuantitiesDTO.setMrpprice(productsAvailablity.getMrpprice());
+								productQuantitiesDTO.setDiscount(productsAvailablity.getDiscount());
+								productQuantitiesDTO.setSellingprice(productsAvailablity.getSellingprice());
+								List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
+								List<ProductImages> productImagesList = productImagesRepository
+										.findByProductQuantityId(productQuantities.getProductquantityId());
+								for (ProductImages productImages : productImagesList) {
+									ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
+									mapper.map(productImages, ProductImagesDto);
+									productImagesDTOList.add(ProductImagesDto);
+								}
+								productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
+								productQuantitiesDTOList.add(productQuantitiesDTO);
+							}
+							productDtoData.setProductQuantitiesDTOs(productQuantitiesDTOList);
+							productDtoList.add(productDtoData);
+						}
+					}
+					
+//					ProductAvailabilityDTO productavaialbilitydto = new ProductAvailabilityDTO();
+//					mapper.map(productsAvailablity, productavaialbilitydto);
+//					productavaialbilitydto.setUserId(productsAvailablity.getUser().getUserId());
+//					productavaialbilitydto.setSubcategoryId(productsAvailablity.getSubcategory().getSubcategoryId());
+//					productavaialbilitydto.setShopdetailsId(productsAvailablity.getShopdetails().getShopdetailsId());
+//					productavaialbilitydto.setProductquantityId(productsAvailablity.getProductquantities().getProduct().getProductId());
+					
+					
+					
+					//productDtoList.add(productavaialbilitydto);
+				}
+			}
+			return productDtoList;
+		} catch (Exception e) {
+			return productDtoList;
+		}
+
+	}
+
 	@Override
 	public List<ProductDTO> findProductsBySubCategryAndShopId(Long subcategoryId, Long shopdetailsId) {
 		List<Product> productData = productRepository.findProductBySubCategoryId(subcategoryId);
@@ -179,39 +246,38 @@ public class ProductServiceImpl implements ProductService {
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
 						.findByProductId(product.getProductId());
 
-				//if (productQuantitiesList.size() != 0) {
-					for (ProductQuantities productQuantities : productQuantitiesList) {
-						ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
-						mapper.map(productQuantities, productQuantitiesDTO);
-						productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
-						productQuantitiesDTO.setDescription(productQuantities.getDescription());
-						ProductsAvailablity pavailability = productAvailabilityRepository.findByIsAvailable(userId,
-								productQuantities.getProductquantityId());
+				// if (productQuantitiesList.size() != 0) {
+				for (ProductQuantities productQuantities : productQuantitiesList) {
+					ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
+					mapper.map(productQuantities, productQuantitiesDTO);
+					productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
+					productQuantitiesDTO.setDescription(productQuantities.getDescription());
+					ProductsAvailablity pavailability = productAvailabilityRepository.findByIsAvailable(userId,
+							productQuantities.getProductquantityId());
 
-						if (pavailability != null) {
+					if (pavailability != null) {
+						productQuantitiesDTO.setIsavailable(pavailability.getIsavailable());
+					} else {
 
-							productQuantitiesDTO.setIsavailable(pavailability.getIsavailable());
-						} else {
-
-							productQuantitiesDTO.setIsavailable(true);
-						}
-
-						List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
-						List<ProductImages> productImagesList = productImagesRepository
-								.findByProductQuantityId(productQuantities.getProductquantityId());
-
-						for (ProductImages productImages : productImagesList) {
-							ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
-							mapper.map(productImages, ProductImagesDto);
-							productImagesDTOList.add(ProductImagesDto);
-						}
-
-						productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
-						productQuantitiesDTOList.add(productQuantitiesDTO);
+						productQuantitiesDTO.setIsavailable(false);
 					}
-					productDtoData.setProductQuantitiesDTOs(productQuantitiesDTOList);
-					productDtoList.add(productDtoData);
-				//}
+
+					List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
+					List<ProductImages> productImagesList = productImagesRepository
+							.findByProductQuantityId(productQuantities.getProductquantityId());
+
+					for (ProductImages productImages : productImagesList) {
+						ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
+						mapper.map(productImages, ProductImagesDto);
+						productImagesDTOList.add(ProductImagesDto);
+					}
+
+					productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
+					productQuantitiesDTOList.add(productQuantitiesDTO);
+				}
+				productDtoData.setProductQuantitiesDTOs(productQuantitiesDTOList);
+				productDtoList.add(productDtoData);
+				// }
 
 			}
 		}
@@ -223,21 +289,21 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			productImagesRepository.deleteById(productimageId);
 			return "success";
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
-		
+
 	}
-	
+
 	@Override
 	public String deleteQuantity(Long productquantityId) {
 		try {
 			productquantityRepository.deleteById(productquantityId);
 			return "success";
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
-		
+
 	}
 
 }

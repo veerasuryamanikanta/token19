@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
 		UserDTO userDtoData = new UserDTO();
 		mapper.map(userData, userDtoData);
 		userDtoData.setRoleId(userData.getRole().getRoleId());
+		userDtoData.setRoleCode(userData.getRole().getRoleCode());
 		return userDtoData;
 	}
 
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService {
 			UserDTO userDtoData = new UserDTO();
 			mapper.map(userData, userDtoData);
 			userDtoData.setRoleId(userData.getRole().getRoleId());
+			userDtoData.setRoleCode(userData.getRole().getRoleCode());
 			return userDtoData;
 		} else {
 			return null;

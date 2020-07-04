@@ -10,6 +10,8 @@ public interface ProductService {
 
 	List<ProductDTO> findProductsBySubCategryAndShopId(Long subcategoryId,Long shopdetailsId);
 	
+	List<ProductDTO> availableProductsBySubCategryAndShopId(Long subcategoryId,Long shopdetailsId);
+	
 	List<ProductDTO> findProductsBySubCategryId(Long subcategoryId,Long userId);
 
 	String saveProductItems(ProductDTO productDTO);

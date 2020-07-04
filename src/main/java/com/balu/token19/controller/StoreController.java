@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.balu.token19.dto.CategoryDTO;
 import com.balu.token19.dto.ErrorObject;
+import com.balu.token19.dto.ProductAvailabilityDTO;
 import com.balu.token19.dto.ProductCategoryDTO;
 import com.balu.token19.dto.ProductDTO;
 import com.balu.token19.dto.QuantityDTO;
@@ -214,6 +215,24 @@ public class StoreController {
 		}
 		return holder;
 	}
+	
+	
+	/*
+	 * -----------------AVAILABLE PRODUCT LIST BY ID-------------
+	 */
+	@RequestMapping(value = "/availableproducts/{subcategoryId}/{userId}", method = RequestMethod.GET)
+	public ReturnHolder availableProductsbySubCatId(@PathVariable("subcategoryId") Long subcategoryId,
+			@PathVariable("userId") Long userId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			List<ProductDTO> productDTOList = productService.availableProductsBySubCategryAndShopId(subcategoryId, userId);
+			holder.setResult(productDTOList);
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
+		}
+		return holder;
+	}
+	
 
 	/*
 	 * -----------------SAVE QTY -------------
