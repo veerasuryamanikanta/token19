@@ -12,7 +12,6 @@ import com.balu.token19.domain.Product;
 import com.balu.token19.domain.ProductImages;
 import com.balu.token19.domain.ProductQuantities;
 import com.balu.token19.domain.ProductsAvailablity;
-import com.balu.token19.dto.ProductAvailabilityDTO;
 import com.balu.token19.dto.ProductDTO;
 import com.balu.token19.dto.ProductImagesDTO;
 import com.balu.token19.dto.ProductQuantitiesDTO;
@@ -57,7 +56,6 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductQuantitiesDTO> productQuantitiesDTOs = productDTO.getProductQuantitiesDTOs();
 			if (productQuantitiesDTOs.size() != 0) {
 				for (ProductQuantitiesDTO productQuantitiesDTO : productQuantitiesDTOs) {
-
 					String quantity = productQuantitiesDTO.getDescription();
 					ProductQuantities productQuantities = new ProductQuantities();
 					ProductQuantities exists_productQuantitiesData = productquantityRepository
@@ -151,6 +149,7 @@ public class ProductServiceImpl implements ProductService {
 								productQuantitiesDTO.setMrpprice(productsAvailablity.getMrpprice());
 								productQuantitiesDTO.setDiscount(productsAvailablity.getDiscount());
 								productQuantitiesDTO.setSellingprice(productsAvailablity.getSellingprice());
+								productQuantitiesDTO.setImagePath(productsAvailablity.getImagePath());
 								List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
 								List<ProductImages> productImagesList = productImagesRepository
 										.findByProductQuantityId(productQuantities.getProductquantityId());
@@ -166,17 +165,6 @@ public class ProductServiceImpl implements ProductService {
 							productDtoList.add(productDtoData);
 						}
 					}
-					
-//					ProductAvailabilityDTO productavaialbilitydto = new ProductAvailabilityDTO();
-//					mapper.map(productsAvailablity, productavaialbilitydto);
-//					productavaialbilitydto.setUserId(productsAvailablity.getUser().getUserId());
-//					productavaialbilitydto.setSubcategoryId(productsAvailablity.getSubcategory().getSubcategoryId());
-//					productavaialbilitydto.setShopdetailsId(productsAvailablity.getShopdetails().getShopdetailsId());
-//					productavaialbilitydto.setProductquantityId(productsAvailablity.getProductquantities().getProduct().getProductId());
-					
-					
-					
-					//productDtoList.add(productavaialbilitydto);
 				}
 			}
 			return productDtoList;

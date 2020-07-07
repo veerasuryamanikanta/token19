@@ -23,6 +23,8 @@ public class ProductDTO {
 
 	private String productName;
 	
+	private String productImagePath;
+	
 	private String productCategoryName;
 
 	private String shortDescription;

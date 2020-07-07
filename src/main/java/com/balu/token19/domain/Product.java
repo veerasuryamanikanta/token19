@@ -47,6 +47,9 @@ public class Product extends Root {
 
 	@NotNull
 	private String productName;
+	
+	@NotNull
+	private String productImagePath;
 
 	@NotNull
 	private String shortDescription;

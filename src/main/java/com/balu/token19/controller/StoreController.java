@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.balu.token19.dto.CategoryDTO;
 import com.balu.token19.dto.ErrorObject;
-import com.balu.token19.dto.ProductAvailabilityDTO;
 import com.balu.token19.dto.ProductCategoryDTO;
 import com.balu.token19.dto.ProductDTO;
 import com.balu.token19.dto.QuantityDTO;

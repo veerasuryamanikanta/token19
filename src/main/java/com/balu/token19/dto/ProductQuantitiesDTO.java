@@ -18,6 +18,8 @@ public class ProductQuantitiesDTO {
 	private Long quantityId;
 
 	private String description;
+	
+	private String imagePath;
 
 	private String mrpprice;
 

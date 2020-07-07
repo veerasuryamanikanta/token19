@@ -40,6 +40,8 @@ public class ProductsAvailablity extends Root {
 	public ProductQuantities productquantities;
 
 	public String description;
+	
+	public String imagePath;
 
 	public String mrpprice;
 
