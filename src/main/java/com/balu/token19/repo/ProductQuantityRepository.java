@@ -19,7 +19,12 @@ public interface ProductQuantityRepository extends JpaRepository<ProductQuantiti
 	List<ProductQuantities> findByAvailableProduct(@Param("productId") Long productId,
 			@Param("shopdetailsId") Long shopdetailsId, @Param("subcategoryId") Long subcategoryId);
 
-	
+	@Query(nativeQuery = true, value = "select * from productquantities where product_id =:productId "
+			+ "and productquantity_id not in (select productquantity_id from vendorproductquantity where shopdetails_id =:shopdetailsId"
+			+ " and isavailable =false)")
+	List<ProductQuantities> findByVendorProduct(@Param("productId") Long productId,
+			@Param("shopdetailsId") Long shopdetailsId);
+
 	@Query(nativeQuery = true, value = "select * from productquantities where product_id =:productId and description =:description")
 	ProductQuantities findByProductIdAnddescription(@Param("productId") Long productId,
 			@Param("description") String description);

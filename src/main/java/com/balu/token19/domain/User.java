@@ -58,6 +58,16 @@ public class User extends Root {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
 	public Set<ProductsAvailablity> productsavailablity;
 
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
+	public Set<VendorProduct> vendorproduct;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.MERGE)
+	public Set<VendorProductQuantity> vendorproductquantity;
+	
+	
 	@NotNull
 	private String userName;
 

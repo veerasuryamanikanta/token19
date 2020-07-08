@@ -49,7 +49,13 @@ public class ShopDetails extends Root {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "shopdetails", cascade = CascadeType.MERGE)
 	public Set<ProductsAvailablity> productsavailablity;
-
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "shopdetails", cascade = CascadeType.MERGE)
+	public Set<VendorProduct> vendorproduct;
+	
+	
+	
 	@NotNull
 	private String shopName;
 

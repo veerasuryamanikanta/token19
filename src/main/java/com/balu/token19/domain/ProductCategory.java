@@ -33,6 +33,7 @@ public class ProductCategory extends Root {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productcategory", cascade = CascadeType.MERGE)
 	public Set<Product> product;
+	
 
 	@NotNull
 	@Column(unique = true)

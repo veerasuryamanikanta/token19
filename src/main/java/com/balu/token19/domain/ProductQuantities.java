@@ -53,6 +53,11 @@ public class ProductQuantities extends Root {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productquantities", cascade = CascadeType.MERGE)
 	public Set<ProductsAvailablity> productsavailablity;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productquantities", cascade = CascadeType.MERGE)
+	public Set<VendorProductQuantity> vendorproductquantity;
+	
 
 	public String description;
 

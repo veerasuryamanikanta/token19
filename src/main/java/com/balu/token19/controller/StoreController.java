@@ -214,8 +214,7 @@ public class StoreController {
 		}
 		return holder;
 	}
-	
-	
+
 	/*
 	 * -----------------AVAILABLE PRODUCT LIST BY ID-------------
 	 */
@@ -224,14 +223,14 @@ public class StoreController {
 			@PathVariable("userId") Long userId) {
 		ReturnHolder holder = new ReturnHolder();
 		try {
-			List<ProductDTO> productDTOList = productService.availableProductsBySubCategryAndShopId(subcategoryId, userId);
+			List<ProductDTO> productDTOList = productService.availableProductsBySubCategryAndShopId(subcategoryId,
+					userId);
 			holder.setResult(productDTOList);
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
 		}
 		return holder;
 	}
-	
 
 	/*
 	 * -----------------SAVE QTY -------------
@@ -267,8 +266,7 @@ public class StoreController {
 		}
 		return holder;
 	}
-	
-	
+
 	/*
 	 * -----------------DELETE IMAGE QUANTITY -------------
 	 */
@@ -277,19 +275,18 @@ public class StoreController {
 		ReturnHolder holder = new ReturnHolder();
 		try {
 			String status = productService.deleteQuantityImage(productimageId);
-			if(status.equalsIgnoreCase("success")) {
+			if (status.equalsIgnoreCase("success")) {
 				holder.setResult("success");
-			}else {
+			} else {
 				holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete."));
 			}
-			
+
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete." + e));
 		}
 		return holder;
 	}
-	
-	
+
 	/*
 	 * -----------------DELETE QUANTITY -------------
 	 */
@@ -298,12 +295,12 @@ public class StoreController {
 		ReturnHolder holder = new ReturnHolder();
 		try {
 			String status = productService.deleteQuantity(productquantityId);
-			if(status.equalsIgnoreCase("success")) {
+			if (status.equalsIgnoreCase("success")) {
 				holder.setResult("success");
-			}else {
+			} else {
 				holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete."));
 			}
-			
+
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete." + e));
 		}
