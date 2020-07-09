@@ -58,7 +58,7 @@ public class UserController {
 						if (Helper.sendOTP(userDtodata.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
 								AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
 								AppConstants.otpMessage)) {
-							System.out.println("----"+rndNumber);
+							System.out.println("----" + rndNumber);
 							OtpDTO otpdto = new OtpDTO();
 							otpdto.setUserNumber(userDtodata.getUserNumber());
 							otpdto.setOtpCode("" + rndNumber);
@@ -91,6 +91,32 @@ public class UserController {
 							holder = new ReturnHolder(false, new ErrorObject("error", "Otp Sent Failed"));
 						}
 					}
+				}
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Save." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------SAVE USER -------------
+	 */
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ReturnHolder updateUser(@RequestBody UserDTO userDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (userDTO != null) {
+				if (userDTO.getUserNumber().equalsIgnoreCase("")) {
+					holder = new ReturnHolder(false, new ErrorObject("error", "User Number Must Not Be Empty"));
+				} else if (userDTO.getRoleId() == null) {
+					holder = new ReturnHolder(false, new ErrorObject("error", "UserType Must Not Be Empty"));
+				} else {
+					UserDTO userDtodata = userService.saveUser(userDTO);
+					holder.setResult(userDtodata);
 				}
 			} else {
 				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));

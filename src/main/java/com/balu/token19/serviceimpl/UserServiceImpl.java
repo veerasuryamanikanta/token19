@@ -40,6 +40,25 @@ public class UserServiceImpl implements UserService {
 		userDtoData.setRoleCode(userData.getRole().getRoleCode());
 		return userDtoData;
 	}
+	
+	/*
+	 * -----------------SAVE USER -------------
+	 */
+	@Override
+	public UserDTO updateUser(UserDTO userDTO) {
+		
+		User user = new User();
+		mapper.map(userDTO, user);
+		if(userDTO.getRoleId()!=null) {
+			user.setRole(roleRepository.getOne(userDTO.getRoleId()));
+		}
+		User userData = userRepository.save(user);
+		UserDTO userDtoData = new UserDTO();
+		mapper.map(userData, userDtoData);
+		userDtoData.setRoleId(userData.getRole().getRoleId());
+		userDtoData.setRoleCode(userData.getRole().getRoleCode());
+		return userDtoData;
+	}
 
 	/*
 	 * -----------------GET USER BY NUMBER -------------
