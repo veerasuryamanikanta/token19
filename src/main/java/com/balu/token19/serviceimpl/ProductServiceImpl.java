@@ -180,60 +180,6 @@ public class ProductServiceImpl implements ProductService {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
-//		try {
-//			List<VendorProductQuantity> vendorProductList = vendorProductQuantityRepository
-//					.findByUserShopProduct(shopdetailsId);
-//			if (vendorProductList.size() != 0) {
-//				for (VendorProductQuantity vendorProductQuantity : vendorProductList) {
-//					Long productId = vendorProductQuantity.getVendorproduct().getProduct().getProductId();
-//					Product productData = productRepository.getOne(productId);
-//					Long subCatId = productData.getSubcategory().getSubcategoryId();
-//					if (subCatId == subcategoryId) {
-//						ProductDTO productDtoData = new ProductDTO();
-//						mapper.map(productData, productDtoData);
-//						productDtoData.setSubcategoryId(productData.getSubcategory().getSubcategoryId());
-//						productDtoData.setProductcategoryId(productData.getProductcategory().getProductcategoryId());
-//						productDtoData
-//								.setProductCategoryName(productData.getProductcategory().getProductcategoryName());
-//						List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
-//						List<ProductQuantities> productQuantitiesList = productquantityRepository
-//								.findByVendorProduct(productData.getProductId(), shopdetailsId);
-//						if (productQuantitiesList.size() != 0) {
-//							for (ProductQuantities productQuantities : productQuantitiesList) {
-//								Long productQuantityId = vendorProductQuantity.getProductquantities()
-//										.getProductquantityId();
-//								Long currentpProductQuantityId = productQuantities.getProductquantityId();
-//								if (productQuantityId == currentpProductQuantityId) {
-//									ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
-//									mapper.map(productQuantities, productQuantitiesDTO);
-//									productQuantitiesDTO.setQuantityId(productQuantities.getQuantity().getQuantityId());
-//									productQuantitiesDTO.setDescription(productQuantities.getDescription());
-//									productQuantitiesDTO.setMrpprice(vendorProductQuantity.getMrpprice());
-//									productQuantitiesDTO.setDiscount(vendorProductQuantity.getDiscount());
-//									productQuantitiesDTO.setSellingprice(vendorProductQuantity.getSellingprice());
-//									// productQuantitiesDTO.setImagePath(vendorProductQuantity.getImagePath());
-//									List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
-//									List<ProductImages> productImagesList = productImagesRepository
-//											.findByProductQuantityId(productQuantities.getProductquantityId());
-//									for (ProductImages productImages : productImagesList) {
-//										ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
-//										mapper.map(productImages, ProductImagesDto);
-//										productImagesDTOList.add(ProductImagesDto);
-//									}
-//									productQuantitiesDTO.setProductImagesDTOs(productImagesDTOList);
-//									productQuantitiesDTOList.add(productQuantitiesDTO);
-//								}
-//								productDtoData.setProductQuantitiesDTOs(productQuantitiesDTOList);
-//								productDtoList.add(productDtoData);
-//							}
-//						}
-//					}
-//				}
-//			}
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
 		return productDtoList;
 
 	}
@@ -348,6 +294,22 @@ public class ProductServiceImpl implements ProductService {
 			return null;
 		}
 
+	}
+
+	@Override
+	public List<ProductImagesDTO> getProductImages(Long productId) {
+		List<ProductQuantities> productQuantitiesList = productquantityRepository.findByProductId(productId);
+		List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
+		for (ProductQuantities productQuantities : productQuantitiesList) {
+			List<ProductImages> productImagesList = productImagesRepository
+					.findByProductQuantityId(productQuantities.getProductquantityId());
+			for (ProductImages productImages : productImagesList) {
+				ProductImagesDTO ProductImagesDto = new ProductImagesDTO();
+				mapper.map(productImages, ProductImagesDto);
+				productImagesDTOList.add(ProductImagesDto);
+			}
+		}
+		return productImagesDTOList;
 	}
 
 }

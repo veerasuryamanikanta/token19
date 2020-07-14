@@ -3,6 +3,7 @@ package com.balu.token19.service;
 import java.util.List;
 
 import com.balu.token19.dto.ProductDTO;
+import com.balu.token19.dto.ProductImagesDTO;
 
 public interface ProductService {
 
@@ -19,6 +20,8 @@ public interface ProductService {
 	String deleteQuantityImage(Long productimageId);
 	
 	String deleteQuantity(Long productquantityId);
+	
+	List<ProductImagesDTO> getProductImages(Long productId);
 	
 
 }

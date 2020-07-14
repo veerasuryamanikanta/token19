@@ -13,6 +13,7 @@ import com.balu.token19.dto.CategoryDTO;
 import com.balu.token19.dto.ErrorObject;
 import com.balu.token19.dto.ProductCategoryDTO;
 import com.balu.token19.dto.ProductDTO;
+import com.balu.token19.dto.ProductImagesDTO;
 import com.balu.token19.dto.QuantityDTO;
 import com.balu.token19.dto.ReturnHolder;
 import com.balu.token19.dto.SubCategoryDTO;
@@ -303,6 +304,21 @@ public class StoreController {
 
 		} catch (Exception e) {
 			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Delete." + e));
+		}
+		return holder;
+	}
+
+	/*
+	 * -----------------ALL QUANTITY LIST -------------
+	 */
+	@RequestMapping(value = "/product/images/{productId}", method = RequestMethod.GET)
+	public ReturnHolder getProductImages(@PathVariable("productId") Long productId) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			List<ProductImagesDTO> imagesList = productService.getProductImages(productId);
+			holder.setResult(imagesList);
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Load." + e));
 		}
 		return holder;
 	}
