@@ -19,6 +19,8 @@ public class FcmDTO {
 
 	private String image;
 	
+	private String notificationImage;
+	
 	private RequestDTO requestdto;
 
 }

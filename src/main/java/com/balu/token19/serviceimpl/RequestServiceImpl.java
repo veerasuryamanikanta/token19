@@ -19,6 +19,7 @@ import com.balu.token19.dto.UserDTO;
 import com.balu.token19.repo.DeviceRepository;
 import com.balu.token19.repo.RequestRepository;
 import com.balu.token19.repo.ShopDetailsRepository;
+import com.balu.token19.repo.SliderRepository;
 import com.balu.token19.repo.UserRepository;
 import com.balu.token19.service.FcmService;
 import com.balu.token19.service.RequestService;
@@ -42,6 +43,9 @@ public class RequestServiceImpl implements RequestService {
 
 	@Autowired
 	private DeviceRepository deviceRepository;
+
+	@Autowired
+	private SliderRepository sliderRepository;
 
 	private String token;
 
@@ -79,14 +83,19 @@ public class RequestServiceImpl implements RequestService {
 			} else {
 				token = "";
 			}
-
 			try {
+				String not_imagepath;
+				try {
+					not_imagepath = sliderRepository.findNotificationImage();
+				} catch (Exception e) {
+					not_imagepath = "";
+				}
 				FcmDTO fcmdto = new FcmDTO();
 				fcmdto.setTo(token);
 				fcmdto.setTitle(requestData.getUser().getUserNumber());
 				fcmdto.setBody("you have a request from " + requestData.getUser().getUserNumber()
 						+ ". So please check cnfirm order");
-				fcmdto.setImage(requestData.getRequestPath());
+				fcmdto.setImage(not_imagepath);
 				fcmdto.setRequestdto(requestDtoData);
 				CompletableFuture<String> pushNotification = fcmservice.send(fcmdto);
 				CompletableFuture.allOf(pushNotification).join();
@@ -187,7 +196,7 @@ public class RequestServiceImpl implements RequestService {
 			try {
 				int tokennumber = requestRepository
 						.findTodayRequestByShopId(requestData.getShopdetails().getShopdetailsId());
-				request.setTokenNumber(String.valueOf(tokennumber+1));
+				request.setTokenNumber(String.valueOf(tokennumber + 1));
 			} catch (Exception e) {
 				request.setTokenNumber(requestData.getTokenNumber());
 			}
