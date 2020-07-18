@@ -92,9 +92,8 @@ public class RequestServiceImpl implements RequestService {
 				}
 				FcmDTO fcmdto = new FcmDTO();
 				fcmdto.setTo(token);
-				fcmdto.setTitle(requestData.getUser().getUserNumber());
-				fcmdto.setBody("you have a request from " + requestData.getUser().getUserNumber()
-						+ ". So please check cnfirm order");
+				fcmdto.setTitle("HEY VENDOR we have a request from " + requestData.getUser().getUserNumber());
+				fcmdto.setBody("Send Time Slot By Confirm Order.");
 				fcmdto.setImage(not_imagepath);
 				fcmdto.setRequestdto(requestDtoData);
 				CompletableFuture<String> pushNotification = fcmservice.send(fcmdto);

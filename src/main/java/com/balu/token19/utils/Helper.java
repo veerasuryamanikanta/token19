@@ -26,6 +26,12 @@ public class Helper {
 			// String senderId = AppConstants.senderid + URLEncoder.encode(senderValue,
 			// AppConstants.utf);
 
+			String userId = "UserID =odospl";
+			String Password = "Password=ewan2628EW";
+			String SenderID = "SenderID=MTOKEN";
+			String Phno = "Phno=" + mobilenumber;
+			String Msg = "Msg=" + message;
+
 			String username = AppConstants.username + "suryaaa";
 			String password = AppConstants.password + "Surya@7891";
 			String from = AppConstants.from + "TOKENS";
@@ -36,7 +42,9 @@ public class Helper {
 			// URL obj = new URL(AppConstants.url + token + secret + usetype + mobile +
 			// messageText + senderId);
 
-			URL obj = new URL(AppConstants.url + username + password + from + to + messageText + type);
+//			URL obj = new URL(AppConstants.url + username + password + from + to + messageText + type);
+			
+			URL obj = new URL(AppConstants.url + userId + Password + SenderID + Phno + Msg);
 
 			HttpURLConnection httpConnection = (HttpURLConnection) obj.openConnection();
 			httpConnection.setDoOutput(true);
@@ -56,7 +64,7 @@ public class Helper {
 			return true;
 		} catch (Exception ex) {
 			return false;
-			
+
 		}
 	}
 

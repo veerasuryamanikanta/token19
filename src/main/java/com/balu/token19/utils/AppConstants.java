@@ -26,7 +26,8 @@ public class AppConstants {
 	public static String message = "&message=";
 	public static String senderid = "&senderid=";
 	// public static String url = "https://www.sms4india.com/api/v1/sendCampaign?";
-	public static String url = "https://www.smsstriker.com/API/sms.php?";
+	//public static String url = "https://www.smsstriker.com/API/sms.php?";
+	public static String url = "http://nimbusit.biz/api/SmsApi/SendMultipleApi?";
 	public static String username = "username=";
 	public static String password = "&password=";
 	public static String from = "&from=";
