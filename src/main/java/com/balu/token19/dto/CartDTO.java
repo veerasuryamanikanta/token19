@@ -28,6 +28,8 @@ public class CartDTO {
 	private List<ProductImagesDTO> productImages;
 
 	private String productMrp;
+	
+	private String sellingPrice;
 
 	private String productDiscount;
 

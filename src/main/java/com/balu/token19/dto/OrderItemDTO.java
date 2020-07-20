@@ -30,6 +30,8 @@ public class OrderItemDTO {
 	private List<ProductImagesDTO> productImages;
 
 	private String productMrp;
+	
+	private String sellingPrice;
 
 	private String productDiscount;
 

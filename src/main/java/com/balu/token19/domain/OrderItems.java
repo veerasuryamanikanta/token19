@@ -39,5 +39,12 @@ public class OrderItems extends Root {
 
 	@NotNull
 	public String itemQuantity;
+	
+	@NotNull
+	public String productMrp;
+	
+	@NotNull
+	public String sellingPrice;
+	
 
 }

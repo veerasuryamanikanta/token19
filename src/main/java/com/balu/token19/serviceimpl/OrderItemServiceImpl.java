@@ -110,7 +110,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 				}
 
 				orderitemsdto.setProductImages(productImagesDTOList);
-				orderitemsdto.setProductMrp(orderItems.getProductquantities().getMrpprice());
+				orderitemsdto.setProductMrp(orderItems.getProductMrp());
+				orderitemsdto.setSellingPrice(orderItems.getSellingPrice());
+				//orderitemsdto.setProductMrp(orderItems.getProductquantities().getMrpprice());
 				orderitemsdto.setSpecialOffer(orderItems.getProductquantities().getSellingprice());
 				orderitemsdto.setQuantityName(orderItems.getProductquantities().getQuantity().getQuantityName());
 				orderitemsdto.setQuantity(orderItems.getProductquantities().getDescription());
