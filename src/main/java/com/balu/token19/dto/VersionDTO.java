@@ -23,7 +23,7 @@ public class VersionDTO {
 	
 	private String updateMessage;
 	
-	private boolean isMandatory;
+	private Boolean isMandatory;
 	
 	private String createdDate;
 	
