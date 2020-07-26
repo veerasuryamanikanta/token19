@@ -34,6 +34,10 @@ public class SubCategory extends Root {
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoryId")
 	public Category category;
+	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	@JoinColumn(name = "shopsubcategoryId")
+	public ShopSubCategory shopsubcategory;
 
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "subcategory", cascade = CascadeType.MERGE)
