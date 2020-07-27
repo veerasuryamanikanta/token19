@@ -31,7 +31,7 @@ public class OtpServiceImpl implements OtpService {
 		if (otp != null) {
 			long rndNumber = Helper.createRandomInteger(55, 579026);
 			if (Helper.sendOTP(usernumber, rndNumber, AppConstants.AK_VALUE, AppConstants.SECRET_VALUE,
-					AppConstants.STAGE, AppConstants.SENDER_ID, AppConstants.otpMessage)) {
+					AppConstants.STAGE, AppConstants.SENDER_ID, rndNumber + AppConstants.otpMessage)) {
 				try {
 					otpRepository.updateOTP(usernumber, String.valueOf(rndNumber));
 					response = "success";

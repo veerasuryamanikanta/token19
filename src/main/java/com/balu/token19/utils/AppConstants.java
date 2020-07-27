@@ -26,7 +26,7 @@ public class AppConstants {
 	public static String message = "&message=";
 	public static String senderid = "&senderid=";
 	// public static String url = "https://www.sms4india.com/api/v1/sendCampaign?";
-	//public static String url = "https://www.smsstriker.com/API/sms.php?";
+	// public static String url = "https://www.smsstriker.com/API/sms.php?";
 	public static String url = "http://nimbusit.biz/api/SmsApi/SendMultipleApi?";
 	public static String username = "username=";
 	public static String password = "&password=";
@@ -34,7 +34,7 @@ public class AppConstants {
 	public static String to = "&to=";
 	public static String msg = "&msg=";
 	public static String type = "&type=";
-	public static String otpMessage = "is your one time password to proceed on token19.co.in it is valid for next 10 miniutes.";
+	public static String otpMessage = " is your one time password to proceed on token19.co.in it is valid for next 10 miniutes.";
 	public static String AK_VALUE = "56U29Q98DU6FIH73HTUI68SQ1CWIJNCQ";
 	public static String SECRET_VALUE = "BDHG5HFWJALXB1VV";
 	public static String SENDER_ID = "StAqua";

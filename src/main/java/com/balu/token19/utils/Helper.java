@@ -13,38 +13,30 @@ public class Helper {
 			String senderValue, String message) {
 
 		try {
-			// String token = AppConstants.apikey + URLEncoder.encode(akvalue,
-			// AppConstants.utf);
-			// String secret = AppConstants.secret + URLEncoder.encode(skvalue,
-			// AppConstants.utf);
-			// String usetype = AppConstants.usetype + URLEncoder.encode(utype,
-			// AppConstants.utf);
-			// String mobile = AppConstants.phone + URLEncoder.encode(mobilenumber,
-			// AppConstants.utf);
-			// String messageText = AppConstants.message + URLEncoder.encode(rndNumber +
-			// message, AppConstants.utf);
-			// String senderId = AppConstants.senderid + URLEncoder.encode(senderValue,
-			// AppConstants.utf);
+//			 String token = AppConstants.apikey + URLEncoder.encode(akvalue,
+//			 AppConstants.utf);
+//			 String secret = AppConstants.secret + URLEncoder.encode(skvalue,
+//			 AppConstants.utf);
+//			 String usetype = AppConstants.usetype + URLEncoder.encode(utype,
+//			 AppConstants.utf);
+//			 String mobile = AppConstants.phone + URLEncoder.encode(mobilenumber,
+//			 AppConstants.utf);
+//			 String messageText = AppConstants.message + URLEncoder.encode(rndNumber +
+//			 message, AppConstants.utf);
+//			 String senderId = AppConstants.senderid + URLEncoder.encode(senderValue,
+//			 AppConstants.utf);
+//			 String username = AppConstants.username + "suryaaa";
+//			 String password = AppConstants.password + "Surya@7891";
+//			 String from = AppConstants.from + "TOKENS";
+//			 String to = AppConstants.to + URLEncoder.encode(mobilenumber, AppConstants.utf);
+//			 String messageText = AppConstants.msg + URLEncoder.encode(rndNumber + message, AppConstants.utf);
+//			 String type = AppConstants.type + "1";
+//			 URL obj = new URL(AppConstants.url + token + secret + usetype + mobile +
+//			 messageText + senderId);
 
-			String userId = "UserID =odospl";
-			String Password = "Password=ewan2628EW";
-			String SenderID = "SenderID=MTOKEN";
-			String Phno = "Phno=" + mobilenumber;
-			String Msg = "Msg=" + message;
-
-			String username = AppConstants.username + "suryaaa";
-			String password = AppConstants.password + "Surya@7891";
-			String from = AppConstants.from + "TOKENS";
-			String to = AppConstants.to + URLEncoder.encode(mobilenumber, AppConstants.utf);
-			String messageText = AppConstants.msg + URLEncoder.encode(rndNumber + message, AppConstants.utf);
-			String type = AppConstants.type + "1";
-
-			// URL obj = new URL(AppConstants.url + token + secret + usetype + mobile +
-			// messageText + senderId);
-
-//			URL obj = new URL(AppConstants.url + username + password + from + to + messageText + type);
-			
-			URL obj = new URL(AppConstants.url + userId + Password + SenderID + Phno + Msg);
+			String encodeMessage = URLEncoder.encode(message, "UTF-8");
+			URL obj = new URL("http://nimbusit.biz/api/SmsApi/SendSingleApi?UserID=manikanta&"
+					+ "Password=@Unsh0708&SenderID=INFSMS&Phno=" + mobilenumber + "&Msg=" + encodeMessage);
 
 			HttpURLConnection httpConnection = (HttpURLConnection) obj.openConnection();
 			httpConnection.setDoOutput(true);
@@ -60,6 +52,7 @@ public class Helper {
 			while ((line = bufferedReader.readLine()) != null) {
 				content.append(line).append("\n");
 			}
+			System.out.println("------" + content);
 			bufferedReader.close();
 			return true;
 		} catch (Exception ex) {

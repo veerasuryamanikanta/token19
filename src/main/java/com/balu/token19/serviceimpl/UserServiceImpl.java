@@ -27,10 +27,10 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public UserDTO saveUser(UserDTO userDTO) {
-		
+
 		User user = new User();
 		mapper.map(userDTO, user);
-		if(userDTO.getRoleId()!=null) {
+		if (userDTO.getRoleId() != null) {
 			user.setRole(roleRepository.getOne(userDTO.getRoleId()));
 		}
 		User userData = userRepository.save(user);
@@ -40,16 +40,16 @@ public class UserServiceImpl implements UserService {
 		userDtoData.setRoleCode(userData.getRole().getRoleCode());
 		return userDtoData;
 	}
-	
+
 	/*
 	 * -----------------SAVE USER -------------
 	 */
 	@Override
 	public UserDTO updateUser(UserDTO userDTO) {
-		
+
 		User user = new User();
 		mapper.map(userDTO, user);
-		if(userDTO.getRoleId()!=null) {
+		if (userDTO.getRoleId() != null) {
 			user.setRole(roleRepository.getOne(userDTO.getRoleId()));
 		}
 		User userData = userRepository.save(user);

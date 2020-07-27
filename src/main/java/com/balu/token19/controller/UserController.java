@@ -57,8 +57,7 @@ public class UserController {
 						long rndNumber = Helper.createRandomInteger(111, 579026);
 						if (Helper.sendOTP(userDtodata.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
 								AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
-								AppConstants.otpMessage)) {
-							System.out.println("----" + rndNumber);
+								rndNumber + AppConstants.otpMessage)) {
 							OtpDTO otpdto = new OtpDTO();
 							otpdto.setUserNumber(userDtodata.getUserNumber());
 							otpdto.setOtpCode("" + rndNumber);
@@ -77,7 +76,7 @@ public class UserController {
 						long rndNumber = Helper.createRandomInteger(111, 579026);
 						if (Helper.sendOTP(userDtodata.getUserNumber(), rndNumber, AppConstants.AK_VALUE,
 								AppConstants.SECRET_VALUE, AppConstants.STAGE, AppConstants.SENDER_ID,
-								AppConstants.otpMessage)) {
+								rndNumber + AppConstants.otpMessage)) {
 							OtpDTO otpdto = new OtpDTO();
 							otpdto.setUserNumber(userDtodata.getUserNumber());
 							otpdto.setOtpCode("" + rndNumber);
