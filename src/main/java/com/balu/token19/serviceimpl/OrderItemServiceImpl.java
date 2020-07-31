@@ -69,6 +69,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 					orderItems.setProduct(productRepository.getOne(orderItemDTO.getProductId()));
 					orderItems.setProductquantities(
 							productQuantityRepository.getOne(orderItemDTO.getProductQuantityId()));
+					orderItems.setIsactive(true);
 					orderItemsList.add(orderItems);
 				}
 				orderItemsRepository.saveAll(orderItemsList);
@@ -117,7 +118,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 				orderitemsdto.setQuantityName(orderItems.getProductquantities().getQuantity().getQuantityName());
 				orderitemsdto.setQuantity(orderItems.getProductquantities().getDescription());
 				orderitemsdto.setItemQuantity(orderItems.getItemQuantity());
-				orderitemsdto.setIsactive(true);
+				orderitemsdto.setIsactive(orderItems.getIsactive());
 				orderitemsdto.setCreatedDate("" + orderItems.getCreatedDate());
 				orderitemsdto.setUpdatedOn("" + orderItems.getUpdatedOn());
 				orderItemDtoList.add(orderitemsdto);
@@ -131,6 +132,17 @@ public class OrderItemServiceImpl implements OrderItemService {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	@Override
+	public String updateOrderItem(OrderItemDTO orderItemDTO) {
+		try {
+			orderItemsRepository.updateOrder(orderItemDTO.getOrderItemId(), orderItemDTO.getIsactive());
+			return "success";
+		}catch (Exception e) {
+			return "failed";
+		}
+		
 	}
 
 }

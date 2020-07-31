@@ -52,7 +52,6 @@ public class Helper {
 			while ((line = bufferedReader.readLine()) != null) {
 				content.append(line).append("\n");
 			}
-			System.out.println("------" + content);
 			bufferedReader.close();
 			return true;
 		} catch (Exception ex) {

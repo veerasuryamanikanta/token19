@@ -17,7 +17,9 @@ import com.balu.token19.utils.HeaderRequestInterceptor;
 @Service
 public class FcmServiceImpl implements FcmService {
 
-	private static final String FIREBASE_SERVER_KEY = "AAAAx0xI7k4:APA91bG2C7r9lrSTsj6St5jtT-v6nDXVaBUusAtW7W4Z7tZOBsxrGp9282EAsQ2An6U_ufGEstxkDkcAumBNjKZ-qFh2p5vfW3kfh9r5vDHd2xiklE3srRlzNi-5VQdTbHFNZeIGP0zw";
+	private static final String FIREBASE_SERVER_KEY = "AAAAyxP85-w:APA91bG-HJ0XrpgryoUChj2_xdQcCEeTy4oOCcCamQjDW_hsvfC5GcIyDw1ZLa1HCwC5wZQZ2blj14d38mj5oCA5HxRq6Cuv0ZLoOY95P-AdqpF3BueQzbWiobGLfCMsaecyNdnpvLdd";
+	// private static final String FIREBASE_SERVER_KEY =
+	// "AAAAx0xI7k4:APA91bG2C7r9lrSTsj6St5jtT-v6nDXVaBUusAtW7W4Z7tZOBsxrGp9282EAsQ2An6U_ufGEstxkDkcAumBNjKZ-qFh2p5vfW3kfh9r5vDHd2xiklE3srRlzNi-5VQdTbHFNZeIGP0zw";
 	private static final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
 
 	@Override
@@ -27,7 +29,6 @@ public class FcmServiceImpl implements FcmService {
 		interceptors.add(new HeaderRequestInterceptor("Authorization", "key=" + FIREBASE_SERVER_KEY));
 		interceptors.add(new HeaderRequestInterceptor("Content-Type", "application/json"));
 		restTemplate.setInterceptors(interceptors);
-
 		JSONObject data = new JSONObject();
 		try {
 			data.put("title", fcmDTO.getTitle());
