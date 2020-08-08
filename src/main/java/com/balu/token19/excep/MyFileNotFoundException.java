@@ -1,4 +1,4 @@
-package com.balu.token19.utils;
+package com.balu.token19.excep;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

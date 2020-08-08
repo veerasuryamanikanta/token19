@@ -14,10 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.balu.token19.utils.FileStorageException;
+import com.balu.token19.excep.FileStorageException;
+import com.balu.token19.excep.MyFileNotFoundException;
 import com.balu.token19.utils.FileStorageProperties;
-import com.balu.token19.utils.MyFileNotFoundException;
-
 
 @Service
 public class FileStorageService {

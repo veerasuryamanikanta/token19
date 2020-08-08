@@ -6,6 +6,6 @@ import com.balu.token19.dto.FcmDTO;
 
 public interface FcmService {
 
-	CompletableFuture<String> send(FcmDTO fcmDTO);
+	public CompletableFuture<String> send(FcmDTO fcmDTO);
 
 }

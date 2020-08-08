@@ -14,11 +14,11 @@ public class RequestDTO {
 	private Long requestId;
 
 	private Long userId;
-	
+
 	private Long shopDetailsId;
-	
+
 	private UserDTO userDTO;
-	
+
 	private ShopDetailsDTO shopDetailsDTO;
 
 	private String requestPath;
@@ -28,9 +28,15 @@ public class RequestDTO {
 	private String recieveTime;
 
 	private String tokenNumber;
-	
+
+	private String userUID;
+
+	private String providerUID;
+
+	private String senderUID;
+
 	private String requestType;
-	
+
 	private String createdDate;
 
 }

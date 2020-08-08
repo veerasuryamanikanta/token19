@@ -48,6 +48,15 @@ public class Request extends Root {
 	
 	@NotNull
 	private String requestType;
+	
+	@NotNull
+	private String userUid;
+	
+	@NotNull
+	private String providerUid;
+	
+	@NotNull
+	private String senderUid;
 
 
 }

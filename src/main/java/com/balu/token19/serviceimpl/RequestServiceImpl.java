@@ -13,6 +13,7 @@ import com.balu.token19.domain.Request;
 import com.balu.token19.domain.ShopDetails;
 import com.balu.token19.domain.User;
 import com.balu.token19.dto.FcmDTO;
+import com.balu.token19.dto.FirebaseSignInSignUpResponseBean;
 import com.balu.token19.dto.RequestDTO;
 import com.balu.token19.dto.ShopDetailsDTO;
 import com.balu.token19.dto.UserDTO;
@@ -23,6 +24,7 @@ import com.balu.token19.repo.SliderRepository;
 import com.balu.token19.repo.UserRepository;
 import com.balu.token19.service.FcmService;
 import com.balu.token19.service.RequestService;
+import com.balu.token19.service.UserAuthenticationService;
 
 @Service
 public class RequestServiceImpl implements RequestService {
@@ -34,6 +36,9 @@ public class RequestServiceImpl implements RequestService {
 
 	@Autowired
 	private FcmService fcmservice;
+
+	@Autowired
+	UserAuthenticationService userAuthenticationService;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -60,48 +65,66 @@ public class RequestServiceImpl implements RequestService {
 		request.setShopdetails(shopdetailsRepository.getOne(requestDTO.getShopDetailsId()));
 		Request requestData = requestRepository.save(request);
 		if (requestData != null) {
-			RequestDTO requestDtoData = new RequestDTO();
-			mapper.map(requestData, requestDtoData);
-			requestDtoData.setUserId(requestData.getUser().getUserId());
-			requestDtoData.setShopDetailsId(requestData.getShopdetails().getShopdetailsId());
-			User user = requestData.getUser();
-			UserDTO userdto = new UserDTO();
-			mapper.map(user, userdto);
-			requestDtoData.setUserDTO(userdto);
-			ShopDetails shopDetails = requestData.getShopdetails();
-			ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
-			mapper.map(shopDetails, shopDetailsDTO);
-			requestDtoData.setShopDetailsDTO(shopDetailsDTO);
-			if (requestData.getUser().getUniqueID() != null) {
-				String notif_token = deviceRepository
-						.findByuniqueId(requestData.getShopdetails().getUser().getUniqueID());
-				if (notif_token != null) {
-					token = notif_token;
+			String userEmail = requestData.getRequestType() + "_" + requestData.getRequestId() + "_user@token19.com";
+			FirebaseSignInSignUpResponseBean userUIDData = userAuthenticationService
+					.signUpWithEmailAndPassword(userEmail, userEmail);
+			String userUID = userUIDData.getLocalId();
+			String providerEmail = requestData.getRequestType() + "_" + requestData.getRequestId()
+					+ "_provider@token19.com";
+			FirebaseSignInSignUpResponseBean providerUIDData = userAuthenticationService
+					.signUpWithEmailAndPassword(providerEmail, providerEmail);
+			String providerUID = providerUIDData.getLocalId();
+			Request updaterequest = new Request();
+			mapper.map(requestDTO, updaterequest);
+			updaterequest.setRequestId(requestData.getRequestId());
+			updaterequest.setUser(userRepository.getOne(requestDTO.getUserId()));
+			updaterequest.setShopdetails(shopdetailsRepository.getOne(requestDTO.getShopDetailsId()));
+			updaterequest.setUserUid(userUID);
+			updaterequest.setProviderUid(providerUID);
+			updaterequest.setSenderUid(userUID);
+			Request updateRequestData = requestRepository.save(updaterequest);
+			if (updateRequestData != null) {
+				RequestDTO requestDtoData = new RequestDTO();
+				mapper.map(updateRequestData, requestDtoData);
+				requestDtoData.setUserId(updateRequestData.getUser().getUserId());
+				requestDtoData.setShopDetailsId(updateRequestData.getShopdetails().getShopdetailsId());
+				User user = updateRequestData.getUser();
+				UserDTO userdto = new UserDTO();
+				mapper.map(user, userdto);
+				requestDtoData.setUserDTO(userdto);
+				ShopDetails shopDetails = updateRequestData.getShopdetails();
+				ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
+				mapper.map(shopDetails, shopDetailsDTO);
+				requestDtoData.setShopDetailsDTO(shopDetailsDTO);
+				if (requestData.getUser().getUniqueID() != null) {
+					String notif_token = deviceRepository
+							.findByuniqueId(updateRequestData.getShopdetails().getUser().getUniqueID());
+					if (notif_token != null) {
+						token = notif_token;
+					} else {
+						token = "";
+					}
 				} else {
 					token = "";
 				}
-			} else {
-				token = "";
-			}
-			try {
-				String not_imagepath;
 				try {
-					not_imagepath = sliderRepository.findNotificationImage();
+					String not_imagepath = sliderRepository.findNotificationImage();
+					FcmDTO fcmdto = new FcmDTO();
+					fcmdto.setTo(token);
+					fcmdto.setTitle("HEY VENDOR we have a request from " + requestData.getUser().getUserNumber());
+					fcmdto.setBody("Send Time Slot By Confirm Order.");
+					fcmdto.setImage(not_imagepath);
+					fcmdto.setRequestdto(requestDtoData);
+					CompletableFuture<String> pushNotification = fcmservice.send(fcmdto);
+					CompletableFuture.allOf(pushNotification).join();
 				} catch (Exception e) {
-					not_imagepath = "";
+					e.printStackTrace();
 				}
-				FcmDTO fcmdto = new FcmDTO();
-				fcmdto.setTo(token);
-				fcmdto.setTitle("HEY VENDOR we have a request from " + requestData.getUser().getUserNumber());
-				fcmdto.setBody("Send Time Slot By Confirm Order.");
-				fcmdto.setImage(not_imagepath);
-				fcmdto.setRequestdto(requestDtoData);
-				CompletableFuture<String> pushNotification = fcmservice.send(fcmdto);
-				CompletableFuture.allOf(pushNotification).join();
 				return requestDtoData;
-			} catch (Exception e) {
+			} else {
 				return null;
 			}
+
 		} else {
 			return null;
 		}
@@ -122,6 +145,9 @@ public class RequestServiceImpl implements RequestService {
 				mapper.map(requestDtoData, requestdto);
 				requestdto.setUserId(requestDtoData.getUser().getUserId());
 				requestdto.setShopDetailsId(requestDtoData.getShopdetails().getShopdetailsId());
+				requestdto.setUserUID(requestDtoData.getUserUid());
+				requestdto.setSenderUID(requestDtoData.getSenderUid());
+				requestdto.setProviderUID(requestDtoData.getProviderUid());
 				User user = requestDtoData.getUser();
 				UserDTO userdto = new UserDTO();
 				mapper.map(user, userdto);
@@ -150,6 +176,9 @@ public class RequestServiceImpl implements RequestService {
 				mapper.map(requestDtoData, requestdto);
 				requestdto.setUserId(requestDtoData.getUser().getUserId());
 				requestdto.setShopDetailsId(requestDtoData.getShopdetails().getShopdetailsId());
+				requestdto.setUserUID(requestDtoData.getUserUid());
+				requestdto.setSenderUID(requestDtoData.getSenderUid());
+				requestdto.setProviderUID(requestDtoData.getProviderUid());
 				User user = requestDtoData.getUser();
 				UserDTO userdto = new UserDTO();
 				mapper.map(user, userdto);

@@ -1,4 +1,4 @@
-package com.balu.token19.utils;
+package com.balu.token19.excep;
 
 public class FileStorageException extends RuntimeException {
     public FileStorageException(String message) {

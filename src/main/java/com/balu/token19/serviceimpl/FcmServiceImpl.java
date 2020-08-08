@@ -11,15 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.balu.token19.dto.FcmDTO;
+import com.balu.token19.excep.HeaderRequestInterceptor;
 import com.balu.token19.service.FcmService;
-import com.balu.token19.utils.HeaderRequestInterceptor;
 
 @Service
 public class FcmServiceImpl implements FcmService {
 
-	private static final String FIREBASE_SERVER_KEY = "AAAAyxP85-w:APA91bG-HJ0XrpgryoUChj2_xdQcCEeTy4oOCcCamQjDW_hsvfC5GcIyDw1ZLa1HCwC5wZQZ2blj14d38mj5oCA5HxRq6Cuv0ZLoOY95P-AdqpF3BueQzbWiobGLfCMsaecyNdnpvLdd";
-	// private static final String FIREBASE_SERVER_KEY =
-	// "AAAAx0xI7k4:APA91bG2C7r9lrSTsj6St5jtT-v6nDXVaBUusAtW7W4Z7tZOBsxrGp9282EAsQ2An6U_ufGEstxkDkcAumBNjKZ-qFh2p5vfW3kfh9r5vDHd2xiklE3srRlzNi-5VQdTbHFNZeIGP0zw";
+	private static final String FIREBASE_SERVER_KEY = "AAAAgW5NQ9E:APA91bHMNM0N7CN5yW1-j164opvpswxpA6tySq78jkJbjF"
+			+ "ckZpD5ts94ggIGYXPMx7mF4Cem8_mKcUHmBhXiEbAU1mNV39Hez88iEly_zfeCJqxDGCGBmbP2lHtY5AYRFV1Jf4HE8hIT";
 	private static final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
 
 	@Override
