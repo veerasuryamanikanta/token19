@@ -13,31 +13,14 @@ public class Helper {
 			String senderValue, String message) {
 
 		try {
-			 String token = AppConstants.apikey + URLEncoder.encode(akvalue,
-			 AppConstants.utf);
-			 String secret = AppConstants.secret + URLEncoder.encode(skvalue,
-			 AppConstants.utf);
-			 String usetype = AppConstants.usetype + URLEncoder.encode(utype,
-			 AppConstants.utf);
-			 String mobile = AppConstants.phone + URLEncoder.encode(mobilenumber,
-			 AppConstants.utf);
-			 //String messageText = AppConstants.message + URLEncoder.encode(rndNumber +
-			 //message, AppConstants.utf);
-			 String senderId = AppConstants.senderid + URLEncoder.encode(senderValue,
-			 AppConstants.utf);
-			 String username = AppConstants.username + "suryaaa";
-			 String password = AppConstants.password + "Surya@7891";
-			 String from = AppConstants.from + "TOKENS";
-			 String to = AppConstants.to + URLEncoder.encode(mobilenumber, AppConstants.utf);
-			 String messageText = AppConstants.msg + URLEncoder.encode(rndNumber + message, AppConstants.utf);
-			 String type = AppConstants.type + "1";
-			 URL obj = new URL(AppConstants.url + token + secret + usetype + mobile +
-			 messageText + senderId);
-
-			//String encodeMessage = URLEncoder.encode(message, "UTF-8");
-//			URL obj = new URL("http://nimbusit.biz/api/SmsApi/SendSingleApi?UserID=manikanta&"
-//					+ "Password=@Unsh0708&SenderID=INFSMS&Phno=" + mobilenumber + "&Msg=" + encodeMessage);
-
+			String mobile = AppConstants.phone + URLEncoder.encode(mobilenumber, AppConstants.utf);
+			String username = AppConstants.username + "suryaaa";
+			String password = AppConstants.password + "Surya@7891";
+			String from = AppConstants.from + "ODOSPL";
+			String to = AppConstants.to + URLEncoder.encode(mobilenumber, AppConstants.utf);
+			String messageText = AppConstants.msg + URLEncoder.encode(rndNumber + message, AppConstants.utf);
+			String type = AppConstants.type;
+			URL obj = new URL(AppConstants.url + username + password + from + mobile + to + messageText + type);
 			HttpURLConnection httpConnection = (HttpURLConnection) obj.openConnection();
 			httpConnection.setDoOutput(true);
 			BufferedReader bufferedReader = null;
@@ -46,7 +29,6 @@ public class Helper {
 			} else {
 				bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getErrorStream()));
 			}
-
 			StringBuilder content = new StringBuilder();
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
@@ -56,7 +38,6 @@ public class Helper {
 			return true;
 		} catch (Exception ex) {
 			return false;
-
 		}
 	}
 

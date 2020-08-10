@@ -239,10 +239,10 @@ public class ProductServiceImpl implements ProductService {
 				productDtoData.setSubcategoryId(product.getSubcategory().getSubcategoryId());
 				productDtoData.setProductcategoryId(product.getProductcategory().getProductcategoryId());
 				productDtoData.setProductCategoryName(product.getProductcategory().getProductcategoryName());
+				productDtoData.setProductImagePath(product.getProductImagePath());
 				List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
 				List<ProductQuantities> productQuantitiesList = productquantityRepository
 						.findByProductId(product.getProductId());
-
 				for (ProductQuantities productQuantities : productQuantitiesList) {
 					ProductQuantitiesDTO productQuantitiesDTO = new ProductQuantitiesDTO();
 					mapper.map(productQuantities, productQuantitiesDTO);
