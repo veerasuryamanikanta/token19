@@ -118,6 +118,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 				orderitemsdto.setQuantityName(orderItems.getProductquantities().getQuantity().getQuantityName());
 				orderitemsdto.setQuantity(orderItems.getProductquantities().getDescription());
 				orderitemsdto.setItemQuantity(orderItems.getItemQuantity());
+				orderitemsdto.setUpdateQuantity(orderItems.getUpdateQuantity());
 				orderitemsdto.setIsactive(orderItems.getIsactive());
 				orderitemsdto.setCreatedDate("" + orderItems.getCreatedDate());
 				orderitemsdto.setUpdatedOn("" + orderItems.getUpdatedOn());
