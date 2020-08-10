@@ -46,5 +46,8 @@ public class OrderItems extends Root {
 	@NotNull
 	public String sellingPrice;
 	
+	@NotNull
+	public String updateQuantity;
+	
 
 }

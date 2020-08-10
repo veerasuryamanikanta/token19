@@ -67,6 +67,29 @@ public class OrderController {
 		return holder;
 	}
 	
+	/*
+	 * -----------------UPDATE ITEM QTY -------------
+	 */
+	@RequestMapping(value = "/updateqty", method = RequestMethod.PUT)
+	public ReturnHolder updateOrderQty(@RequestBody OrderItemDTO ordersDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			if (ordersDTO != null) {
+				String response = orderItemService.updateOrderItemCount(ordersDTO);
+				if (response.equalsIgnoreCase("failed")) {
+					holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Update." + response));
+				} else {
+					holder.setResult(response);
+				}
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty"));
+			}
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Unable to Update." + e));
+		}
+		return holder;
+	}
+	
 	
 
 	/*

@@ -44,6 +44,8 @@ public class OrderItemDTO {
 	private String createdDate;
 
 	private String itemQuantity;
+	
+	private String updateQuantity;
 
 	private String updatedOn;
 

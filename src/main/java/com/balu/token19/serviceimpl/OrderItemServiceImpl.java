@@ -113,7 +113,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 				orderitemsdto.setProductImages(productImagesDTOList);
 				orderitemsdto.setProductMrp(orderItems.getProductMrp());
 				orderitemsdto.setSellingPrice(orderItems.getSellingPrice());
-				//orderitemsdto.setProductMrp(orderItems.getProductquantities().getMrpprice());
+				// orderitemsdto.setProductMrp(orderItems.getProductquantities().getMrpprice());
 				orderitemsdto.setSpecialOffer(orderItems.getProductquantities().getSellingprice());
 				orderitemsdto.setQuantityName(orderItems.getProductquantities().getQuantity().getQuantityName());
 				orderitemsdto.setQuantity(orderItems.getProductquantities().getDescription());
@@ -139,10 +139,21 @@ public class OrderItemServiceImpl implements OrderItemService {
 		try {
 			orderItemsRepository.updateOrder(orderItemDTO.getOrderItemId(), orderItemDTO.getIsactive());
 			return "success";
-		}catch (Exception e) {
+		} catch (Exception e) {
 			return "failed";
 		}
-		
+
+	}
+
+	@Override
+	public String updateOrderItemCount(OrderItemDTO orderItemDTO) {
+		try {
+			orderItemsRepository.updateOrderCount(orderItemDTO.getOrderItemId(), orderItemDTO.getUpdateQuantity());
+			return "success";
+		} catch (Exception e) {
+			return "failed";
+		}
+
 	}
 
 }

@@ -8,6 +8,8 @@ public interface OrderItemService {
 	String saveOrderItem(OrdersDTO ordersDTO);
 	
 	String updateOrderItem(OrderItemDTO orderItemDTO);
+	
+	String updateOrderItemCount(OrderItemDTO orderItemDTO);
 
 	OrdersDTO getOrderItems(String orderId);
 
