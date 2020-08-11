@@ -100,6 +100,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 				orderitemsdto.setProductQuantityId(orderItems.getProductquantities().getProductquantityId());
 				orderitemsdto.setProductName(orderItems.getProduct().getProductName());
 				orderitemsdto.setProductDescription(orderItems.getProduct().getShortDescription());
+				orderitemsdto.setProductImagePath(orderItems.getProduct().getProductImagePath());
 				List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
 				List<ProductImages> productImagesList = productImagesRepository
 						.findByProductQuantityId(orderItems.getProductquantities().getProductquantityId());
