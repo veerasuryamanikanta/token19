@@ -148,6 +148,7 @@ public class ProductServiceImpl implements ProductService {
 						productDtoData.setLongDescription(vendorProduct.getProduct().getLongDescription());
 						productDtoData.setCreatedDate("" + vendorProduct.getCreatedDate());
 						productDtoData.setUpdatedOn("" + vendorProduct.getUpdatedOn());
+						productDtoData.setProductImagePath(vendorProduct.getProduct().getProductImagePath());
 						productDtoData.setIsactive(true);
 						List<ProductQuantitiesDTO> productQuantitiesDTOList = new ArrayList<>();
 						for (VendorProductQuantity vendorProductQuantity : vendorProductQuantityList) {
