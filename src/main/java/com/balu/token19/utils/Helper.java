@@ -18,7 +18,7 @@ public class Helper {
 			String password = AppConstants.password + "Surya@7891";
 			String from = AppConstants.from + "ODOSPL";
 			String to = AppConstants.to + URLEncoder.encode(mobilenumber, AppConstants.utf);
-			String messageText = AppConstants.msg + URLEncoder.encode(rndNumber + message, AppConstants.utf);
+			String messageText = AppConstants.msg + URLEncoder.encode(message, AppConstants.utf);
 			String type = AppConstants.type;
 			URL obj = new URL(AppConstants.url + username + password + from + mobile + to + messageText + type);
 			HttpURLConnection httpConnection = (HttpURLConnection) obj.openConnection();
