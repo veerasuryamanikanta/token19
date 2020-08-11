@@ -93,7 +93,7 @@ public class CartServiceImpl implements CartService {
 				saved_cartData.setProductQuantityId(cart.getProductquantities().getProductquantityId());
 				saved_cartData.setProductName(cart.getProduct().getProductName());
 				saved_cartData.setProductDescription(cart.getProduct().getShortDescription());
-				
+				saved_cartData.setProductImagePath(cart.getProduct().getProductImagePath());
 				List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
 				List<ProductImages> productImagesList = productImagesRepository
 						.findByProductQuantityId(cart.getProductquantities().getProductquantityId());

@@ -24,6 +24,8 @@ public class CartDTO {
 	private String productName;
 
 	private String productDescription;
+	
+	private String productImagePath;
 
 	private List<ProductImagesDTO> productImages;
 
