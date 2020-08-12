@@ -221,6 +221,17 @@ public class RequestServiceImpl implements RequestService {
 				request.setRequestStatus(requestData.getRequestStatus());
 			}
 
+			if (requestDTO.getUserUID() == null) {
+				request.setUserUid(requestData.getUserUid());
+			}
+			if (requestDTO.getProviderUID() == null) {
+				request.setProviderUid(requestData.getProviderUid());
+			}
+
+			if (requestDTO.getSenderUID() == null) {
+				request.setSenderUid(requestData.getSenderUid());
+			}
+
 			try {
 				int tokennumber = requestRepository
 						.findTodayRequestByShopId(requestData.getShopdetails().getShopdetailsId());
