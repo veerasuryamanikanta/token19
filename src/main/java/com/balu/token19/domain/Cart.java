@@ -30,19 +30,15 @@ public class Cart extends Root {
 	public User user;
 
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-	@JoinColumn(name = "productId")
-	public Product product;
-
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "productquantityId")
 	public ProductQuantities productquantities;
 
 	@NotNull
 	public String itemQuantity;
-	
+
 	@NotNull
 	public String productMrp;
-	
+
 	@NotNull
 	public String sellingPrice;
 

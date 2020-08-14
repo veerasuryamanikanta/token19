@@ -15,7 +15,6 @@ import com.balu.token19.dto.ProductImagesDTO;
 import com.balu.token19.repo.CartRepository;
 import com.balu.token19.repo.ProductImagesRepository;
 import com.balu.token19.repo.ProductQuantityRepository;
-import com.balu.token19.repo.ProductRepository;
 import com.balu.token19.repo.UserRepository;
 import com.balu.token19.service.CartService;
 
@@ -31,9 +30,6 @@ public class CartServiceImpl implements CartService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private ProductRepository productRepository;
-
-	@Autowired
 	private ProductQuantityRepository productQuantityRepository;
 
 	@Autowired
@@ -47,13 +43,12 @@ public class CartServiceImpl implements CartService {
 		Cart cart = new Cart();
 		mapper.map(cartDTO, cart);
 		cart.setUser(userRepository.getOne(cartDTO.getUserId()));
-		cart.setProduct(productRepository.getOne(cartDTO.getProductId()));
 		cart.setProductquantities(productQuantityRepository.getOne(cartDTO.getProductQuantityId()));
 		Cart cartData = cartRepository.save(cart);
 		CartDTO saved_cartData = new CartDTO();
 		mapper.map(cartData, saved_cartData);
 		saved_cartData.setUserId(cartData.getUser().getUserId());
-		saved_cartData.setProductId(cartData.getProduct().getProductId());
+		saved_cartData.setProductId(cartData.getProductquantities().getProduct().getProductId());
 		saved_cartData.setProductQuantityId(cartData.getProductquantities().getProductquantityId());
 		return saved_cartData;
 	}
@@ -68,7 +63,7 @@ public class CartServiceImpl implements CartService {
 			CartDTO saved_cartData = new CartDTO();
 			mapper.map(cart, saved_cartData);
 			saved_cartData.setUserId(cart.getUser().getUserId());
-			saved_cartData.setProductId(cart.getProduct().getProductId());
+			saved_cartData.setProductId(cart.getProductquantities().getProduct().getProductId());
 			saved_cartData.setProductQuantityId(cart.getProductquantities().getProductquantityId());
 			return saved_cartData;
 		} else {
@@ -89,11 +84,11 @@ public class CartServiceImpl implements CartService {
 				CartDTO saved_cartData = new CartDTO();
 				mapper.map(cart, saved_cartData);
 				saved_cartData.setUserId(cart.getUser().getUserId());
-				saved_cartData.setProductId(cart.getProduct().getProductId());
+				saved_cartData.setProductId(cart.getProductquantities().getProduct().getProductId());
 				saved_cartData.setProductQuantityId(cart.getProductquantities().getProductquantityId());
-				saved_cartData.setProductName(cart.getProduct().getProductName());
-				saved_cartData.setProductDescription(cart.getProduct().getShortDescription());
-				saved_cartData.setProductImagePath(cart.getProduct().getProductImagePath());
+				saved_cartData.setProductName(cart.getProductquantities().getProduct().getProductName());
+				saved_cartData.setProductDescription(cart.getProductquantities().getProduct().getShortDescription());
+				saved_cartData.setProductImagePath(cart.getProductquantities().getProduct().getProductImagePath());
 				List<ProductImagesDTO> productImagesDTOList = new ArrayList<>();
 				List<ProductImages> productImagesList = productImagesRepository
 						.findByProductQuantityId(cart.getProductquantities().getProductquantityId());
@@ -125,7 +120,6 @@ public class CartServiceImpl implements CartService {
 		} catch (Exception e) {
 			return "failed";
 		}
-
 	}
 
 	@Override
