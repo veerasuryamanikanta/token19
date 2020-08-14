@@ -40,35 +40,44 @@ public class CartServiceImpl implements CartService {
 	 */
 	@Override
 	public CartDTO saveCart(CartDTO cartDTO) {
-		Cart cart = new Cart();
-		mapper.map(cartDTO, cart);
-		cart.setUser(userRepository.getOne(cartDTO.getUserId()));
-		cart.setProductquantities(productQuantityRepository.getOne(cartDTO.getProductQuantityId()));
-		Cart cartData = cartRepository.save(cart);
-		CartDTO saved_cartData = new CartDTO();
-		mapper.map(cartData, saved_cartData);
-		saved_cartData.setUserId(cartData.getUser().getUserId());
-		saved_cartData.setProductId(cartData.getProductquantities().getProduct().getProductId());
-		saved_cartData.setProductQuantityId(cartData.getProductquantities().getProductquantityId());
-		return saved_cartData;
+		try {
+			Cart cart = new Cart();
+			mapper.map(cartDTO, cart);
+			cart.setUser(userRepository.getOne(cartDTO.getUserId()));
+			cart.setProductquantities(productQuantityRepository.getOne(cartDTO.getProductQuantityId()));
+			Cart cartData = cartRepository.save(cart);
+			CartDTO saved_cartData = new CartDTO();
+			mapper.map(cartData, saved_cartData);
+			saved_cartData.setUserId(cartData.getUser().getUserId());
+			saved_cartData.setProductId(cartData.getProductquantities().getProduct().getProductId());
+			saved_cartData.setProductQuantityId(cartData.getProductquantities().getProductquantityId());
+			return saved_cartData;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/*
 	 * -----------------GET CART ITEM -------------
 	 */
 	@Override
-	public CartDTO findByProduct(Long userId, Long productId) {
-		Cart cart = cartRepository.findByUserAndProduct(userId, productId);
-		if (cart != null) {
-			CartDTO saved_cartData = new CartDTO();
-			mapper.map(cart, saved_cartData);
-			saved_cartData.setUserId(cart.getUser().getUserId());
-			saved_cartData.setProductId(cart.getProductquantities().getProduct().getProductId());
-			saved_cartData.setProductQuantityId(cart.getProductquantities().getProductquantityId());
-			return saved_cartData;
-		} else {
+	public CartDTO findByProduct(Long userId, Long productQtyId) {
+		try {
+			Cart cart = cartRepository.findByUserAndProduct(userId, productQtyId);
+			if (cart != null) {
+				CartDTO saved_cartData = new CartDTO();
+				mapper.map(cart, saved_cartData);
+				saved_cartData.setUserId(cart.getUser().getUserId());
+				saved_cartData.setProductId(cart.getProductquantities().getProduct().getProductId());
+				saved_cartData.setProductQuantityId(cart.getProductquantities().getProductquantityId());
+				return saved_cartData;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
 			return null;
 		}
+
 	}
 
 	/*
@@ -120,6 +129,7 @@ public class CartServiceImpl implements CartService {
 		} catch (Exception e) {
 			return "failed";
 		}
+
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public interface CartService {
 
 	CartDTO saveCart(CartDTO cartDTO);
 
-	CartDTO findByProduct(Long userId, Long productId);
+	CartDTO findByProduct(Long userId, Long productQtyId);
 
 	List<CartDTO> findByUserId(Long userId);
 

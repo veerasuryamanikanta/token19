@@ -29,7 +29,7 @@ public class CartController {
 		ReturnHolder holder = new ReturnHolder();
 		try {
 			if (cartDTO != null) {
-				CartDTO cartdto = cartService.findByProduct(cartDTO.getUserId(), cartDTO.getProductId());
+				CartDTO cartdto = cartService.findByProduct(cartDTO.getUserId(), cartDTO.getProductQuantityId());
 				if (cartdto != null) {
 					cartDTO.setCartId(cartdto.getCartId());
 					CartDTO cartdtoData = cartService.saveCart(cartDTO);

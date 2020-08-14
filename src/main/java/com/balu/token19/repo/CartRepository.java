@@ -13,16 +13,16 @@ import com.balu.token19.domain.Cart;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
-	@Query(nativeQuery = true, value = "select * from cart where user_id =:userId and product_id =:productId")
-	Cart findByUserAndProduct(@Param("userId") Long userId, @Param("productId") Long productId);
+	@Query(nativeQuery = true, value = "select * from cart where user_id =:userId and productquantity_id =:productQtyId")
+	Cart findByUserAndProduct(@Param("userId") Long userId, @Param("productQtyId") Long productQtyId);
 
 	@Query(nativeQuery = true, value = "select * from cart where user_id =:userId")
 	List<Cart> findByUser(@Param("userId") Long userId);
 
 	@Modifying
 	@Transactional
-	@Query(nativeQuery = true, value = "delete from cart where user_id =:userId and product_id =:productId")
-	void deletItem(@Param("userId") Long userId, @Param("productId") Long productId);
+	@Query(nativeQuery = true, value = "delete from cart where user_id =:userId and productquantity_id =:productQtyId")
+	void deletItem(@Param("userId") Long userId, @Param("productQtyId") Long productQtyId);
 	
 	@Modifying
 	@Transactional
