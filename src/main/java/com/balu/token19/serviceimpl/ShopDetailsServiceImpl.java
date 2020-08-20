@@ -52,7 +52,8 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 		shopdetailsDtoData.setUserId(shopDetailsData.getUser().getUserId());
 		shopdetailsDtoData.setUserNumber(shopDetailsData.getUser().getUserNumber());
 		shopdetailsDtoData.setShopsubcategoryId(shopDetailsData.getShopsubcategory().getShopsubcategoryId());
-		shopdetailsDtoData.setCategoryName(shopDetailsData.getShopsubcategory().getShopcategory().getShopcategoryName());
+		shopdetailsDtoData
+				.setCategoryName(shopDetailsData.getShopsubcategory().getShopcategory().getShopcategoryName());
 		return shopdetailsDtoData;
 	}
 
@@ -67,7 +68,8 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 			shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
 			shopdetailsDtoData.setUserNumber(shopdetails.getUser().getUserNumber());
 			shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
-			shopdetailsDtoData.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
+			shopdetailsDtoData
+					.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
 			mapper.map(shopdetails, shopdetailsDtoData);
 			return shopdetailsDtoData;
 		} else {
@@ -90,7 +92,55 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 				shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
 				shopdetailsDtoData.setUserNumber(shopdetails.getUser().getUserNumber());
 				shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
-				shopdetailsDtoData.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
+				shopdetailsDtoData
+						.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
+				mapper.map(shopdetails, shopdetailsDtoData);
+				shopdetailsDtoList.add(shopdetailsDtoData);
+			}
+		}
+		return shopdetailsDtoList;
+	}
+
+	/*
+	 * ----------------SHOPS LIST BY PINCODE--------------------
+	 */
+	@Override
+	public List<ShopDetailsDTO> getAllShopsList() {
+		List<ShopDetails> shopdetailsList = shopDetailsRepository.findAll();
+		List<ShopDetailsDTO> shopdetailsDtoList = new ArrayList<ShopDetailsDTO>();
+		if (shopdetailsList.size() != 0) {
+			for (int i = 0; i < shopdetailsList.size(); i++) {
+				ShopDetails shopdetails = (ShopDetails) shopdetailsList.get(i);
+				ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
+				shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
+				shopdetailsDtoData.setUserNumber(shopdetails.getUser().getUserNumber());
+				shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
+				shopdetailsDtoData
+						.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
+				mapper.map(shopdetails, shopdetailsDtoData);
+				shopdetailsDtoList.add(shopdetailsDtoData);
+			}
+		}
+		return shopdetailsDtoList;
+	}
+
+	/*
+	 * ----------------SHOPS LIST BY PINCODE--------------------
+	 */
+	@Override
+	public List<ShopDetailsDTO> getAllShopsListByDetails(ShopDetailsDTO shopDetailsDTO) {
+		List<ShopDetails> shopdetailsList = shopDetailsRepository.findByCityAndArea(shopDetailsDTO.getAreaname(),
+				shopDetailsDTO.getCityname());
+		List<ShopDetailsDTO> shopdetailsDtoList = new ArrayList<ShopDetailsDTO>();
+		if (shopdetailsList.size() != 0) {
+			for (int i = 0; i < shopdetailsList.size(); i++) {
+				ShopDetails shopdetails = (ShopDetails) shopdetailsList.get(i);
+				ShopDetailsDTO shopdetailsDtoData = new ShopDetailsDTO();
+				shopdetailsDtoData.setUserId(shopdetails.getUser().getUserId());
+				shopdetailsDtoData.setUserNumber(shopdetails.getUser().getUserNumber());
+				shopdetailsDtoData.setShopsubcategoryId(shopdetails.getShopsubcategory().getShopsubcategoryId());
+				shopdetailsDtoData
+						.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
 				mapper.map(shopdetails, shopdetailsDtoData);
 				shopdetailsDtoList.add(shopdetailsDtoData);
 			}
@@ -149,7 +199,8 @@ public class ShopDetailsServiceImpl implements ShopDetailsService {
 			mapper.map(shopDetailsData, shopdetailsDtoData);
 			shopdetailsDtoData.setUserId(shopDetailsData.getUser().getUserId());
 			shopdetailsDtoData.setShopsubcategoryId(shopDetailsData.getShopsubcategory().getShopsubcategoryId());
-			shopdetailsDtoData.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
+			shopdetailsDtoData
+					.setCategoryName(shopdetails.getShopsubcategory().getShopcategory().getShopcategoryName());
 			return shopdetailsDtoData;
 		} else {
 			return null;

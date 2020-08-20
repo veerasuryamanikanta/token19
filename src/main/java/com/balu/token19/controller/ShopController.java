@@ -136,6 +136,46 @@ public class ShopController {
 		}
 		return holder;
 	}
+	
+	/*
+	 * -----------------SHOP LIST BY PINCODE -------------
+	 */
+	@RequestMapping(value = "/shoplist/list", method = RequestMethod.GET)
+	public ReturnHolder getAllShopdetails() {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			List<ShopDetailsDTO> shopDtoList = shopDetailsService.getAllShopsList();
+			if (shopDtoList.size() != 0) {
+				holder.setResult(shopDtoList);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+		}
+		return holder;
+	}
+	
+	/*
+	 * -----------------SHOP LIST BY PINCODE -------------
+	 */
+	@RequestMapping(value = "/shoplist/list", method = RequestMethod.POST)
+	public ReturnHolder getAllShopdetailsByDetails(@RequestBody ShopDetailsDTO shopdetailsDTO) {
+		ReturnHolder holder = new ReturnHolder();
+		try {
+			List<ShopDetailsDTO> shopDtoList = shopDetailsService.getAllShopsList();
+			if (shopDtoList.size() != 0) {
+				holder.setResult(shopDtoList);
+			} else {
+				holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+			}
+
+		} catch (Exception e) {
+			holder = new ReturnHolder(false, new ErrorObject("error", "Data Empty."));
+		}
+		return holder;
+	}
 
 	/*
 	 * -----------------SAVE CATEGORY -------------

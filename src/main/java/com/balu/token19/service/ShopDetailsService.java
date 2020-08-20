@@ -16,6 +16,9 @@ public interface ShopDetailsService {
 	
 	List<ShopDetailsDTO> getShopsbyPincode(String pincode);
 	
+	List<ShopDetailsDTO> getAllShopsList();
+	
+	List<ShopDetailsDTO> getAllShopsListByDetails(ShopDetailsDTO shopDetailsDTO);
 	
 	ShopCategoryDTO saveShopCategory(ShopCategoryDTO shopcategoryDTO);
 

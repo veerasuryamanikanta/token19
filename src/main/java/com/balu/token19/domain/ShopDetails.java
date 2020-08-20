@@ -63,6 +63,12 @@ public class ShopDetails extends Root {
 	private String ownerName;
 	
 	@NotNull
+	private String areaname;
+	
+	@NotNull
+	private String cityname;
+	
+	@NotNull
 	private String pincode;
 	
 	@NotNull
