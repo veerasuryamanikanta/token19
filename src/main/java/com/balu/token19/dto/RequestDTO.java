@@ -33,6 +33,10 @@ public class RequestDTO {
 
 	private String providerUID;
 
+	private String userFcmId;
+
+	private String provideFcmId;
+
 	private String senderUID;
 
 	private String requestType;

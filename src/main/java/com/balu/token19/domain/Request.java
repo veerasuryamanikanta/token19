@@ -56,6 +56,12 @@ public class Request extends Root {
 	private String providerUid;
 	
 	@NotNull
+	private String userFcmId;
+	
+	@NotNull
+	private String provideFcmId;
+	
+	@NotNull
 	private String senderUid;
 
 

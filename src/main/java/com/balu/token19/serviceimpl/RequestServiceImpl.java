@@ -52,7 +52,7 @@ public class RequestServiceImpl implements RequestService {
 	@Autowired
 	private SliderRepository sliderRepository;
 
-	private String token;
+	private String provider_token;
 
 	/*
 	 * -----------------SAVE REQUEST -------------
@@ -82,6 +82,17 @@ public class RequestServiceImpl implements RequestService {
 			updaterequest.setUserUid(userUID);
 			updaterequest.setProviderUid(providerUID);
 			updaterequest.setSenderUid(userUID);
+			try {
+				String user_token = deviceRepository.findByuniqueId(requestData.getUser().getUniqueID());
+				provider_token = deviceRepository
+						.findByuniqueId(requestData.getShopdetails().getUser().getUniqueID());
+				updaterequest.setProvideFcmId(provider_token);
+				updaterequest.setUserFcmId(user_token);
+			} catch (Exception e) {
+				updaterequest.setUserFcmId("");
+				updaterequest.setProvideFcmId("");
+			}
+
 			Request updateRequestData = requestRepository.save(updaterequest);
 			if (updateRequestData != null) {
 				RequestDTO requestDtoData = new RequestDTO();
@@ -96,21 +107,10 @@ public class RequestServiceImpl implements RequestService {
 				ShopDetailsDTO shopDetailsDTO = new ShopDetailsDTO();
 				mapper.map(shopDetails, shopDetailsDTO);
 				requestDtoData.setShopDetailsDTO(shopDetailsDTO);
-				if (requestData.getUser().getUniqueID() != null) {
-					String notif_token = deviceRepository
-							.findByuniqueId(updateRequestData.getShopdetails().getUser().getUniqueID());
-					if (notif_token != null) {
-						token = notif_token;
-					} else {
-						token = "";
-					}
-				} else {
-					token = "";
-				}
 				try {
 					String not_imagepath = sliderRepository.findNotificationImage();
 					FcmDTO fcmdto = new FcmDTO();
-					fcmdto.setTo(token);
+					fcmdto.setTo(provider_token);
 					fcmdto.setTitle("HEY VENDOR we have a request from " + requestData.getUser().getUserNumber());
 					fcmdto.setBody("Send Time Slot By Confirm Order.");
 					fcmdto.setImage(not_imagepath);
