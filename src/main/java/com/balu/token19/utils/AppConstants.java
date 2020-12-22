@@ -1,5 +1,8 @@
 package com.balu.token19.utils;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+
 public class AppConstants {
 
 	// response strings
@@ -37,5 +40,7 @@ public class AppConstants {
 	public static String SECRET_VALUE = "BDHG5HFWJALXB1VV";
 	public static String SENDER_ID = "StAqua";
 	public static String STAGE = "prod";
+	
+	public static final Mapper mapper = new DozerBeanMapper();
 
 }
