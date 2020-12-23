@@ -22,5 +22,5 @@ public class Root {
 	private Timestamp updatedOn;
 
 	@Column(columnDefinition = "boolean default true")
-	public Boolean isactive = true;
+	public boolean isactive = true;
 }
