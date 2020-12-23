@@ -55,7 +55,7 @@ public class CultureServiceImpl implements CultureService {
 					Culture article = (Culture) cultureDataList.get(i);
 					CultureDTO articledto = new CultureDTO(article.getCultureId(), article.getUser().getUserId(),
 							article.getTitle(), article.getDescription(), "" + article.getCreatedDate(),
-							"" + article.getUpdatedOn(), article.getIsactive());
+							"" + article.getUpdatedOn(), article.isIsactive());
 					cultureDtoList.add(articledto);
 				}
 				return cultureDtoList;

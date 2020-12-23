@@ -51,7 +51,7 @@ public class CropCategoryServiceImpl implements CropCategoryService {
 					CropCategoryDTO cropCategoryDTO = new CropCategoryDTO(cropCategory.getCropCategoryId(),
 							cropCategory.getCropCategoryName(), cropCategory.getCropCategoryCode(),
 							"" + cropCategory.getCreatedDate(), "" + cropCategory.getUpdatedOn(),
-							cropCategory.getIsactive());
+							cropCategory.isIsactive());
 					cropCategoryDTOList.add(cropCategoryDTO);
 				}
 				return cropCategoryDTOList;

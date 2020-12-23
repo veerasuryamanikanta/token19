@@ -72,7 +72,7 @@ public class TechnicianServiceImpl implements TechnicianService {
 					Technician technician = (Technician) techniciansList.get(i);
 					TechnicianDTO techniciandto = new TechnicianDTO(technician.getTechnicianId(), technician.getUser().getUserId(),
 							technician.getTitle(),technician.getDescription(),technician.getBlogurl(),technician.getExperience(),
-							"" + technician.getCreatedDate(),"" + technician.getUpdatedOn(), technician.getIsactive());
+							"" + technician.getCreatedDate(),"" + technician.getUpdatedOn(), technician.isIsactive());
 					techniciansDtoList.add(techniciandto);
 				}
 				return techniciansDtoList;

@@ -50,7 +50,7 @@ public class LanguageServiceImpl implements LanguageService {
 					Languages article = (Languages) languagesList.get(i);
 					LanguageDTO articledto = new LanguageDTO(article.getLanguageId(), article.getLanguageMotherName(),
 							article.getLanguageEnglishName(), "" + article.getCreatedDate(),
-							"" + article.getUpdatedOn(), article.getIsactive());
+							"" + article.getUpdatedOn(), article.isIsactive());
 					languageDTOsList.add(articledto);
 				}
 				return languageDTOsList;

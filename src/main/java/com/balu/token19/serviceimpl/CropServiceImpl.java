@@ -62,7 +62,7 @@ public class CropServiceImpl implements CropService {
 					CropDTO articledto = new CropDTO(crop.getCropId(), crop.getCulture().getCultureId(),
 							crop.getCropcategory().getCropCategoryId(), crop.getCropname(), crop.getDescription(),
 							crop.getImagepath(), "" + crop.getCreatedDate(), "" + crop.getUpdatedOn(),
-							crop.getIsactive());
+							crop.isIsactive());
 					CropDtoList.add(articledto);
 				}
 				return CropDtoList;

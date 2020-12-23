@@ -52,7 +52,7 @@ public class ArticleServiceImpl implements ArticleService {
 					ArticleDTO articledto = new ArticleDTO(article.getArticleId(), article.getUser().getUserId(),
 							article.getTitle(), article.getContent(), article.getFilepath(), article.getArticleType(),
 							"" + article.getCreatedDate(), "" + article.getUpdatedOn(),
-							article.getIsactive());
+							article.isIsactive());
 					articlesDtoList.add(articledto);
 				}
 				return articlesDtoList;

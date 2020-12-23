@@ -51,7 +51,7 @@ public class ReportCategoryServiceImpl implements ReportCategoryService {
 					ReportCategoryDTO reportCategoryDTO = new ReportCategoryDTO(reportCategory.getReportCategoryId(),
 							reportCategory.getReportCategoryName(), reportCategory.getReportCategoryCode(),
 							"" + reportCategory.getCreatedDate(), "" + reportCategory.getUpdatedOn(),
-							reportCategory.getIsactive());
+							reportCategory.isIsactive());
 					ReportCategoryDTOList.add(reportCategoryDTO);
 				}
 				return ReportCategoryDTOList;
